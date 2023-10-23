@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="/admin/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lí chung</title>
+</head>
+<body>
+<div class="content" layout:fragment="content">
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Sản phẩm</th>
+            <th scope="col">Giá nhập</th>
+            <th scope="col">Giá bán</th>
+            <th scope="col">Số lượng</th>
+            <th scope="col">Thành tiền</th>
+<!--            <th scope="col">Tổng tiền</th>-->
+<!--            <th scope="col">Trạng thái</th>-->
+<!--            <th scope="col">Chi tiết</th>-->
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="detail : ${details}">
+            <td th:text="${detail.stt}"></td>
+            <td th:text="${detail.pro_name}"></td>
+            <td th:text="${detail.import_price}"></td>
+            <td th:text="${detail.pro_price}"></td>
+            <td th:text="${detail.quantity}"></td>
+            <td th:text="${detail.subTotal}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

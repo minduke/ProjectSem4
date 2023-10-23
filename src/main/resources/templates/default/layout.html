@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+    <link rel="shortcut icon" href="images/favicon.png">
+    <title>POLO | The Multi-Purpose HTML5 Template</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link th:href="@{/default/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/default/vendor/fontawesome/css/font-awesome.min.css}" type="text/css" rel="stylesheet">
+    <link th:href="@{/default/vendor/animateit/animate.min.css}" rel="stylesheet">
+
+    <!-- Vendor css -->
+    <link th:href="@{/default/vendor/owlcarousel/owl.carousel.css}" rel="stylesheet">
+    <link th:href="@{/default/vendor/magnific-popup/magnific-popup.css}" rel="stylesheet">
+
+    <!-- Template base -->
+    <link th:href="@{/default/css/theme-base.css}" rel="stylesheet">
+
+    <!-- Template elements -->
+    <link th:href="@{/default/css/theme-elements.css}" rel="stylesheet">
+
+    <!-- Responsive classes -->
+    <link th:href="@{/default/css/responsive.css}" rel="stylesheet">
+
+    <!--[if lt IE 9]>
+    <script src="http://css3-mediaqueries-js.googlecode.com/svn/trunk/css3-mediaqueries.js"></script>
+    <![endif]-->
+
+
+    <!-- Template color -->
+    <link th:href="@{/default/css/color-variations/blue.css}" rel="stylesheet" type="text/css" media="screen"
+          title="blue">
+
+    <!-- LOAD GOOGLE FONTS -->
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,800,700,600%7CRaleway:100,300,600,700,800"
+          rel="stylesheet" type="text/css"/>
+
+    <!-- SLIDER REVOLUTION 5.x CSS SETTINGS -->
+    <link rel="stylesheet" property="stylesheet" th:href="@{/default/vendor/rs-plugin/css/settings.css}" type="text/css"
+          media="all"/>
+
+    <!-- CSS CUSTOM STYLE -->
+    <link rel="stylesheet" type="text/css" th:href="@{/default/css/custom.css}" media="screen"/>
+
+    <!--VENDOR SCRIPT-->
+    <script th:src="@{/default/vendor/jquery/jquery-1.11.2.min.js}"></script>
+    <script th:src="@{/default/vendor/plugins-compressed.js}"></script>
+
+</head>
+
+<body class="wide">
+
+
+<!-- WRAPPER -->
+<div class="wrapper">
+
+    <!-- HEADER -->
+    <header id="header" class="header-dark" layout:fragment="header">
+        <div id="header-wrap">
+            <div class="container">
+
+                <!--LOGO-->
+                <div id="logo">
+                    <a th:href="@{/home}" class="logo" data-dark-logo="images/logo-dark.png">
+                        <img src="images/logo.png" alt="Polo Logo">
+                    </a>
+                </div>
+                <!--END: LOGO-->
+
+                <!--MOBILE MENU -->
+                <div class="nav-main-menu-responsive">
+                    <button class="lines-button x">
+                        <span class="lines"></span>
+                    </button>
+                </div>
+                <!--END: MOBILE MENU -->
+
+                <!--SHOPPING CART -->
+                <div id="shopping-cart">
+<!--                    <span class="shopping-cart-items">8</span>-->
+                    <a th:href="@{'/cart'}"><i class="fa fa-shopping-cart"></i></a>
+                </div>
+                <!--END: SHOPPING CART -->
+
+                <!--TOP SEARCH -->
+                <div id="top-search"><a id="top-search-trigger"><i class="fa fa-search"></i><i class="fa fa-close"></i></a>
+                    <form action="search-results-page.html" method="get">
+                        <input type="text" name="q" class="form-control" value=""
+                               placeholder="Start typing & press  &quot;Enter&quot;">
+                    </form>
+                </div>
+                <!--END: TOP SEARCH -->
+
+                <!--NAVIGATION-->
+                <div class="navbar-collapse collapse main-menu-collapse navigation-wrap">
+                    <div class="container">
+                        <nav id="mainMenu" class="main-menu mega-menu">
+                            <ul class="main-menu nav nav-pills">
+<!--                                <li><a th:href="@{'/home'}"><i class="fa fa-home"></i></a>-->
+<!--                                </li>-->
+                                <li><a th:href="@{'/home'}"><i class="fa fa-home"></i>Trang Chủ</a></li>
+                                <li class="dropdown"><a href="#">Sản Phẩm<span
+                                        class="label label-danger infinit">HOT</span><i class="fa fa-angle-down"></i> </a>
+                                    <ul class="dropdown-menu">
+                                        <li class=""><a href="#">Bánh Lạnh</a></li>
+                                        <li class=""><a href="#">Brownies</a></li>
+                                        <li class=""><a href="#">Chè</a></li>
+                                        <li class=""><a href="#">Bông lan</a></li>
+                                    </ul>
+                                </li>
+                                <li class=""><a th:href="@{'/tin-tuc'}">Tin Tức</a></li>
+                                <li class="dropdown"><a href="#">Khuyến Mãi  </a></li>
+                                <li class=""><a th:href="@{'/login'}">Đăng Nhập</a>
+
+                                </li>
+
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+                <!--END: NAVIGATION-->
+            </div>
+        </div>
+    </header>
+    <!-- END: HEADER -->
+
+
+        <section layout:fragment="content">
+            <div class="container">
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed neque velit, ultrices in vulputate
+                    vitae,
+                    volutpat iaculis velit. In congue dolor a ligula cursus aliquam. Aliquam id malesuada metus. Donec
+                    ultricies lorem augue, ac fringilla felis aliquet et. Integer a rutrum dui, id varius neque. Donec
+                    orci
+                    massa, porttitor sit amet velit non, interdum feugiat lacus. Fusce tincidunt id erat at consequat.
+                    Cras
+                    vel aliquet mauris, ac tempor lorem. Donec faucibus sodales eros sed pretium. Praesent ut
+                    scelerisque
+                    lectus, ut feugiat mi.</p>
+
+                <p>Nunc vulputate semper erat, non iaculis sapien congue sit amet. Duis non nulla volutpat, dignissim
+                    leo
+                    sit amet, porta nunc. Donec placerat fermentum metus ac scelerisque. In id sollicitudin nulla.
+                    Suspendisse potenti. Integer aliquam orci aliquam eros posuere ornare. Fusce augue felis, maximus
+                    non
+                    lacus vitae, ullamcorper dignissim leo. Ut congue feugiat turpis at aliquam. Donec eros neque,
+                    accumsan
+                    sed venenatis volutpat, tempor at metus. Curabitur vel vestibulum ipsum, convallis cursus nisl.
+                    Mauris
+                    scelerisque gravida faucibus. Morbi vitae sapien nibh. Integer libero orci, ullamcorper in tincidunt
+                    at,
+                    molestie quis ipsum.</p>
+
+                <p>Nunc vulputate semper erat, non iaculis sapien congue sit amet. Duis non nulla volutpat, dignissim
+                    leo
+                    sit amet, porta nunc. Donec placerat fermentum metus ac scelerisque. In id sollicitudin nulla.
+                    Suspendisse potenti. Integer aliquam orci aliquam eros posuere ornare. Fusce augue felis, maximus
+                    non
+                    lacus vitae, ullamcorper dignissim leo. Ut congue feugiat turpis at aliquam. Donec eros neque,
+                    accumsan
+                    sed venenatis volutpat, tempor at metus. Curabitur vel vestibulum ipsum, convallis cursus nisl.
+                    Mauris
+                    scelerisque gravida faucibus. Morbi vitae sapien nibh. Integer libero orci, ullamcorper in tincidunt
+                    at,
+                    molestie quis ipsum.</p>
+            </div>
+        </section>
+
+    <!-- FOOTER -->
+    <footer class="background-dark text-grey" id="footer" layout:fragment="footer">
+        <div class="footer-content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="footer-logo float-left">
+                            <img alt="" src="images/logo-sm-dark.png">
+                        </div>
+                        <p style="margin-top: 12px;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi
+                            sagittis, sem quis lacinia faucibus, orci ipsum gravida tortor, vel interdum mi sapien ut
+                            justo. Nulla varius consequat magna, id molestie ipsum volutpat quis. Suspendisse
+                            consectetur fringilla luctus. Fusce id mi diam, non ornare orci. Pellentesque ipsum erat,
+                            facilisis ut venenatis eu, sodales vel dolor.
+                        </p>
+
+                    </div>
+                </div>
+                <div class="seperator seperator-dark seperator-simple"></div>
+                <div class="row">
+
+
+                    <div class="col-md-4">
+                        <div class="widget clearfix widget-contact-us"
+                             style="background-image: url('images/world-map.png'); background-position: 50% 55px; background-repeat: no-repeat">
+                            <h4 class="widget-title">Contact us</h4>
+                            <ul class="list-large list-icons">
+                                <li><i class="fa fa-map-marker"></i>
+                                    <strong>Address:</strong> 795 Folsom Ave, Suite 600
+                                    <br>San Francisco, CA 94107
+                                </li>
+                                <li><i class="fa fa-phone"></i><strong>Phone:</strong> (123) 456-7890</li>
+                                <li><i class="fa fa-envelope"></i><strong>Email:</strong> <a
+                                        href="mailto:first.last@example.com">first.last@example.com</a>
+                                </li>
+                                <li><i class="fa fa-clock-o"></i>Monday - Friday: <strong>08:00 - 22:00</strong>
+                                    <br>Saturday, Sunday: <strong>Closed</strong>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="widget clearfix widget-tweeter">
+                            <h4 class="widget-title">Recent Tweets</h4>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+
+                        <div class="widget clearfix widget-newsletter">
+                            <form id="widget-subscribe-form" action="include/subscribe-form.php" role="form"
+                                  method="post" class="form-inline">
+                                <h4 class="widget-title">Newsletter</h4>
+                                <small>Stay informed on our latest news!</small>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-paper-plane"></i></span>
+                                    <input type="email" aria-required="true" name="widget-subscribe-form-email"
+                                           class="form-control required email" placeholder="Enter your Email">
+                                    <span class="input-group-btn">
+											<button type="submit" id="widget-subscribe-submit-button"
+                                                    class="btn btn-primary">Subscribe</button>
+										</span>
+                                </div>
+                            </form>
+                            <script type="text/javascript">
+                                jQuery("#widget-subscribe-form").validate({
+                                    submitHandler: function (form) {
+                                        jQuery(form).ajaxSubmit({
+                                            dataType: 'json',
+                                            success: function (text) {
+                                                if (text.response == 'success') {
+                                                    $.notify({
+                                                        message: "You have successfully subscribed to our mailing list."
+                                                    }, {
+                                                        type: 'success'
+                                                    });
+                                                    $(form)[0].reset();
+
+                                                } else {
+                                                    $.notify({
+                                                        message: text.message
+                                                    }, {
+                                                        type: 'warning'
+                                                    });
+                                                }
+                                            }
+                                        });
+                                    }
+                                });
+                            </script>
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+        </div>
+        <div class="copyright-content">
+            <div class="container">
+                <div class="row">
+                    <div class="copyright-text col-md-6"> &copy; 2016 POLO - Best HTML5 Template Ever. All Rights
+                        Reserved. <a target="_blank" href="http://www.inspiro-media.com">INSPIRO</a>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="social-icons">
+                            <ul>
+                                <li class="social-facebook"><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                <li class="social-twitter"><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                <li class="social-google"><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                                <li class="social-pinterest"><a href="#"><i class="fa fa-pinterest"></i></a></li>
+                                <li class="social-vimeo"><a href="#"><i class="fa fa-vimeo-square"></i></a></li>
+                                <li class="social-linkedin"><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                                <li class="social-dribbble"><a href="#"><i class="fa fa-dribbble"></i></a></li>
+                                <li class="social-youtube"><a href="#"><i class="fa fa-youtube-play"></i></a></li>
+                                <li class="social-rss"><a href="#"><i class="fa fa-rss"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- END: FOOTER -->
+
+</div>
+<!-- END: WRAPPER -->
+
+<!-- GO TOP BUTTON -->
+<a class="gototop gototop-button" href="#"><i class="fa fa-chevron-up"></i></a>
+
+<!-- SLIDER REVOLUTION 5.x SCRIPTS  -->
+<script type="text/javascript" th:src="@{default/vendor/rs-plugin/js/jquery.themepunch.tools.min.js}"></script>
+<script type="text/javascript" th:src="@{default/vendor/rs-plugin/js/jquery.themepunch.revolution.min.js}"></script>
+
+<script type="text/javascript">
+    var tpj = jQuery;
+
+    var revapi21;
+    tpj(document).ready(function () {
+        if (tpj("#rev_slider_21_1").revolution == undefined) {
+            revslider_showDoubleJqueryError("#rev_slider_21_1");
+        } else {
+            revapi21 = tpj("#rev_slider_21_1").show().revolution({
+                sliderType: "standard",
+                jsFileLocation: "vendor/rs-plugin/js/",
+                sliderLayout: "fullscreen",
+                dottedOverlay: "none",
+                delay: 9000,
+                navigation: {
+                    onHoverStop: "off",
+                },
+                responsiveLevels: [1240, 1024, 778, 480],
+                visibilityLevels: [1240, 1024, 778, 480],
+                gridwidth: [1240, 1024, 778, 480],
+                gridheight: [868, 768, 960, 720],
+                lazyType: "none",
+                parallax: {
+                    type: "mouse",
+                    origo: "slidercenter",
+                    speed: 700,
+                    levels: [2, 6, 10, 20, 25, 30, 35, 40, 45, 50, 47, 48, 49, 50, 51, 55],
+                    type: "mouse",
+                    disable_onmobile: "on"
+                },
+                shadow: 0,
+                spinner: "spinner0",
+                stopLoop: "off",
+                stopAfterLoops: -1,
+                stopAtSlide: -1,
+                shuffle: "off",
+                autoHeight: "off",
+                fullScreenAutoWidth: "off",
+                fullScreenAlignForce: "off",
+                fullScreenOffsetContainer: "",
+                fullScreenOffset: "",
+                disableProgressBar: "on",
+                hideThumbsOnMobile: "off",
+                hideSliderAtLimit: 0,
+                hideCaptionAtLimit: 0,
+                hideAllCaptionAtLilmit: 0,
+                debugMode: false,
+                fallbacks: {
+                    simplifyAll: "off",
+                    nextSlideOnWindowFocus: "off",
+                    disableFocusListener: false,
+                }
+            });
+        }
+    });	/*ready*/
+</script>
+
+<!-- Theme Base, Components and Settings -->
+<script th:src="@{/default/js/theme-functions.js}"></script>
+
+<!-- Custom js file -->
+<script th:src="@{/default/js/custom.js}"></script>
+
+
+</body>
+</html>
+

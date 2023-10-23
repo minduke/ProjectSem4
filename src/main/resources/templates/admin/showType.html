@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="/admin/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container" layout:fragment="content" >
+    <h1 style="text-align: center">
+        Danh mục nhóm sản phẩm
+    </h1>
+    <table class="table" style="">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Tên</th>
+            <th scope="col">Sửa</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="type : ${types}">
+            <th scope="row" th:text="${type.type_id}"></th>
+            <td th:text="${type.type_name}"></td>
+            <td><a href=""><i class="fa-solid fa-pen-to-square"></i></a></td>
+        </tr>
+        </tbody>
+    </table>
+    <a th:href="@{/admin/addType}"><button class="btn btn-primary">Thêm</button></a>
+</div>
+
+
+</body>
+</html>

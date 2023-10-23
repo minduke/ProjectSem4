@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="/default/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <!-- SHOP PRODUCT PAGE -->
+    <form th:action="@{'/add/' + ${product.pro_id}}" method="post">
+
+    <section id="product-page" class="product-page p-b-0" th:object="${product}">
+        <div class="container">
+            <div class="product">
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="product-image">
+                            <div class="carousel" data-carousel-col="1" data-lightbox-type="gallery">
+                                <a href="images/shop/products/product-large.jpg" title="Shop product image!"><img alt="Shop product image!" th:src="@{'/images/' + ${product.pro_image}}" style="width: 380px; height: 507px">
+                                </a>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-7">
+                        <div class="product-description">
+
+                            <div class="product-title">
+                                <h3><a href="#" th:text="*{pro_name}"></a></h3>
+                            </div>
+                            <div class="product-price"><ins th:text="*{pro_price} + ' VND' "></ins>
+                            </div>
+
+                            <div class="product-reviews"><a href="#"></a>
+                            </div>
+
+                            <div class="seperator m-b-10"></div>
+                                <p th:text="*{pro_spec}"></p>
+                            <div class="product-meta">
+
+
+
+                            </div>
+                            <div class="seperator m-t-20 m-b-10"></div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+
+                            </div>
+                        </div>
+
+                        <div class="m-t-10">
+                            <h6>Select quantity</h6>
+<!--                            <div class="cart-product-quantity">-->
+<!--                                <div class="product-details-quantity">-->
+<!--                                    <input type="button" class="minus" value="-">-->
+<!--                                    <input type="text" class="qty" value="1" min="1" step="1">-->
+<!--                                    <input type="button" class="plus" value="+">-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <label for="cart_qty">Qty:</label>-->
+                            <div class="product-details-quantity">
+                                <input type="number" id="cart_qty" name="qty" class="qty" min="1" value="1">
+                            </div>
+                        </div>
+                        <div class="m-t-20">
+                                <input type="hidden" th:value="${product.pro_id}" name="id">
+                                <button type="submit" class="btn btn-primary btn-lg"><i class="fa fa-shopping-cart"></i> Bỏ vào giỏ</button>
+                        </div>
+
+                    </div>
+
+
+                </div>
+                <div class="row m-t-40">
+
+                    <div class="col-md-6">
+                        <h4>Reviews (3)</h4>
+                        <div id="comments" class="comments">
+
+
+
+                            <div class="comment">
+                                <a href="#" class="pull-left">
+                                    <img alt="" src="images/team/1.jpg" class="avatar">
+                                </a>
+                                <div class="media-body">
+                                    <div class="product-rate">
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star-half-o"></i>
+                                    </div>
+                                    <h4 class="media-heading">Alea Grande</h4>
+
+                                    <p>Maecenas nec iaculis turpis, egeiquam eget malesuada enim, eu interdum elit. Sed sagittis ornare velit a congue.</p>
+
+                                </div>
+                            </div>
+
+                            <div class="comment">
+                                <a class="pull-left" href="#">
+                                    <img class="avatar" src="images/team/3.jpg" alt="">
+                                </a>
+                                <div class="media-body">
+                                    <div class="product-rate">
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star-half-o"></i>
+                                    </div>
+                                    <h4 class="media-heading">Ariol Smith</h4>
+
+                                    <p>Ut ulneque. Aliquam eget malesuada enim, eu interdum elit. Sed sagittis ornare velit a congue.</p>
+
+                                </div>
+                            </div>
+                            <div class="comment">
+                                <a href="#" class="pull-left">
+                                    <img alt="" src="images/team/2.jpg" class="avatar">
+                                </a>
+                                <div class="media-body">
+                                    <div class="product-rate">
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star-half-o"></i>
+                                    </div>
+                                    <h4 class="media-heading">Juna Smith</h4>
+
+                                    <p>Nullam nisl dui, congue in mi non,a enim, eu interdum elit. Sed sagittis ornare velit a congue.</p>
+
+                                </div>
+
+
+
+
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h4> Additional Information</h4>
+                        <div class="accordion toggle fancy radius clean">
+                            <div class="ac-item ac-active">
+                                <h5 class="ac-title"><i class="fa fa-rocket"></i>Suscipit laboriosam</h5>
+                                <div class="ac-content">Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.</div>
+                            </div>
+                            <div class="ac-item">
+                                <h5 class="ac-title"><i class="fa fa-heart"></i>Aliquam voluptatem</h5>
+                                <div style="display: none;" class="ac-content">Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.</div>
+                            </div>
+                            <div class="ac-item">
+                                <h5 class="ac-title"><i class="fa fa-shopping-cart"></i>Labore et dolore</h5>
+                                <div style="display: none;" class="ac-content">Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+    </form>
+
+    <!-- END: SHOP PRODUCT PAGE -->
+</div>
+</body>
+</html>
