@@ -5,6 +5,8 @@ package com.tuithemngot.model;
 
 public class Customer {
 
+    private int stt;
+
     private Long cus_id;
 
 
@@ -37,7 +39,8 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(Long cus_id, String cus_name, String cus_birthday, String cus_address, String cus_phone, String cus_email, String cus_gender, String cus_username, String cus_password, String cus_create_at) {
+    public Customer(int stt, Long cus_id, String cus_name, String cus_birthday, String cus_address, String cus_phone, String cus_email, String cus_gender, String cus_username, String cus_password, String cus_create_at) {
+        this.stt = stt;
         this.cus_id = cus_id;
         this.cus_name = cus_name;
         this.cus_birthday = cus_birthday;
@@ -48,6 +51,14 @@ public class Customer {
         this.cus_username = cus_username;
         this.cus_password = cus_password;
         this.cus_create_at = cus_create_at;
+    }
+
+    public int getStt() {
+        return stt;
+    }
+
+    public void setStt(int stt) {
+        this.stt = stt;
     }
 
     public Long getCus_id() {

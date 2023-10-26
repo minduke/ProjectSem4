@@ -22,13 +22,14 @@ public class Product {
 
     private int type_id;
 
+    private String type_name;
 
     private int pro_status;
 
     public Product() {
     }
 
-    public Product(Long pro_id, String pro_name, String pro_image, float import_price, float pro_price, String pro_spec, int type_id, int pro_status) {
+    public Product(Long pro_id, String pro_name, String pro_image, float import_price, float pro_price, String pro_spec, int type_id, String type_name, int pro_status) {
         this.pro_id = pro_id;
         this.pro_name = pro_name;
         this.pro_image = pro_image;
@@ -36,6 +37,7 @@ public class Product {
         this.pro_price = pro_price;
         this.pro_spec = pro_spec;
         this.type_id = type_id;
+        this.type_name = type_name;
         this.pro_status = pro_status;
     }
 
@@ -93,6 +95,14 @@ public class Product {
 
     public void setType_id(int type_id) {
         this.type_id = type_id;
+    }
+
+    public String getType_name() {
+        return type_name;
+    }
+
+    public void setType_name(String type_name) {
+        this.type_name = type_name;
     }
 
     public int getPro_status() {

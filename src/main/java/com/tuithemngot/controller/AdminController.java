@@ -6,7 +6,9 @@ import com.tuithemngot.model.*;
 import com.tuithemngot.repository.*;
 import com.tuithemngot.repository.repositoryDTO.OrderDetailRepoDTO;
 import com.tuithemngot.repository.repositoryDTO.OrderRepoDTO;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -43,17 +45,28 @@ public class AdminController {
         return "/admin/showDetail";
     }
 
+    // customer
     @Autowired
     private CustomerRepository cusRepo;
 
-
-    // customer
     @RequestMapping(value = "/customer", method = RequestMethod.GET)
-    public String showCustomer(Model model) {
-        List<Customer> listC = cusRepo.findAll();
+    public String showCustomer(Model model, @RequestParam(name = "keyword", required = false) String keyword) {
+
+        List<Customer> listC;
+
+        if (keyword != null){
+            listC = cusRepo.findBySearch(keyword);
+
+        } else {
+            listC = cusRepo.findAll();
+
+        }
         model.addAttribute("customers", listC);
+
         return "/admin/showCustomer";
     }
+
+
 
 
     // product
@@ -96,19 +109,19 @@ public class AdminController {
             String originalFileName = fileData.getOriginalFilename();
             File imageSrc = new File(uploadRootDir.getAbsolutePath() + originalFileName);
 
-                try {
+            try {
 
-                    File serverFile = new File(uploadRootDir.getAbsolutePath() + File.separator + originalFileName);
-                    BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
-                    stream.write(fileData.getBytes());
+                File serverFile = new File(uploadRootDir.getAbsolutePath() + File.separator + originalFileName);
+                BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+                stream.write(fileData.getBytes());
 
-                    stream.close();
+                stream.close();
 
 //                    uploadedFiles.add(serverFile);
 
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
         }
 
@@ -147,6 +160,13 @@ public class AdminController {
     public String saveEdit(Product product){
         proRep.update(product);
         return "redirect:/admin/products";
+    }
+
+    @RequestMapping("/list-product/{id}")
+    public String showProductByFilter(@PathVariable("id") Long id, Model model){
+        List<Product> listFilter = proRep.findByFilter(id);
+        model.addAttribute("lists", listFilter);
+        return "admin/showProductByType";
     }
 
 
@@ -193,7 +213,5 @@ public class AdminController {
         model.addAttribute("impDetails", importDetailList);
         return "/admin/ImportDetail";
     }
-
-
 
 }

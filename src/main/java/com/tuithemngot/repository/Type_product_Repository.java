@@ -1,6 +1,7 @@
 package com.tuithemngot.repository;
 
 import com.tuithemngot.model.Import;
+import com.tuithemngot.model.Product;
 import com.tuithemngot.model.Type_product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -23,6 +24,7 @@ public class Type_product_Repository {
         @Override
         public  Type_product mapRow(ResultSet rs, int rowNum) throws SQLException {
             Type_product type = new Type_product();
+            type.setStt(rs.getInt("stt"));
             type.setType_id(rs.getInt("type_id"));
             type.setType_name(rs.getString("type_name"));
             return type;
@@ -31,7 +33,7 @@ public class Type_product_Repository {
     }
     public List<Type_product> findAll() {
         try{
-            return typeDB.query("select * from type_product", new Type_productRowMapper());
+            return typeDB.query("select row_number() over(order by type_id) as 'stt', * from type_product", new Type_productRowMapper());
         }catch (Exception e) {
             e.printStackTrace();
         }

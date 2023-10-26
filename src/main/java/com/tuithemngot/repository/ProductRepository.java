@@ -28,6 +28,7 @@ public class ProductRepository {
             pro.setPro_price(rs.getFloat("pro_price"));
             pro.setPro_spec(rs.getString("pro_spec"));
             pro.setType_id(rs.getInt("type_id"));
+            pro.setType_name(rs.getString("type_name"));
             pro.setPro_status(rs.getInt("pro_status"));
             return pro;
         }
@@ -35,7 +36,16 @@ public class ProductRepository {
 
     public List<Product> findAll(){
         try {
-            return pDB.query("select * from products", new ProductRowMapper());
+            return pDB.query("select * from products p inner join type_product t on p.type_id = t.type_id", new ProductRowMapper());
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<Product> findByFilter(Long id){
+        try {
+            return pDB.query("select * from products p inner join type_product t on p.type_id = t.type_id where p.type_id = ?", new ProductRowMapper(), new Object[]{id});
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -63,7 +73,7 @@ public class ProductRepository {
 
     public Product findById(Long id){
         try {
-            return pDB.queryForObject("select * from products where pro_id = ?", new ProductRowMapper(), new Object[]{id});
+            return pDB.queryForObject("select * from products p inner join type_product t on p.type_id = t.type_id where pro_id = ?", new ProductRowMapper(), new Object[]{id});
         }catch (Exception e){
             e.printStackTrace();
         }

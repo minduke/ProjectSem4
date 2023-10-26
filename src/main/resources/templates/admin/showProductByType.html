@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultra.net.nz/thymeleaf/layout" layout:decorate="/admin/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="" layout:fragment="content">
+    <table class="table">
+<!--        <h1 th:text="'Sản phẩm thuộc nhóm ' + ${lists.get(id).type_name}" style="text-align: center"></h1>-->
+        <thead>
+        <tr>
+            <th scope="col"></th>
+            <th scope="col">Tên sản phẩm</th>
+            <!--            <th scope="col">Hình ảnh</th>-->
+            <th scope="col">Giá nhập</th>
+            <th scope="col">Giá bán</th>
+            <th scope="col">Mô tả</th>
+<!--            <th scope="col">Phân loại</th>-->
+<!--            <th scope="col">Trạng thái</th>-->
+            <th scope="col"></th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="list : ${lists}">
+            <!--            <td style="display: none" th:text="${product.pro_id}"></td>-->
+            <td>
+                <img th:src="@{'/images/' + ${list.pro_image}}" alt="Ảnh sản phẩm" style="width: 80px; height: 100px">
+                <!--                <a href=""><button class="btn btn-primary" style="margin-top: 5px">Sửa ảnh</button></a>-->
+            </td>
+            <td th:text="${list.pro_name}"></td>
+            <!--            <td><img th:src="@{'/images/' + ${product.pro_image}}" alt="Ảnh sản phẩm" width="80px"></td>-->
+            <td th:text="${list.import_price} + đ"></td>
+            <td th:text="${list.pro_price} + đ"></td>
+            <td th:text="${list.pro_spec}"></td>
+<!--            <td th:text="${product.type_name}"></td>-->
+            <td></td>
+            <td><a th:href="@{'/admin/edit/' + ${list.pro_id} }" ><i class="fa-solid fa-pen-to-square"></i></a></td>
+<!--            <td><a th:href="@{'/admin/delete/' + ${product.pro_id}}" href=""><i class="fa-solid fa-trash-can"></i></a></td>-->
+        </tr>
+        </tbody>
+    </table>
+    <hr>
+    <a th:href="@{/admin/insert}"><button class="btn btn-primary">Thêm sản phẩm</button></a>
+
+</div>
+</body>
+</html>

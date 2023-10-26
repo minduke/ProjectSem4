@@ -8,8 +8,10 @@
 <body>
 <div layout:fragment="content">
     <div>
-        <input type="text" name="search">
-        <button>Tìm kiếm</button>
+        <form>
+            <input type="text" name="keyword"/>
+            <input type="submit" value="Tìm kiếm" />
+        </form>
     </div>
     <table class="table">
         <thead>
@@ -21,24 +23,24 @@
             <th scope="col">Số điện thoại</th>
             <th scope="col">Email</th>
             <th scope="col">Giới tính</th>
-<!--            <th scope="col">Tên đăng nhập</th>-->
-<!--            <th scope="col">Mật khẩu</th>-->
-<!--            <th scope="col">Ngày tạo</th>-->
-<!--            <th scope="col">Trạng thái</th>-->
+            <!--            <th scope="col">Tên đăng nhập</th>-->
+            <!--            <th scope="col">Mật khẩu</th>-->
+            <!--            <th scope="col">Ngày tạo</th>-->
+            <!--            <th scope="col">Trạng thái</th>-->
         </tr>
         </thead>
         <tbody>
         <tr th:each="customer: ${customers}">
-            <td th:text="${customer.cus_id}"></td>
+            <td th:text="${customer.stt}"></td>
             <td th:text="${customer.cus_name}"></td>
             <td th:text="${customer.cus_birthday}"></td>
             <td th:text="${customer.cus_address}"></td>
             <td th:text="${customer.cus_phone}"></td>
             <td th:text="${customer.cus_email}"></td>
             <td th:text="${customer.cus_gender}"></td>
-<!--            <td th:text="${customer.cus_username}"></td>-->
-<!--            <td th:text="${customer.cus_password}"></td>-->
-<!--            <td th:text="${customer.cus_create_at}"></td>-->
+            <!--            <td th:text="${customer.cus_username}"></td>-->
+            <!--            <td th:text="${customer.cus_password}"></td>-->
+            <!--            <td th:text="${customer.cus_create_at}"></td>-->
         </tr>
         </tbody>
     </table>

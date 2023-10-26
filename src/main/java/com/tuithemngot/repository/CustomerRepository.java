@@ -20,6 +20,7 @@ public class CustomerRepository {
         @Override
         public Customer mapRow(ResultSet rs, int rowNum) throws SQLException {
             Customer cus = new Customer();
+            cus.setStt(rs.getInt("stt"));
             cus.setCus_id(rs.getLong("cus_id"));
             cus.setCus_name(rs.getString("cus_name"));
             cus.setCus_birthday(rs.getString("cus_birthday"));
@@ -36,8 +37,17 @@ public class CustomerRepository {
 
     public List<Customer> findAll(){
         try{
-            return cDB.query("select * from customers", new CustomerRowMapper());
+            return cDB.query("select row_number() over(order by cus_id) stt, * from customers", new CustomerRowMapper());
         }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<Customer> findBySearch(String keyword){
+        try {
+            return cDB.query("exec sp_show_cus_by_name ?", new CustomerRowMapper(), new Object[]{keyword});
+        } catch (Exception e){
             e.printStackTrace();
         }
         return null;
