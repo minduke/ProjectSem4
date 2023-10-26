@@ -43,9 +43,7 @@ public class ImportDetailRepository {
 
     public List<ImportDetail> findById(Long id){
         try {
-            return impDetailRepo.query("select row_number() over (order by d.import_detail_id) as 'stt', *\n" +
-                    "from import_detail d inner join products p on d.pro_id = p.pro_id\n" +
-                    "where d.import_id = ?", new ImportDetailRowMapper(), new Object[]{id});
+            return impDetailRepo.query("exec sp_show_import_detail_by_id ?", new ImportDetailRowMapper(), new Object[]{id});
         } catch (Exception e){
             e.printStackTrace();
         }

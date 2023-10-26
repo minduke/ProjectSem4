@@ -36,6 +36,13 @@ public class AdminController {
         return "/admin/home";
     }
 
+    @RequestMapping("/date")
+    public String orderByDate(Model model, @RequestParam(value = "from", required = false) String from, @RequestParam(value = "to", required = false) String to){
+        List<OrderDTO> orders = orderRepoDTO.showOrderByDate(from, to);
+        model.addAttribute("orders", orders);
+        return "/admin/showOrderByDate";
+    }
+
     @Autowired
     OrderDetailRepoDTO orderDetailRepoDTO;
     @RequestMapping("/order-detail/{id}")

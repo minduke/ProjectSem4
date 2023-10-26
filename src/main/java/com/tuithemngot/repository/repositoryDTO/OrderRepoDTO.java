@@ -34,7 +34,16 @@ public class OrderRepoDTO {
 
     public List<OrderDTO> showOrder(){
         try {
-            return jdbcTemplate.query("select row_number() over (order by order_id) as 'stt', * from orders", new OrderDTORowMapper());
+            return jdbcTemplate.query("exec sp_show_order", new OrderDTORowMapper());
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<OrderDTO> showOrderByDate(String from, String to){
+        try {
+            return jdbcTemplate.query("exec sp_show_order_by_date ?, ?", new OrderDTORowMapper(), new Object[]{from, to});
         } catch (Exception e){
             e.printStackTrace();
         }

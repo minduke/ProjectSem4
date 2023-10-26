@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="/admin/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lí chung</title>
+</head>
+<body>
+<div layout:replace="header">
+
+</div>
+
+<div layout:replace="sidebar">
+
+</div>
+<div class="content" layout:fragment="content" onload="setTodayDate()">
+    <form>
+        Từ <input type="date" name="from" id="from" />
+        Đến <input type="date" name="to" id="to" />
+        <input type="submit" value="Xem">
+    </form>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Người nhận</th>
+            <th scope="col">Địa chỉ giao hàng</th>
+            <th scope="col">Số điện thoại</th>
+            <th scope="col">Thời gian đặt hàng</th>
+            <th scope="col">Tổng tiền</th>
+            <th scope="col">Trạng thái</th>
+            <th scope="col">Chi tiết</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="order: ${orders}">
+            <td th:text="${order.stt}"></td>
+            <td th:text="${order.order_receiver}"></td>
+            <td th:text="${order.order_delivery_address}"></td>
+            <td th:text="${order.order_phone_receiver}"></td>
+            <td th:text="${order.order_date}"></td>
+            <td th:text="${order.total}"></td>
+            <td th:text="${order.status}"></td>
+            <td th:text="${order.order_id}" hidden></td>
+            <td><a th:href="@{'/admin/order-detail/' + ${order.order_id}}"><i class="fa-solid fa-pen-to-square"></i></a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+
+</html>

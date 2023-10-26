@@ -37,7 +37,7 @@ public class CustomerRepository {
 
     public List<Customer> findAll(){
         try{
-            return cDB.query("select row_number() over(order by cus_id) stt, * from customers", new CustomerRowMapper());
+            return cDB.query("exec sp_show_customer", new CustomerRowMapper());
         }catch (Exception e){
             e.printStackTrace();
         }

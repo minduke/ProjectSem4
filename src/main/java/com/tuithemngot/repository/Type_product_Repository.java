@@ -33,7 +33,7 @@ public class Type_product_Repository {
     }
     public List<Type_product> findAll() {
         try{
-            return typeDB.query("select row_number() over(order by type_id) as 'stt', * from type_product", new Type_productRowMapper());
+            return typeDB.query("exec sp_show_type", new Type_productRowMapper());
         }catch (Exception e) {
             e.printStackTrace();
         }
