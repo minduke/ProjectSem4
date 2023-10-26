@@ -62,4 +62,11 @@ public class HomeController {
     public String loginForm() {
         return "default/loginForm";
     }
+
+    @RequestMapping("/banhLanh")
+    public String banhLanh(Model model){
+        List<Product> listP = proRepo.findAll();
+        model.addAttribute("products", listP);
+        return "default/banhLanh";
+    }
 }
