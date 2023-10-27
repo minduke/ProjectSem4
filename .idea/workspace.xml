@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="5b1f3d53-ff66-4b89-88f5-ce9e00910002" name="Changes" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+        <option value="HTML File" />
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
+  <component name="ProjectId" id="2W1V2vyyJ1LvhJyoHzdf2sQK03e" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;Notification.DisplayName-DoNotAsk-Vcs Important Messages&quot;: &quot;VCS important messages&quot;,
+    &quot;Notification.DoNotAsk-Vcs Important Messages&quot;: &quot;true&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/github/ProjectSEM4/src/main/resources/templates/admin&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;69b4f0077804df23734674be4f42824e&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\github\ProjectSEM4\src\main\resources\templates\admin" />
+      <recent name="D:\sts-workspace\tuithemngot\src\main\resources\static\default" />
+      <recent name="D:\sts-workspace\tuithemngot\src\main\resources\static\admin" />
+      <recent name="D:\sts-workspace\tuithemngot\src\main\resources\static" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\sts-workspace\tuithemngot\src\main\resources\templates" />
+      <recent name="D:\sts-workspace\tuithemngot\src\main\resources\static\admin" />
+      <recent name="D:\sts-workspace\tuithemngot\src\main\resources\static\admin\css" />
+      <recent name="D:\sts-workspace\tuithemngot\src\main\resources\templates\admin" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="TuithemngotApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="tuithemngot" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.tuithemngot.TuithemngotApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="5b1f3d53-ff66-4b89-88f5-ce9e00910002" name="Changes" comment="" />
+      <created>1695899871696</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1695899871696</updated>
+      <workItem from="1695899872844" duration="3052000" />
+      <workItem from="1695912373529" duration="1029000" />
+      <workItem from="1695948866912" duration="6732000" />
+      <workItem from="1695972727021" duration="4893000" />
+      <workItem from="1696530613441" duration="680000" />
+      <workItem from="1696553980251" duration="3867000" />
+      <workItem from="1696566603084" duration="38000" />
+      <workItem from="1696567192476" duration="467000" />
+      <workItem from="1696679609765" duration="7369000" />
+      <workItem from="1696695908536" duration="7939000" />
+      <workItem from="1696704551091" duration="10000" />
+      <workItem from="1696704847414" duration="731000" />
+      <workItem from="1696705596455" duration="2633000" />
+      <workItem from="1696782457111" duration="797000" />
+      <workItem from="1696813029632" duration="8436000" />
+      <workItem from="1696823242520" duration="3515000" />
+      <workItem from="1696826817793" duration="293000" />
+      <workItem from="1696836079472" duration="10235000" />
+      <workItem from="1696945745303" duration="4469000" />
+      <workItem from="1696985744180" duration="11831000" />
+      <workItem from="1697300671554" duration="988000" />
+      <workItem from="1697301680103" duration="26000" />
+      <workItem from="1697460501676" duration="6053000" />
+      <workItem from="1697475106459" duration="6345000" />
+      <workItem from="1697548861397" duration="2121000" />
+      <workItem from="1697567364330" duration="596000" />
+      <workItem from="1697591589300" duration="13564000" />
+      <workItem from="1697638048221" duration="1196000" />
+      <workItem from="1697645888399" duration="2626000" />
+      <workItem from="1697656797884" duration="825000" />
+      <workItem from="1697718562328" duration="3552000" />
+      <workItem from="1697732545170" duration="8428000" />
+      <workItem from="1697743150408" duration="1340000" />
+      <workItem from="1697763496161" duration="9340000" />
+      <workItem from="1697820438894" duration="11815000" />
+      <workItem from="1697889401981" duration="8609000" />
+      <workItem from="1697907697894" duration="1423000" />
+      <workItem from="1697912160371" duration="303000" />
+      <workItem from="1697963696118" duration="2795000" />
+      <workItem from="1697969604684" duration="8245000" />
+      <workItem from="1698022621979" duration="10697000" />
+      <workItem from="1698034518032" duration="665000" />
+      <workItem from="1698317440891" duration="203000" />
+      <workItem from="1698319751249" duration="4503000" />
+      <workItem from="1698345944878" duration="3545000" />
+      <workItem from="1698368453338" duration="1557000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
