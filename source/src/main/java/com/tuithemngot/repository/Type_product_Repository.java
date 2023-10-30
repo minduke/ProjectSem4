@@ -25,7 +25,7 @@ public class Type_product_Repository {
         public  Type_product mapRow(ResultSet rs, int rowNum) throws SQLException {
             Type_product type = new Type_product();
             type.setStt(rs.getInt("stt"));
-            type.setType_id(rs.getInt("type_id"));
+            type.setType_id(rs.getLong("type_id"));
             type.setType_name(rs.getString("type_name"));
             return type;
         }
@@ -47,5 +47,14 @@ public class Type_product_Repository {
             e.printStackTrace();
         }
         return 0;
+    }
+
+    public Type_product findById(Long id){
+        try {
+            return typeDB.queryForObject("select row_number() over (order by type_id) 'stt', * from type_product where type_id = ?", new Type_productRowMapper(), new Object[]{id});
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 }

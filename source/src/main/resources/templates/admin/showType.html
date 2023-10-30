@@ -22,7 +22,8 @@
         <tr th:each="type : ${types}">
             <th scope="row" th:text="${type.stt}"></th>
             <th scope="row" th:text="${type.type_id}" hidden></th>
-            <td th:text="${type.type_name}"></td>
+            <td th:text="${type.type_name}" ></td>
+<!--            <td ><input name="type_name" type="text"></td>-->
             <td><a th:href="@{'/admin/list-product/' + ${type.type_id}}"><i class="fa-solid fa-eye"></i></a></td>
             <td><a href=""><i class="fa-solid fa-pen-to-square"></i></a></td>
         </tr>

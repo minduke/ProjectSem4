@@ -106,15 +106,17 @@
                                 <li class="dropdown"><a href="#">Sản Phẩm<span
                                         class="label label-danger infinit">HOT</span><i class="fa fa-angle-down"></i> </a>
                                     <ul class="dropdown-menu">
-                                        <li class=""><a th:href="@{'/banhLanh'}">Bánh Lạnh</a></li>
-                                        <li class=""><a href="#">Brownies</a></li>
-                                        <li class=""><a href="#">Chè</a></li>
-                                        <li class=""><a href="#">Bông lan</a></li>
+                                        <li class="" th:each="menu : ${menus}">
+                                            <a th:text="${menu.type_name}"></a>
+                                        </li>
+<!--                                        <li class=""><a href="#">Brownies</a></li>-->
+<!--                                        <li class=""><a href="#">Chè</a></li>-->
+<!--                                        <li class=""><a href="#">Bông lan</a></li>-->
                                     </ul>
                                 </li>
                                 <li class=""><a th:href="@{'/tin-tuc'}">Tin Tức</a></li>
                                 <li class="dropdown"><a href="#">Khuyến Mãi  </a></li>
-                                <li class=""><a th:href="@{'/login'}">Đăng Nhập</a>
+                                <li class=""><a th:href="@{'/login'}">Đăng Nhập/Đăng Kí</a>
 
                                 </li>
 
