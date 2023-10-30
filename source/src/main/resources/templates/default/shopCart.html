@@ -24,6 +24,9 @@
                         </tr>
                         </thead>
                         <tbody>
+                        <div th:if="${items == null or #lists.isEmpty(items)}">
+                            <h1>Chưa có sản phẩm trong giỏ</h1>
+                        </div>
                         <tr th:each="item : ${items}">
                             <td class="cart-product-remove">
                                 <a th:href="@{'/remove/' + ${item.product.pro_id}}"><i class="fa fa-close"></i></a>
@@ -33,6 +36,7 @@
                                 <a href="#">
                                     <img th:src="@{'/images/' + ${item.product.pro_image}}" alt="">
                                 </a>
+<!--                                <div th:text="${item.product.pro_id}" hidden name="id"></div>-->
                                 <div class="cart-product-thumbnail-name" th:text="${item.product.pro_name}"></div>
                             </td>
 
@@ -65,18 +69,7 @@
 
                 </div>
                 <div class="row">
-<!--                    <div class="col-md-4">-->
-<!--                        <form class="form-inline">-->
-<!--                            <div class="form-group">-->
-<!--                                <input type="text" placeholder="Coupon Code" id="CouponCode" class="form-control">-->
-<!--                                <a href="#" class="button border"><span>Apply</span> </a>-->
-<!--                                <p class="small">Enter any valid coupon or promo code here to redeem your discount.</p>-->
-<!--                            </div>-->
-<!--                        </form>-->
-<!--                    </div>-->
-<!--                    <div class="col-md-8 text-right">-->
-<!--                        <a class="button color button-3d rounded icon-left" href="#"><span>Update Cart</span></a>-->
-<!--                    </div>-->
+
                 </div>
                 <div class="row">
                     <hr class="space">
@@ -87,11 +80,11 @@
 
                             </div>
                             <div class="col-md-6 form-group">
-<!--                                <input type="text" placeholder="State / County" class="form-control">-->
+
                             </div>
 
                             <div class="col-md-6  form-group">
-<!--                                <input type="text" class="form-control" placeholder="Post Code / Zip">-->
+
                             </div>
 
 
@@ -143,7 +136,7 @@
                             </table>
 
                         </div>
-
+                        <a th:href="@{'/update'}"  class="button color button-3d rounded icon-left float-left"><span>Cập nhật giỏ hàng</span></a>
                         <a th:href="@{'/check-out'}"  class="button color button-3d rounded icon-left float-right"><span>Thanh Toán</span></a>
                     </div>
                 </div>

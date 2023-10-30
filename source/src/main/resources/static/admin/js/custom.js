@@ -14,6 +14,8 @@ function setTodayDate() {
 
     var formattedDate = year + '-' + month + '-' + day; // Tạo định dạng "yyyy-MM-dd"
 
-    var dateInput = document.getElementById('from'); // Thay 'your-input-id' bằng ID của phần tử input của bạn
+    var dateInput = document.getElementById('from');// Thay 'your-input-id' bằng ID của phần tử input của bạn
+    var dateInput2 = document.getElementById('to');
     dateInput.value = formattedDate; // Gán giá trị mặc định cho phần tử input
+    dateInput2.value = formattedDate;
 }

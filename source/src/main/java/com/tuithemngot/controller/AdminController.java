@@ -83,15 +83,15 @@ public class AdminController {
     @RequestMapping(value = "/insertPro", method = RequestMethod.POST)
     public String insertPro(Product product, @RequestParam("pro_name") String pro_name,
                             @RequestParam("import_price") float import_price, @RequestParam("pro_price") float pro_price,
-                            @RequestParam("pro_spec") String pro_spec, @RequestParam("type_id") int type_id, MyUploadForm myUploadForm,
-                            @ModelAttribute("myUploadForm") MyUploadForm myUploadForm1, @RequestParam("fileDatas") MultipartFile file) {
+                            @RequestParam("pro_spec") String pro_spec, MyUploadForm myUploadForm,
+                            @ModelAttribute("myUploadForm") MyUploadForm myUploadForm1, @RequestParam("fileDatas") MultipartFile file, HttpServletRequest request) {
 
         product.setPro_name(pro_name);
         product.setPro_image(file.getOriginalFilename());
         product.setImport_price(import_price);
         product.setPro_price(pro_price);
         product.setPro_spec(pro_spec);
-        product.setType_id(type_id);
+        product.setType_id((Long) request.getSession().getAttribute("type_id"));
         proRep.insertProduct(product);
 
 
@@ -170,9 +170,11 @@ public class AdminController {
     }
 
     @RequestMapping("/list-product/{id}")
-    public String showProductByFilter(@PathVariable("id") Long id, Model model){
+    public String showProductByFilter(@PathVariable("id") Long id, Model model, HttpServletRequest request){
         List<Product> listFilter = proRep.findByFilter(id);
         model.addAttribute("lists", listFilter);
+        request.getSession().setAttribute("type_id", id);
+        request.getSession().setAttribute("type_name", typeRepo.findById(id).getType_name());
         return "admin/showProductByType";
     }
 
@@ -182,9 +184,10 @@ public class AdminController {
     Type_product_Repository typeRepo;
 
     @RequestMapping(value = "/type", method = RequestMethod.GET)
-    public String showType(Model model){
+    public String showType(Model model, @RequestParam(value = "type_name", required = false) String type_name, HttpServletRequest request){
         List<Type_product> listType = typeRepo.findAll();
         model.addAttribute("types", listType);
+//        request.getSession().setAttribute("type_names", type_name);
         return "admin/showType";
     }
 

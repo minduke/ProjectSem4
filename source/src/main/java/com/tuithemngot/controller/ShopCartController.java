@@ -42,7 +42,7 @@ public class ShopCartController {
     }
 
     @RequestMapping("/update")
-    public String update(HttpSession session, @RequestParam("id") Long id, @RequestParam("qty") int qty){
+    public String update(HttpSession session, @RequestParam(value = "id", required = false) Long id, @RequestParam(value = "qty") int qty){
         Product product = proRepo.findById(id);
         Cart cart = cartManager.getCart(session);
         cart.updateItem(product, qty);

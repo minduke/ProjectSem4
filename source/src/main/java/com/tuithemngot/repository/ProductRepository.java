@@ -27,7 +27,7 @@ public class ProductRepository {
             pro.setImport_price(rs.getFloat("import_price"));
             pro.setPro_price(rs.getFloat("pro_price"));
             pro.setPro_spec(rs.getString("pro_spec"));
-            pro.setType_id(rs.getInt("type_id"));
+            pro.setType_id(rs.getLong("type_id"));
             pro.setType_name(rs.getString("type_name"));
             pro.setPro_status(rs.getInt("pro_status"));
             return pro;
