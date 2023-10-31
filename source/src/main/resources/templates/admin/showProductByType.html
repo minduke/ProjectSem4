@@ -15,8 +15,6 @@
 
             <th scope="col">Giá nhập</th>
             <th scope="col">Giá bán</th>
-<!--            <th scope="col">Mô tả</th>-->
-
             <th scope="col">Trạng thái</th>
             <th scope="col"></th>
         </tr>
@@ -29,11 +27,16 @@
             <td th:text="${list.pro_name}"></td>
             <td th:text="${list.import_price} + đ"></td>
             <td th:text="${list.pro_price} + đ"></td>
-<!--            <td th:text="${list.pro_spec}"></td>-->
-<!--            <td th:text="${product.type_name}"></td>-->
-            <td></td>
+            <td>
+                <form th:action="@{'/admin/updateProStatus/' + ${list.pro_id} }" method="post">
+                    <select name="update">
+                        <option th:each="proStatus : ${proStatuses}" th:value="${proStatus}" th:text="${proStatus}" th:selected="${list.pro_status eq proStatus}">
+                        </option>
+                    </select>
+                    <button type="submit"><i class="fa-solid fa-rotate-right"></i></button>
+                </form>
+            </td>
             <td><a th:href="@{'/admin/edit/' + ${list.pro_id} }" ><i class="fa-solid fa-pen-to-square"></i></a></td>
-            <td><a th:href="@{'/admin/delete/' + ${list.pro_id}}" href=""><i class="fa-solid fa-trash-can"></i></a></td>
         </tr>
         </tbody>
     </table>

@@ -24,6 +24,7 @@
             <th scope="col">Tổng tiền</th>
             <th scope="col">Trạng thái</th>
             <th scope="col">Chi tiết</th>
+            <th scope="col"></th>
         </tr>
         </thead>
         <tbody>
@@ -34,9 +35,18 @@
             <td th:text="${order.order_phone_receiver}"></td>
             <td th:text="${order.order_date}"></td>
             <td th:text="${order.total}"></td>
-            <td th:text="${order.status}"></td>
+            <td>
+                <form th:action="@{'/admin/updateStatus/' + ${order.order_id}}" method="post">
+                    <select name="update">
+                        <option th:each="status : ${orderStatuses}" th:value="${status}" th:text="${status}" th:selected="${order.status eq status}"></option>
+                    </select>
+                    <button type="submit"><i class="fa-solid fa-rotate-right"></i></button>
+
+                </form>
+            </td>
             <td th:text="${order.order_id}" hidden></td>
-            <td><a th:href="@{'/admin/order-detail/' + ${order.order_id}}"><i class="fa-solid fa-pen-to-square"></i></a></td>
+            <td><a th:href="@{'/admin/order-detail/' + ${order.order_id}}"><i class="fa-solid fa-eye"></i></a></td>
+<!--            <td><a th:href="@{/admin/updateStatus}"><i class="fa-solid fa-rotate-right"></i></a></td>-->
         </tr>
         </tbody>
     </table>

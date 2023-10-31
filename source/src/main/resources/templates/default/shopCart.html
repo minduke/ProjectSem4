@@ -17,7 +17,6 @@
                         <tr>
                             <th class="cart-product-remove"></th>
                             <th class="cart-product-thumbnail">Sản phẩm</th>
-<!--                            <th class="cart-product-name">Mô tả</th>-->
                             <th class="cart-product-price">Giá</th>
                             <th class="cart-product-quantity">Số lượng</th>
                             <th class="cart-product-subtotal">Thành tiền</th>
@@ -36,17 +35,10 @@
                                 <a href="#">
                                     <img th:src="@{'/images/' + ${item.product.pro_image}}" alt="">
                                 </a>
-<!--                                <div th:text="${item.product.pro_id}" hidden name="id"></div>-->
+                                <input th:text="${item.product.pro_id}" name="id">
                                 <div class="cart-product-thumbnail-name" th:text="${item.product.pro_name}"></div>
                             </td>
 
-<!--                            <td class="cart-product-description">-->
-
-<!--                                <p>-->
-<!--                                    <span th:text="${item.product.pro_spec}"></span>-->
-<!--                                </p>-->
-
-<!--                            </td>-->
 
                             <td class="cart-product-price">
                                 <span class="amount" th:text="${item.product.pro_price}">$20.00</span>
@@ -134,9 +126,10 @@
                                 </tbody>
 
                             </table>
+<!--                            <a th:href="@{'/update/' + ${}}"  class="button color button-3d rounded icon-left float-left"><span>Cập nhật giỏ hàng</span></a>-->
 
                         </div>
-                        <a th:href="@{'/update'}"  class="button color button-3d rounded icon-left float-left"><span>Cập nhật giỏ hàng</span></a>
+                        <a th:href="@{'/update/'}"  class="button color button-3d rounded icon-left float-left"><span>Cập nhật giỏ hàng</span></a>
                         <a th:href="@{'/check-out'}"  class="button color button-3d rounded icon-left float-right"><span>Thanh Toán</span></a>
                     </div>
                 </div>

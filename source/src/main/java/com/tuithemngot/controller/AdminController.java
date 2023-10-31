@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -33,7 +34,14 @@ public class AdminController {
     public String homeAdmin(Model model) {
         List<OrderDTO> orders = orderRepoDTO.showOrder();
         model.addAttribute("orders", orders);
+        model.addAttribute("orderStatuses", Arrays.asList("Chờ xác nhận", "Đã xác nhận", "Đang giao", "Hoàn thành", "Huỷ"));
         return "/admin/home";
+    }
+
+    @RequestMapping(value = "/updateStatus/{id}", method = RequestMethod.POST)
+    public String updateStatus(@RequestParam(value = "update", required = false) String status, @PathVariable(value = "id", required = false) Long id){
+        orderRepoDTO.updateStatus(status, id);
+        return "redirect:/admin/";
     }
 
     @RequestMapping("/date")
@@ -147,6 +155,7 @@ public class AdminController {
     public String showProducts(Model model){
         List<Product> listP = proRep.findAll();
         model.addAttribute("products", listP);
+        model.addAttribute("proStatuses", Arrays.asList("Hết hàng", "Còn hàng"));
         return "admin/showProduct";
     }
 
@@ -173,9 +182,16 @@ public class AdminController {
     public String showProductByFilter(@PathVariable("id") Long id, Model model, HttpServletRequest request){
         List<Product> listFilter = proRep.findByFilter(id);
         model.addAttribute("lists", listFilter);
+        model.addAttribute("proStatuses", Arrays.asList("Hết hàng", "Còn hàng"));
         request.getSession().setAttribute("type_id", id);
         request.getSession().setAttribute("type_name", typeRepo.findById(id).getType_name());
         return "admin/showProductByType";
+    }
+
+    @RequestMapping(value = "/updateProStatus/{id}", method = RequestMethod.POST)
+    public String updateProStatus(@RequestParam(value = "update", required = false) String update, @PathVariable(value = "id", required = false) Long id){
+        proRep.updateProStatus(update, id);
+        return "redirect:/admin/products";
     }
 
 
@@ -184,10 +200,9 @@ public class AdminController {
     Type_product_Repository typeRepo;
 
     @RequestMapping(value = "/type", method = RequestMethod.GET)
-    public String showType(Model model, @RequestParam(value = "type_name", required = false) String type_name, HttpServletRequest request){
+    public String showType(Model model){
         List<Type_product> listType = typeRepo.findAll();
         model.addAttribute("types", listType);
-//        request.getSession().setAttribute("type_names", type_name);
         return "admin/showType";
     }
 
