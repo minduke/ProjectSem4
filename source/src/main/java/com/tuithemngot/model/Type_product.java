@@ -5,7 +5,7 @@ public class Type_product {
 
     private int stt;
 
-    private int type_id;
+    private Long type_id;
 
 
     private String type_name;
@@ -14,7 +14,7 @@ public class Type_product {
 
     }
 
-    public Type_product(int stt, int type_id, String type_name){
+    public Type_product(int stt, Long type_id, String type_name){
         this.stt = stt;
         this.type_id = type_id;
         this.type_name = type_name;
@@ -28,11 +28,11 @@ public class Type_product {
         this.stt = stt;
     }
 
-    public int getType_id() {
+    public Long getType_id() {
         return type_id;
     }
 
-    public void setType_id(int type_id) {
+    public void setType_id(Long type_id) {
         this.type_id = type_id;
     }
 

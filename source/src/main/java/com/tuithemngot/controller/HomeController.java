@@ -48,6 +48,16 @@ public class HomeController {
         return "default/shopCart";
     }
 
+    @Autowired
+    Type_product_Repository typeProductRepository;
+
+    @RequestMapping("/layout")
+    public String layout(Model model){
+        List<Type_product> showMenu = typeProductRepository.findAll();
+        model.addAttribute("menus", showMenu);
+        return "default/layout";
+    }
+
     @RequestMapping("/check-out")
     public String checkOut() {
         return "default/shopcartCheckout";

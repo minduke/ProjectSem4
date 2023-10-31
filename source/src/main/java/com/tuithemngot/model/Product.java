@@ -20,7 +20,7 @@ public class Product {
     private String pro_spec;
 
 
-    private int type_id;
+    private Long type_id;
 
     private String type_name;
 
@@ -29,7 +29,7 @@ public class Product {
     public Product() {
     }
 
-    public Product(Long pro_id, String pro_name, String pro_image, float import_price, float pro_price, String pro_spec, int type_id, String type_name, int pro_status) {
+    public Product(Long pro_id, String pro_name, String pro_image, float import_price, float pro_price, String pro_spec, Long type_id, String type_name, int pro_status) {
         this.pro_id = pro_id;
         this.pro_name = pro_name;
         this.pro_image = pro_image;
@@ -89,11 +89,11 @@ public class Product {
         this.pro_spec = pro_spec;
     }
 
-    public int getType_id() {
+    public Long getType_id() {
         return type_id;
     }
 
-    public void setType_id(int type_id) {
+    public void setType_id(Long type_id) {
         this.type_id = type_id;
     }
 
