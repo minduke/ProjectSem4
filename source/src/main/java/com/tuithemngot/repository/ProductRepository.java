@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -29,7 +30,7 @@ public class ProductRepository {
             pro.setPro_spec(rs.getString("pro_spec"));
             pro.setType_id(rs.getLong("type_id"));
             pro.setType_name(rs.getString("type_name"));
-            pro.setPro_status(rs.getInt("pro_status"));
+            pro.setPro_status(rs.getString("pro_status"));
             return pro;
         }
     }
@@ -67,6 +68,7 @@ public class ProductRepository {
             return pDB.update("delete products where pro_id = ?", new Object[]{id});
         }catch (Exception e){
             e.printStackTrace();
+
         }
         return 0;
     }
@@ -84,6 +86,15 @@ public class ProductRepository {
         try {
             return pDB.update("update products set pro_name = ?, import_price = ?, pro_price = ?, pro_spec = ?, type_id = ? where pro_id = ?",
                     new Object[]{pro.getPro_name(), pro.getImport_price(), pro.getPro_price(), pro.getPro_spec(), pro.getType_id(), pro.getPro_id()});
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public int updateProStatus(String update, Long id){
+        try {
+            return pDB.update("update products set pro_status = ? where pro_id = ?", new Object[]{update, id});
         } catch (Exception e){
             e.printStackTrace();
         }

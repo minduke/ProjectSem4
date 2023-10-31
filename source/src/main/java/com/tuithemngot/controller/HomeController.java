@@ -27,6 +27,8 @@ public class HomeController {
     public String home(Model model) {
         List<Product> listP = proRepo.findAll();
         model.addAttribute("products", listP);
+        List<Type_product> showMenu = typeProductRepository.findAll();
+        model.addAttribute("menus", showMenu);
         return "default/home";
     }
 
@@ -35,6 +37,8 @@ public class HomeController {
     public String productDetail(@PathVariable("id") Long id, Model model) {
         Product product = proRepo.findById(id);
         model.addAttribute("product", product);
+        List<Type_product> showMenu = typeProductRepository.findAll();
+        model.addAttribute("menus", showMenu);
         return "default/productDetail";
     }
 
@@ -45,6 +49,8 @@ public class HomeController {
     public String showCart(HttpSession session, Model model) {
         List<CartItem> items = cartManager.getCart(session).getItems();
         model.addAttribute("items", items);
+        List<Type_product> showMenu = typeProductRepository.findAll();
+        model.addAttribute("menus", showMenu);
         return "default/shopCart";
     }
 
@@ -59,17 +65,23 @@ public class HomeController {
     }
 
     @RequestMapping("/check-out")
-    public String checkOut() {
+    public String checkOut(Model model) {
+        List<Type_product> showMenu = typeProductRepository.findAll();
+        model.addAttribute("menus", showMenu);
         return "default/shopcartCheckout";
     }
 
     @RequestMapping("/tin-tuc")
-    public String newsBOARD() {
+    public String newsBOARD(Model model) {
+        List<Type_product> showMenu = typeProductRepository.findAll();
+        model.addAttribute("menus", showMenu);
         return "default/newsBoard";
     }
 
     @RequestMapping("/login")
-    public String loginForm() {
+    public String loginForm(Model model) {
+        List<Type_product> showMenu = typeProductRepository.findAll();
+        model.addAttribute("menus", showMenu);
         return "default/loginForm";
     }
 
@@ -77,6 +89,8 @@ public class HomeController {
     public String banhLanh(Model model){
         List<Product> listP = proRepo.findAll();
         model.addAttribute("products", listP);
+        List<Type_product> showMenu = typeProductRepository.findAll();
+        model.addAttribute("menus", showMenu);
         return "default/banhLanh";
     }
 }

@@ -37,14 +37,16 @@ public class ShopCartController {
         Product product = proRepo.findById(id);
         Cart cart = cartManager.getCart(session);
         cart.removeItem(product);
-//        cartManager.removeCart(session);
         return "redirect:/home";
     }
 
     @RequestMapping("/update")
-    public String update(HttpSession session, @RequestParam(value = "id", required = false) Long id, @RequestParam(value = "qty") int qty){
+    public String update(HttpSession session, @RequestParam(value = "id", required = false) Long id, @RequestParam(value = "qty", required = false) Integer qty){
         Product product = proRepo.findById(id);
         Cart cart = cartManager.getCart(session);
+        if (qty == null){
+            qty = 0;
+        }
         cart.updateItem(product, qty);
         return "redirect:/home";
     }
