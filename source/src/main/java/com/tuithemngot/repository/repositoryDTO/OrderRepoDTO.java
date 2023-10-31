@@ -50,4 +50,13 @@ public class OrderRepoDTO {
         return null;
     }
 
+    public int updateStatus(String status, Long id){
+        try {
+            return jdbcTemplate.update("update orders set status = ? where order_id = ?", new Object[]{status, id});
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
 }

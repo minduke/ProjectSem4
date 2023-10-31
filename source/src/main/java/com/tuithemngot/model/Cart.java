@@ -15,7 +15,7 @@ public class Cart {
 
     public CartItem getItem(Product p){
         for(CartItem item : items){
-            if (item.getProduct().getPro_id() == p.getPro_id()){
+            if (item != null && item.getProduct() != null && p != null && p.getPro_id() != null && item.getProduct().getPro_id().equals(p.getPro_id())){
                 return item;
             }
         }
