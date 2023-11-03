@@ -258,7 +258,7 @@ public class AdminController {
     @RequestMapping(value = "/chklogin", method = RequestMethod.POST)
     public String chklogin(@RequestParam("usr")String username,@RequestParam("pwd") String password, HttpServletRequest request) {
         Logger log = Logger.getGlobal();
-        log.info(username +" "+password);
+        log.info("Tài khoản: " +username + " <---> " + "Mật khẩu: " + password);
         request.getSession().setAttribute("myacc",username);
         return "redirect:/admin/";
     }
