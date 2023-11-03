@@ -1,8 +1,5 @@
 package com.tuithemngot.model;
 
-
-
-
 public class Import {
 
     private Long import_id;

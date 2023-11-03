@@ -19,3 +19,20 @@ function setTodayDate() {
     dateInput.value = formattedDate; // Gán giá trị mặc định cho phần tử input
     dateInput2.value = formattedDate;
 }
+
+// const inputElement = document.getElementById("myNumber");
+// inputElement.addEventListener("input", function (){
+//     console.log("Change value: " + inputElement.value)
+// })
+//
+// inputElement.addEventListener("stepUp", function (){
+//     var currentValue = parseInt(inputElement.value);
+//     var increment = 1000;
+//     var newValue = currentValue + increment;
+//     inputElement.value = newValue;
+//     console.log("Clicked step up button")
+// })
+//
+// inputElement.addEventListener("keydown", function (){
+//     console.log("Clicked step down button")
+// })
