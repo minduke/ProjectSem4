@@ -23,6 +23,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Logger;
 
 @Controller
 @RequestMapping("/admin")
@@ -248,5 +249,17 @@ public class AdminController {
         List<CartItemImport> items = cartManager.getImportCart(session).getItems();
         model.addAttribute("items", items);
         return "/admin/showCartImport";
+    }
+
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String loginAD(){
+        return "/admin/LoginAD";
+    }
+    @RequestMapping(value = "/chklogin", method = RequestMethod.POST)
+    public String chklogin(@RequestParam("usr")String username,@RequestParam("pwd") String password, HttpServletRequest request) {
+        Logger log = Logger.getGlobal();
+        log.info(username +" "+password);
+        request.getSession().setAttribute("myacc",username);
+        return "redirect:/admin/";
     }
 }
