@@ -37,7 +37,16 @@ public class ProductRepository {
 
     public List<Product> findAll(){
         try {
-            return pDB.query("select * from products p inner join type_product t on p.type_id = t.type_id", new ProductRowMapper());
+            return pDB.query("exec sp_show_product", new ProductRowMapper());
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<Product> findAllForUser(){
+        try {
+            return pDB.query("exec sp_show_product_for_user", new ProductRowMapper());
         } catch (Exception e){
             e.printStackTrace();
         }

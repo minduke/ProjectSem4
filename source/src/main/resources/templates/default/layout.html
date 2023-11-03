@@ -107,7 +107,7 @@
                                         class="label label-danger infinit">HOT</span><i class="fa fa-angle-down"></i> </a>
                                     <ul class="dropdown-menu">
                                         <li class="" th:each="menu : ${menus}">
-                                            <a th:text="${menu.type_name}"></a>
+                                            <a th:text="${menu.type_name}" th:href="@{'/menu/' + ${menu.type_id} }"></a>
                                         </li>
 <!--                                        <li class=""><a href="#">Brownies</a></li>-->
 <!--                                        <li class=""><a href="#">Chè</a></li>-->

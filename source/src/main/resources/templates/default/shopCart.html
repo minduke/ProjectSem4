@@ -12,6 +12,7 @@
         <div class="container">
             <div class="shop-cart">
                 <div class="table table-condensed table-striped table-responsive">
+                    <form th:action="@{/update}" method="post">
                     <table class="table">
                         <thead>
                         <tr>
@@ -35,7 +36,7 @@
                                 <a href="#">
                                     <img th:src="@{'/images/' + ${item.product.pro_image}}" alt="">
                                 </a>
-                                <input th:text="${item.product.pro_id}" name="id">
+                                <input th:value="${item.product.pro_id}" name="id" type="hidden">
                                 <div class="cart-product-thumbnail-name" th:text="${item.product.pro_name}"></div>
                             </td>
 
@@ -58,7 +59,9 @@
                         </tbody>
 
                     </table>
+                        <button type="submit" class="button color button-3d rounded icon-left float-left"><span>Cập nhật giỏ hàng</span></button>
 
+                    </form>
                 </div>
                 <div class="row">
 
@@ -88,33 +91,34 @@
 
                             <table class="table" >
                                 <tbody>
-                                <tr th:each="item : ${items}">
-                                    <td class="cart-product-name" >
-                                        <strong>Giá tiền sản phẩm</strong>
-                                    </td>
+<!--                                <tr th:each="item : ${items}">-->
+<!--                                    <td class="cart-product-name" >-->
+<!--                                        <strong>Giá tiền sản phẩm</strong>-->
+<!--                                    </td>-->
 
-                                    <td class="cart-product-name text-right">
-                                        <span class="amount" th:text="${item.product.pro_price}">$125.96</span>
-                                    </td>
-                                </tr>
+<!--                                    <td class="cart-product-name text-right">-->
+<!--                                        <span class="amount" th:text="${item.product.pro_price}">$125.96</span>-->
+<!--                                    </td>-->
+<!--                                </tr>-->
+<!--                                <tr>-->
+<!--                                    <td class="cart-product-name">-->
+<!--                                        <strong>Tiền vận chuyển</strong>-->
+<!--                                    </td>-->
+
+<!--                                    <td class="cart-product-name  text-right">-->
+<!--&lt;!&ndash;                                        <span class="amount">Miễn phí</span>&ndash;&gt;-->
+<!--                                    </td>-->
+<!--                                </tr>-->
+<!--                                <tr>-->
+<!--                                    <td class="cart-product-name">-->
+<!--                                        <strong>Ưu đãi</strong>-->
+<!--                                    </td>-->
+
+<!--                                    <td class="cart-product-name  text-right">-->
+<!--&lt;!&ndash;                                        <span class="amount">-20%</span>&ndash;&gt;-->
+<!--                                    </td>-->
+<!--                                </tr>-->
                                 <tr>
-                                    <td class="cart-product-name">
-                                        <strong>Tiền vận chuyển</strong>
-                                    </td>
-
-                                    <td class="cart-product-name  text-right">
-<!--                                        <span class="amount">Miễn phí</span>-->
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="cart-product-name">
-                                        <strong>Ưu đãi</strong>
-                                    </td>
-
-                                    <td class="cart-product-name  text-right">
-<!--                                        <span class="amount">-20%</span>-->
-                                    </td>
-                                </tr><tr>
                                     <td class="cart-product-name">
                                         <strong>Tổng tiền</strong>
                                     </td>
@@ -129,7 +133,7 @@
 <!--                            <a th:href="@{'/update/' + ${}}"  class="button color button-3d rounded icon-left float-left"><span>Cập nhật giỏ hàng</span></a>-->
 
                         </div>
-                        <a th:href="@{'/update/'}"  class="button color button-3d rounded icon-left float-left"><span>Cập nhật giỏ hàng</span></a>
+<!--                        <a th:href="@{'/update'}"  class="button color button-3d rounded icon-left float-left"><span>Cập nhật giỏ hàng</span></a>-->
                         <a th:href="@{'/check-out'}"  class="button color button-3d rounded icon-left float-right"><span>Thanh Toán</span></a>
                     </div>
                 </div>

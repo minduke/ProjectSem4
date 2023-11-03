@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="/admin/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Nhập hàng</title>
+</head>
+<body>
+    <div class="container" layout:fragment="content">
+        <h1 style="text-align: center">
+            Nhập Hàng
+        </h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col"></th>
+                <th scope="col"></th>
+                <th scope="col">Tên sản phẩm</th>
+                <th scope="col">Giá nhập</th>
+                <th scope="col">Số lượng</th>
+                <th scope="col">Thành tiền</th>
+                <th scope="col">Cập nhật</th>
+            </tr>
+        </thead>
+        <tbody>
+            <div th:if="${items == null}">
+                <h1>Chưa có sản phẩm</h1>
+            </div>
+            <tr th:each="item : ${items}">
+                <form th:action="@{'/remove-import/' + ${item.product.pro_id} }" method="post">
+                    <td class="cart-product-remove">
+                        <button type="submit"><i class="fa fa-close"></i></button>
+                    </td>
+                </form>
+                <th><img th:src="@{'/images/' + ${item.product.pro_image} }" style="width: 80px; height: 100px"></th>
+                <form th:action="@{'/update-import/' + ${item.product.pro_id} }" method="post">
+                    <td th:text="${item.product.pro_name}"></td>
+                    <td><input type="number" min="1000" th:value="${item.product.import_price}" id="myNumber" name="import_price"/></td>
+                    <td><input type="number" min="1" th:value="${item.quantity}" name="quantity"/></td>
+                    <td th:text="${item.subTotal}"></td>
+                    <td><button type="submit"><i class="fa fa-rotate-right"></i></button></td>
+                </form>
+            </tr>
+        </tbody>
+    </table>
+        <div class="col col-lg-4"></div>
+        <div class="col col-lg-4"></div>
+        <div class="col col-lg-4" th:text=" 'Tổng tiền: ' + ${session.nhapHang.total} " style="font-size: 30px"></div>
+</div>
+</body>
+</html>
