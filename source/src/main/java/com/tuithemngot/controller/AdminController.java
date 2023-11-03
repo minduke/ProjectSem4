@@ -6,7 +6,9 @@ import com.tuithemngot.model.*;
 import com.tuithemngot.repository.*;
 import com.tuithemngot.repository.repositoryDTO.OrderDetailRepoDTO;
 import com.tuithemngot.repository.repositoryDTO.OrderRepoDTO;
+import com.tuithemngot.service.CartManager;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
@@ -239,4 +241,12 @@ public class AdminController {
         return "/admin/ImportDetail";
     }
 
+    @Autowired
+    CartManager cartManager;
+    @RequestMapping(value = "/new-import", method = RequestMethod.GET)
+    public String newImport(HttpSession session, Model model){
+        List<CartItemImport> items = cartManager.getImportCart(session).getItems();
+        model.addAttribute("items", items);
+        return "/admin/showCartImport";
+    }
 }

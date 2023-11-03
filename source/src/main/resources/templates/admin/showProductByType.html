@@ -37,6 +37,9 @@
                 </form>
             </td>
             <td><a th:href="@{'/admin/edit/' + ${list.pro_id} }" ><i class="fa-solid fa-pen-to-square"></i></a></td>
+            <form th:action="@{'/add-to-cart/' + ${list.pro_id} }" method="post">
+                <td><button type="submit"><i class="fa-solid fa-plus-square"></i></button></td>
+            </form>
         </tr>
         </tbody>
     </table>

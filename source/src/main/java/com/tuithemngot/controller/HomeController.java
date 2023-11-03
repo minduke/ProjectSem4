@@ -5,14 +5,11 @@ import com.tuithemngot.repository.*;
 import com.tuithemngot.service.CartManager;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.context.annotation.SessionScope;
 
 import java.util.List;
 
@@ -25,7 +22,7 @@ public class HomeController {
 
     @RequestMapping(value = "/home", method = RequestMethod.GET)
     public String home(Model model) {
-        List<Product> listP = proRepo.findAll();
+        List<Product> listP = proRepo.findAllForUser();
         model.addAttribute("products", listP);
         List<Type_product> showMenu = typeProductRepository.findAll();
         model.addAttribute("menus", showMenu);
@@ -85,12 +82,14 @@ public class HomeController {
         return "default/loginForm";
     }
 
-    @RequestMapping("/banhLanh")
-    public String banhLanh(Model model){
-        List<Product> listP = proRepo.findAll();
+    @RequestMapping("/menu/{id}")
+    public String banhLanh(Model model, @PathVariable("id") Long id){
+        List<Product> listP = proRepo.findByFilter(id);
         model.addAttribute("products", listP);
         List<Type_product> showMenu = typeProductRepository.findAll();
         model.addAttribute("menus", showMenu);
-        return "default/banhLanh";
+        Type_product typeProduct = typeProductRepository.findById(id);
+        model.addAttribute("typeName", typeProduct);
+        return "default/showProductByType";
     }
 }
