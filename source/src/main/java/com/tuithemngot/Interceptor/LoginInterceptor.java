@@ -14,7 +14,8 @@ public class LoginInterceptor implements HandlerInterceptor {
         if(logURL.equals("/admin/login")) {
             System.out.println(logURL);
             return true;
-        } return false;
+        }
+        return false;
     }
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView)
