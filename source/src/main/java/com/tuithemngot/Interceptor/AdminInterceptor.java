@@ -12,15 +12,15 @@ public class AdminInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         Object acc = request.getSession().getAttribute("myacc");
-        if (acc != null) {
+        if (acc == null) {
             Logger log = Logger.getGlobal();
-            log.info("Tài khoản tồn tại");
-            return true;
-        } else {
-            Logger log = Logger.getGlobal();
-            log.info("Tài khoản không tồn tại");
+            log.info("Tài khoản chưa tồn tại");
             response.sendRedirect("/admin/login");
             return false;
+        } else {
+            Logger log = Logger.getGlobal();
+            log.info("Tài khoản đã tồn tại");
+            return true;
         }
 
     }

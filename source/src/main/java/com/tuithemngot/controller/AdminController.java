@@ -260,6 +260,12 @@ public class AdminController {
         Logger log = Logger.getGlobal();
         log.info("Tài khoản: " +username + " <---> " + "Mật khẩu: " + password);
         request.getSession().setAttribute("myacc",username);
-        return "redirect:/admin/";
+        if(username.equals("")) {
+            return "redirect:/admin/login";
+        } else {
+            return "redirect:/admin/";
+        }
+
+
     }
 }
