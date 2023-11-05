@@ -44,10 +44,14 @@ public class HomeController {
 
     @RequestMapping("/cart")
     public String showCart(HttpSession session, Model model) {
-        List<CartItem> items = cartManager.getCart(session).getItems();
-        model.addAttribute("items", items);
         List<Type_product> showMenu = typeProductRepository.findAll();
         model.addAttribute("menus", showMenu);
+        List<CartItem> items = cartManager.getCart(session).getItems();
+        if (items == null || items.isEmpty()){
+            model.addAttribute("msg", "Chưa có sản phẩm trong giỏ");
+        } else {
+            model.addAttribute("items", items);
+        }
         return "default/shopCart";
     }
 

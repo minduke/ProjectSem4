@@ -5,46 +5,62 @@
     <title>Nhập hàng</title>
 </head>
 <body>
-    <div class="container" layout:fragment="content">
-        <h1 style="text-align: center">
-            Nhập Hàng
-        </h1>
+<div class="container" layout:fragment="content">
+    <h1 style="text-align: center">
+        Nhập Hàng
+    </h1>
     <table class="table">
         <thead>
-            <tr>
-                <th scope="col"></th>
-                <th scope="col"></th>
-                <th scope="col">Tên sản phẩm</th>
-                <th scope="col">Giá nhập</th>
-                <th scope="col">Số lượng</th>
-                <th scope="col">Thành tiền</th>
-                <th scope="col">Cập nhật</th>
-            </tr>
+        <tr>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col">Tên sản phẩm</th>
+            <th scope="col">Giá nhập</th>
+            <th scope="col">Số lượng</th>
+            <th scope="col">Thành tiền</th>
+            <th scope="col">Cập nhật</th>
+        </tr>
         </thead>
         <tbody>
-            <div th:if="${items == null}">
-                <h1>Chưa có sản phẩm</h1>
-            </div>
-            <tr th:each="item : ${items}">
-                <form th:action="@{'/remove-import/' + ${item.product.pro_id} }" method="post">
-                    <td class="cart-product-remove">
-                        <button type="submit"><i class="fa fa-close"></i></button>
-                    </td>
-                </form>
-                <th><img th:src="@{'/images/' + ${item.product.pro_image} }" style="width: 80px; height: 100px"></th>
-                <form th:action="@{'/update-import/' + ${item.product.pro_id} }" method="post">
-                    <td th:text="${item.product.pro_name}"></td>
-                    <td><input type="number" min="1000" th:value="${item.product.import_price}" id="myNumber" name="import_price"/></td>
-                    <td><input type="number" min="1" th:value="${item.quantity}" name="quantity"/></td>
-                    <td th:text="${item.subTotal}"></td>
-                    <td><button type="submit"><i class="fa fa-rotate-right"></i></button></td>
-                </form>
-            </tr>
+        <div th:if="${items == null}">
+            <h1>Chưa có sản phẩm</h1>
+        </div>
+        <tr th:each="item : ${items}">
+            <form th:action="@{'/remove-import/' + ${item.product.pro_id} }" method="post">
+                <td class="cart-product-remove">
+                    <button type="submit"><i class="fa fa-close"></i></button>
+                </td>
+            </form>
+            <th><img th:src="@{'/images/' + ${item.product.pro_image} }" style="width: 80px; height: 100px"></th>
+            <form th:action="@{'/update-import/' + ${item.product.pro_id} }" method="post">
+                <td th:text="${item.product.pro_name}"></td>
+                <td><input type="number" min="1000" th:value="${item.product.import_price}" id="myNumber" name="import_price"/></td>
+                <td><input type="number" min="1" th:value="${item.quantity}" name="quantity"/></td>
+                <td th:text="${item.subTotal}"></td>
+                <td><button type="submit"><i class="fa fa-rotate-right"></i></button></td>
+            </form>
+        </tr>
         </tbody>
     </table>
-        <div class="col col-lg-4"></div>
-        <div class="col col-lg-4"></div>
-        <div class="col col-lg-4" th:text=" 'Tổng tiền: ' + ${session.nhapHang.total} " style="font-size: 30px"></div>
+    <div class="col col-lg-4"></div>
+    <div class="col col-lg-4"></div>
+    <div class="col col-lg-4" th:text=" 'Tổng tiền: ' + ${session.nhapHang.total} " style="font-size: 30px" ></div>
+    <form th:action="@{/admin/save-import}" method="post">
+        <table hidden>
+            <tbody>
+            <tr th:each="item : ${items}">
+                <td><input type="text" name="pro_id" th:value="${item.product.pro_id}"></td>
+                <td><input type="text" name="import_price" th:value="${item.product.import_price}"></td>
+                <td><input type="text" name="quantity" th:value="${item.quantity}"></td>
+                <td><input type="text" name="sub_total" th:value="${item.subTotal}"></td>
+                <td><input type="text" name="import_total" th:value="${session.nhapHang.total}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="col-lg-5"></div>
+        <div class="col-lg-5"></div>
+        <div class="col-lg-2"><button type="submit" class="btn btn-primary">Xác nhận</button></div>
+    </form>
 </div>
 </body>
 </html>

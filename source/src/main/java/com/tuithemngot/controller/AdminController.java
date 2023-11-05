@@ -17,11 +17,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.sql.DataSource;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -257,8 +259,6 @@ public class AdminController {
     @Autowired
     AdminRepository adminRepository;
 
-    @Autowired
-    JdbcTemplate jdbcTemplate;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String loginAD() {
@@ -284,5 +284,32 @@ public class AdminController {
     public String logout(HttpServletRequest request){
         request.getSession().removeAttribute("myacc");
         return "redirect:/admin/login";
+    }
+
+    @Autowired
+    JdbcTemplate jdbcTemplate;
+    @Autowired
+    DataSource dataSource;
+
+    @RequestMapping(value = "/save-import", method = RequestMethod.POST)
+    public String saveImport(@RequestParam("import_total") double total, HttpSession session){
+
+        String insertImport = String.format("exec sp_insert_import ?", total);
+        jdbcTemplate = new JdbcTemplate(dataSource);
+        Long import_id = jdbcTemplate.queryForObject(insertImport, new Object[]{total}, Long.class);
+        System.out.println(import_id);
+        String sql = "insert into import_detail (import_id, pro_id, import_price, quantity, import_detail_total) values (?, ?, ?, ?, ?)";
+        CartImport importDetailList = cartManager.getImportCart(session);
+        List<CartItemImport> items = importDetailList.getItems();
+        for (CartItemImport item : items) {
+            Product product = item.getProduct();
+            int quantity = item.getQuantity();
+            double importPrice = product.getImport_price();
+            double importDetailTotal = item.getSubTotal();
+            jdbcTemplate.update(sql, import_id, product.getPro_id(), importPrice, quantity, importDetailTotal);
+        }
+         session.removeAttribute("nhapHang");
+
+        return "redirect:/admin/";
     }
 }
