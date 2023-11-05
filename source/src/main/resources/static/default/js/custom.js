@@ -74,4 +74,24 @@
 }
 };
 });
+    document.getElementById("address").onchange = getAddress;
+    document.getElementById("ward").onchange = getAddress;
+    document.getElementById("district").onchange = getAddress;
+    document.getElementById("city").onchange = getAddress;
+
+    function getAddress(){
+        var address = document.getElementById("address").value;
+        var wardSelect = document.getElementById("ward");
+        var districtSelect = document.getElementById("district");
+        var citySelect = document.getElementById("city");
+
+        var ward = wardSelect.selectedIndex !== -1 ? wardSelect.options[wardSelect.selectedIndex].text : '';
+        var district = districtSelect.selectedIndex !== -1 ? districtSelect.options[districtSelect.selectedIndex].text : '';
+        var city = citySelect.selectedIndex !== -1 ? citySelect.options[citySelect.selectedIndex].text : '';
+
+        var delivery_address = address + ', ' + ward + ', ' + district + ', ' + city;
+        var current_address = document.getElementById("current_address");
+        current_address.value = delivery_address;
+
+    }
 
