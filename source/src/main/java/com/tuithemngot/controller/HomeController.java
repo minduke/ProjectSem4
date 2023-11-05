@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.sql.DataSource;
 import java.util.List;
 
 @Controller
@@ -31,6 +32,9 @@ public class HomeController {
 
     @Autowired
     JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    DataSource dataSource;
 
     @RequestMapping(value = "/home", method = RequestMethod.GET)
     public String home(Model model) {
@@ -74,7 +78,7 @@ public class HomeController {
         return "default/layout";
     }
 
-    @RequestMapping("/check-out")
+    @RequestMapping(value = "/check-out", method = RequestMethod.GET)
     public String checkOut(Model model) {
         List<Type_product> showMenu = typeProductRepository.findAll();
         model.addAttribute("menus", showMenu);
@@ -108,6 +112,12 @@ public class HomeController {
         }
     }
 
+    @RequestMapping("/logout")
+    public String logout(HttpServletRequest request){
+        request.getSession().removeAttribute("user");
+        return "redirect:/home";
+    }
+
     @RequestMapping("/menu/{id}")
     public String banhLanh(Model model, @PathVariable("id") Long id){
         List<Product> listP = proRepo.findByFilter(id);
@@ -134,5 +144,33 @@ public class HomeController {
         customer.setCus_gender(cus_gender);
         customerRepository.insertCustomer(customer);
         return "redirect:/login";
+    }
+
+    @RequestMapping(value = "/save-order", method = RequestMethod.POST)
+    public String saveOrder(@RequestParam("order_receiver") String receiver, @RequestParam("order_phone_receiver") String phone_receiver, @RequestParam("order_delivery_address") String address, HttpSession session, HttpServletRequest request){
+        Customer customer = (Customer) session.getAttribute("user");
+        Long cus_id = customer.getCus_id();
+        Cart cart = (Cart) session.getAttribute("gioHang");
+        double order_total = cart.getTotal();
+        String insertOrder = String.format("exec sp_insert_order ?, ?, ?, ?, ?", cus_id, order_total, receiver, address, phone_receiver);
+        jdbcTemplate = new JdbcTemplate(dataSource);
+        Long order_id = jdbcTemplate.queryForObject(insertOrder, new Object[]{cus_id, order_total, receiver, address, phone_receiver}, Long.class);
+        System.out.println(order_id);
+        String sql = "insert into order_detail (order_id, pro_id, import_price, pro_price, quantity, detail_total) values (?, ?, ?, ?, ?, ?)";
+        cart = cartManager.getCart(session);
+        List<CartItem> items = cart.getItems();
+        for (CartItem item : items){
+            Product product = item.getProduct();
+            Long pro_id = product.getPro_id();
+            float import_price = product.getImport_price();
+            float pro_price = product.getPro_price();
+            int quantity = item.getQuantity();
+            double subTotal = item.getSubTotal();
+
+            jdbcTemplate.update(sql, order_id, pro_id, import_price, pro_price, quantity, subTotal);
+        }
+
+        session.removeAttribute("gioHang");
+        return "redirect:/home";
     }
 }

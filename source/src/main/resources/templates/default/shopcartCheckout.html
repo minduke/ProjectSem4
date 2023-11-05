@@ -11,258 +11,173 @@
 <section layout:fragment="content" id="shop-checkout">
     <div class="container">
         <div class="shop-cart">
-            <form method="post" class="sep-top-md">
-                <div class="row">
-                    <div class="col-md-6 no-padding">
-                        <div class="col-md-12">
-                            <h4 class="upper">Thông Tin Vận Chuyển</h4>
+            <form th:action="@{/save-order}" method="post">
+<!--                <form class="sep-top-md">-->
+                    <div class="row">
+                        <div class="col-md-6 no-padding">
+                            <div class="col-md-12">
+                                <h4 class="upper">Thông Tin Vận Chuyển</h4>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <input type="text" class="form-control input-lg" placeholder="Họ và tên" required name="order_receiver">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <input type="text" class="form-control input-lg" placeholder="Số điện thoại" required name="order_phone_receiver">
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <input type="text" class="form-control input-lg" placeholder="Địa chỉ nhận hàng: số nhà / tên đường" id="address">
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <select class="form-select form-select-sm mb-3" id="city" aria-label=".form-select-sm">
+                                    <option value="" selected>Chọn tỉnh thành</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <select class="form-select form-select-sm mb-3" id="district" aria-label=".form-select-sm">
+                                    <option value="" selected>Chọn quận huyện</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <select class="form-select form-select-sm" id="ward" aria-label=".form-select-sm">
+                                    <option value="" selected>Chọn phường xã</option>
+                                </select>
+                            </div>
+                            <div class="col-md-12 form-group" hidden>
+                                <label class="sr-only">Đây là địa chỉ của bạn nè</label>
+                                <input type="text" class="form-control input-lg" placeholder="Email" id="current_address" name="order_delivery_address">
+                            </div>
                         </div>
-                        <div class="col-md-6 form-group">
-                            <input type="text" class="form-control input-lg" placeholder="Họ và tên" value="">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <input type="text" class="form-control input-lg" placeholder="Số điện thoại" value="">
-                        </div>
-                        <div class="col-md-12 form-group">
-                            <input type="text" class="form-control input-lg" placeholder="Địạ chỉ nhận hàng: số nhà / tên đường" value="">
-                        </div>
-                        <div class="col-md-12 form-group">
-                            <select class="form-select form-select-sm mb-3" id="city" aria-label=".form-select-sm">
-                                <option value="" selected>Chọn tỉnh thành</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <select class="form-select form-select-sm mb-3" id="district" aria-label=".form-select-sm">
-                                <option value="" selected>Chọn quận huyện</option>
-                            </select>
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <select class="form-select form-select-sm" id="ward" aria-label=".form-select-sm">
-                                <option value="" selected>Chọn phường xã</option>
-                            </select>
-                        </div>
-                        <div class="col-md-12 form-group">
-                            <label class="sr-only">Email</label>
-                            <input type="text" class="form-control input-lg" placeholder="Email" value="">
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="col-md-12 no-padding">
+                        <div class="col-md-6">
                             <div class="col-md-12 no-padding">
-                                <label>Ghi Chú Đơn Hàng</label>
-                                <textarea class="form-control input-lg" placeholder="Gửi lời nhắn cho shop biết" rows="7"></textarea>
+                                <div class="col-md-12 no-padding">
+                                    <label>Ghi Chú Đơn Hàng</label>
+                                    <textarea class="form-control input-lg" placeholder="Gửi lời nhắn cho shop biết" rows="7"></textarea>
+                                </div>
                             </div>
                         </div>
                     </div>
+<!--                </form>-->
+    <!--            Chỗ này là chia vùng-->
+                <div class="seperator"><i class="fa fa-credit-card"></i>
+                </div>
+
+    <!--Vùng này để hiển thị sản phẩm và tổng tiền hóa đơn khi khách hàng đã lựa-->
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4 class="upper">Thông tin đơn hàng</h4>
+                        <div class="table table-condensed table-striped table-responsive table table-bordered table-responsive">
+                            <table class="table m-b-0">
+                                <thead>
+                                    <tr>
+
+                                        <th class="cart-product-thumbnail">Tên sản phẩm</th>
+                                        <th class="cart-product-name">Số lượng</th>
+                                        <th class="cart-product-subtotal">Thành tiền</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="cart : ${session.gioHang.items}">
+
+                                        <td class="cart-product-thumbnail">
+
+                                            <div class="cart-product-thumbnail-name" th:text="${cart.product.pro_name}">Bolt Sweatshirt</div>
+                                        </td>
+
+                                        <td class="cart-product-description">
+                                            <p th:text="${cart.quantity}"></p>
+                                        </td>
+
+                                        <td class="cart-product-subtotal">
+                                            <span class="amount" th:text="${cart.subTotal}">$20.00</span>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="table-responsive">
+                            <h4>Hóa Đơn</h4>
+
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <td class="cart-product-name">
+                                            <strong>Tạm tính</strong>
+                                        </td>
+
+                                        <td class="cart-product-name text-right">
+                                            <span class="amount" th:text="${session.gioHang.total}">$125.96</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="cart-product-name">
+                                            <strong>Phí vận chuyển</strong>
+                                        </td>
+
+                                        <td class="cart-product-name  text-right">
+                                            <span class="amount">Miễn phí vận chuyển</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="cart-product-name">
+                                            <strong>Giảm giá</strong>
+                                        </td>
+
+                                        <td class="cart-product-name  text-right">
+                                            <span class="amount"></span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="cart-product-name">
+                                            <strong>Tổng</strong>
+                                        </td>
+
+                                        <td class="cart-product-name text-right">
+                                            <span class="amount color lead" th:text="${session.gioHang.total}"><strong>$100.76</strong></span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+
+                            </table>
+
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h4 class="upper">Phương Thức Thanh Toán</h4>
+
+                        <table class="payment-method table table-bordered table-condensed table-responsive">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio" name="optionsRadios" value=""><b class="dark">Thanh toán khi nhận hàng(COD) <i class="fa fa-money"></i></b>
+                                                <br>
+                                            </label>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="radio">
+                                            <label>
+                                                <input type="radio" name="optionsRadios" value=""><b class="dark">Thanh toán qua MOMO <i class="fa fa-credit-card"></i></b>
+                                            </label>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button type="submit" class="button color button-3d rounded icon-left float-right"><span>Xác nhận thanh toán</span></button>
+                    </div>
+
                 </div>
             </form>
-<!--            Chỗ này là chia vùng-->
-            <div class="seperator"><i class="fa fa-credit-card"></i>
-            </div>
-
-<!--Vùng này để hiển thị sản phẩm và tổng tiền hóa đơn khi khách hàng đã lựa-->
-            <div class="row">
-                <div class="col-md-6">
-                    <h4 class="upper">Sản Phẩm</h4>
-                    <div class="table table-condensed table-striped table-responsive table table-bordered table-responsive">
-                        <table class="table m-b-0">
-                            <thead>
-                            <tr>
-
-                                <th class="cart-product-thumbnail">Product</th>
-                                <th class="cart-product-name">Description</th>
-
-
-                                <th class="cart-product-subtotal">Total</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-
-
-                                <td class="cart-product-thumbnail">
-
-                                    <div class="cart-product-thumbnail-name">Bolt Sweatshirt</div>
-                                </td>
-
-                                <td class="cart-product-description">
-
-                                    <p><span>Bolt Sweatshirt</span>
-                                        <span>Size: M</span>
-                                        <span>Color: Blue</span>
-                                        <span>Gender: Women</span>
-                                    </p>
-                                </td>
-
-
-
-
-
-                                <td class="cart-product-subtotal">
-                                    <span class="amount">$20.00</span>
-                                </td>
-                            </tr>
-                            <tr>
-
-
-                                <td class="cart-product-thumbnail">
-
-                                    <div class="cart-product-thumbnail-name">Consume Tshirt</div>
-                                </td>
-
-                                <td class="cart-product-description">
-                                    <p><span>Consume Tshirt</span>
-                                        <span>Size: S</span>
-                                        <span>Color: Blue</span>
-                                        <span>Gender: Women</span>
-                                    </p>
-                                </td>
-
-
-
-
-
-                                <td class="cart-product-subtotal">
-                                    <span class="amount">$18.99</span>
-                                </td>
-                            </tr>
-                            <tr>
-
-
-                                <td class="cart-product-thumbnail">
-
-                                    <div class="cart-product-thumbnail-name">Logo Tshirt</div>
-                                </td>
-
-                                <td class="cart-product-description">
-
-                                    <p><span>Logo Tshirt</span>
-                                        <span>Size: L</span>
-                                        <span>Color: Grey</span>
-                                        <span>Gender: Man</span>
-                                    </p>
-                                </td>
-
-
-
-
-
-                                <td class="cart-product-subtotal">
-                                    <span class="amount">$18.00</span>
-                                </td>
-                            </tr>
-                            <tr>
-
-
-                                <td class="cart-product-thumbnail">
-
-                                    <div class="cart-product-thumbnail-name">Grey Sweatshirt</div>
-                                </td>
-
-                                <td class="cart-product-description">
-
-                                    <p><span>Grey Sweatshirt</span>
-                                        <span>Size: L</span>
-                                        <span>Color: Grey</span>
-                                        <span>Gender: Man</span>
-                                    </p>
-                                </td>
-
-
-
-
-
-                                <td class="cart-product-subtotal">
-                                    <span class="amount">$68.97</span>
-                                </td>
-                            </tr>
-
-                            </tbody>
-
-                        </table>
-
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="table-responsive">
-                        <h4>Hóa Đơn</h4>
-
-                        <table class="table">
-                            <tbody>
-                            <tr>
-                                <td class="cart-product-name">
-                                    <strong>Order Subtotal</strong>
-                                </td>
-
-                                <td class="cart-product-name text-right">
-                                    <span class="amount">$125.96</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="cart-product-name">
-                                    <strong>Shipping</strong>
-                                </td>
-
-                                <td class="cart-product-name  text-right">
-                                    <span class="amount">Free Shipping</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="cart-product-name">
-                                    <strong>Coupon</strong>
-                                </td>
-
-                                <td class="cart-product-name  text-right">
-                                    <span class="amount">-20%</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="cart-product-name">
-                                    <strong>Total</strong>
-                                </td>
-
-                                <td class="cart-product-name text-right">
-                                    <span class="amount color lead"><strong>$100.76</strong></span>
-                                </td>
-                            </tr>
-                            </tbody>
-
-                        </table>
-
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <h4 class="upper">Phương Thức Thanh Toán</h4>
-
-                    <table class="payment-method table table-bordered table-condensed table-responsive">
-                        <tbody>
-                        <tr>
-                            <td>
-                                <div class="radio">
-                                    <label>
-                                        <input type="radio" name="optionsRadios" value=""><b class="dark">Thanh toán khi nhận hàng(COD) <i class="fa fa-money"></i></b>
-                                        <br>
-                                    </label>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="radio">
-                                    <label>
-                                        <input type="radio" name="optionsRadios" value=""><b class="dark">Thanh toán qua MOMO <i class="fa fa-credit-card"></i></b>
-                                    </label>
-                                </div>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <a class="button color button-3d rounded icon-left float-right" href="#"><span>Xác nhận thanh toán</span></a>
-                </div>
-
-            </div>
-
-
 
         </div>
     </div>
