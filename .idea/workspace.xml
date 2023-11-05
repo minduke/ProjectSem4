@@ -28,10 +28,17 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHome" value="Use Maven wrapper" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
   <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 8
+  &quot;associatedIndex&quot;: 2
 }</component>
-  <component name="ProjectId" id="2W1V2vyyJ1LvhJyoHzdf2sQK03e" />
+  <component name="ProjectId" id="2X9M2FF6lZvn2fgONF8yzTeI0n3" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -74,6 +81,7 @@
       <recent name="D:\sts-workspace\tuithemngot\src\main\resources\static\admin" />
       <recent name="D:\sts-workspace\tuithemngot\src\main\resources\static\admin\css" />
       <recent name="D:\sts-workspace\tuithemngot\src\main\resources\templates\admin" />
+      <recent name="D:\Aptech\GitHub\ProjectSem4\src\main\resources\static\images" />
     </key>
   </component>
   <component name="RunManager">
