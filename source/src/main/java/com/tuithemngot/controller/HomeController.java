@@ -96,4 +96,8 @@ public class HomeController {
         model.addAttribute("typeName", typeProduct);
         return "default/showProductByType";
     }
+    @RequestMapping("/register")
+    public String regisTer() {
+        return "default/register";
+    }
 }
