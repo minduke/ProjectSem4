@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Thanh Toán</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
 </head>
 <body>
 <!-- SHOP CHECKOUT -->
@@ -14,139 +15,55 @@
                 <div class="row">
                     <div class="col-md-6 no-padding">
                         <div class="col-md-12">
-                            <h4 class="upper">Thông tin vận chuyển</h4>
+                            <h4 class="upper">Thông Tin Vận Chuyển</h4>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <input type="text" class="form-control input-lg" placeholder="Họ và tên" value="">
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <input type="text" class="form-control input-lg" placeholder="Số điện thoại" value="">
                         </div>
                         <div class="col-md-12 form-group">
-                            <label class="sr-only">Thành phố</label>
-                            <select class="fullwidth" name="country">
-                                <option value="Hồ Chí Minh" data-provinces="['Tân Bình','Tân Phú']">Hồ Chí Minh</option>
+                            <input type="text" class="form-control input-lg" placeholder="Địạ chỉ nhận hàng: số nhà / tên đường" value="">
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <select class="form-select form-select-sm mb-3" id="city" aria-label=".form-select-sm">
+                                <option value="" selected>Chọn tỉnh thành</option>
                             </select>
                         </div>
                         <div class="col-md-6 form-group">
-                            <label class="sr-only">First Name</label>
-                            <input type="text" class="form-control input-lg" placeholder="First Name" value="">
+                            <select class="form-select form-select-sm mb-3" id="district" aria-label=".form-select-sm">
+                                <option value="" selected>Chọn quận huyện</option>
+                            </select>
                         </div>
                         <div class="col-md-6 form-group">
-                            <label class="sr-only">Last Name</label>
-                            <input type="text" class="form-control input-lg" placeholder="Last Name" value="">
+                            <select class="form-select form-select-sm" id="ward" aria-label=".form-select-sm">
+                                <option value="" selected>Chọn phường xã</option>
+                            </select>
                         </div>
                         <div class="col-md-12 form-group">
-                            <label class="sr-only">Company Name</label>
-                            <input type="text" class="form-control input-lg" placeholder="Company Name" value="">
-                        </div>
-                        <div class="col-md-12 form-group">
-                            <label class="sr-only">Address</label>
-                            <input type="text" class="form-control input-lg" placeholder="Address" value="">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label class="sr-only">Apartment, suite, unit etc.</label>
-                            <input type="text" class="form-control input-lg" placeholder="Apartment, suite, unit etc." value="">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label class="sr-only">Town / City</label>
-                            <input type="text" class="form-control input-lg" placeholder="Town / City" value="">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label class="sr-only">State / County</label>
-                            <input type="text" class="form-control input-lg" placeholder="State / County" value="">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label class="sr-only">Postcode / Zip</label>
-                            <input type="text" class="form-control input-lg" placeholder="Postcode / Zip" value="">
-                        </div>
-                        <div class="col-md-6 form-group">
                             <label class="sr-only">Email</label>
                             <input type="text" class="form-control input-lg" placeholder="Email" value="">
                         </div>
-                        <div class="col-md-6 form-group">
-                            <label class="sr-only">Phone</label>
-                            <input type="text" class="form-control input-lg" placeholder="Phone" value="">
-                        </div>
-                        <div class="col-md-12 form-group">
-                            <div class="panel panel-naked">
-                            </div>
-                        </div>
-                        <select class="form-select form-select-sm mb-3" id="city" aria-label=".form-select-sm">
-                            <option value="" selected>Chọn tỉnh thành</option>
-                        </select>
-
-                        <select class="form-select form-select-sm mb-3" id="district" aria-label=".form-select-sm">
-                            <option value="" selected>Chọn quận huyện</option>
-                        </select>
-
-                        <select class="form-select form-select-sm" id="ward" aria-label=".form-select-sm">
-                            <option value="" selected>Chọn phường xã</option>
-                        </select>
                     </div>
                     <div class="col-md-6">
                         <div class="col-md-12 no-padding">
                             <div class="col-md-12 no-padding">
-                                <label>Địa chỉ cụ thể</label>
-                                <textarea class="form-control input-lg" placeholder="Nhập thông tin cụ thể và ghi chú đơn hàng" rows="7"></textarea>
+                                <label>Ghi Chú Đơn Hàng</label>
+                                <textarea class="form-control input-lg" placeholder="Gửi lời nhắn cho shop biết" rows="7"></textarea>
                             </div>
                         </div>
-
                     </div>
-
-
-
                 </div>
-
-
-
-            <!--SCRIPT-->
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
-                <script>
-                    var citis = document.getElementById("city");
-                    var districts = document.getElementById("district");
-                    var wards = document.getElementById("ward");
-                    var Parameter = {
-                        url: "https://raw.githubusercontent.com/kenzouno1/DiaGioiHanhChinhVN/master/data.json",
-                        method: "GET",
-                        responseType: "application/json",
-                    };
-                    var promise = axios(Parameter);
-                    promise.then(function (result) {
-                        renderCity(result.data);
-                    });
-
-                    function renderCity(data) {
-                        for (const x of data) {
-                            citis.options[citis.options.length] = new Option(x.Name, x.Id);
-                        }
-                        citis.onchange = function () {
-                            district.length = 1;
-                            ward.length = 1;
-                            if(this.value != ""){
-                                const result = data.filter(n => n.Id === this.value);
-
-                                for (const k of result[0].Districts) {
-                                    district.options[district.options.length] = new Option(k.Name, k.Id);
-                                }
-                            }
-                        };
-                        district.onchange = function () {
-                            ward.length = 1;
-                            const dataCity = data.filter((n) => n.Id === citis.value);
-                            if (this.value != "") {
-                                const dataWards = dataCity[0].Districts.filter(n => n.Id === this.value)[0].Wards;
-
-                                for (const w of dataWards) {
-                                    wards.options[wards.options.length] = new Option(w.Name, w.Id);
-                                }
-                            }
-                        };
-                    }
-                </script>
             </form>
-
+<!--            Chỗ này là chia vùng-->
             <div class="seperator"><i class="fa fa-credit-card"></i>
             </div>
 
-
+<!--Vùng này để hiển thị sản phẩm và tổng tiền hóa đơn khi khách hàng đã lựa-->
             <div class="row">
                 <div class="col-md-6">
-                    <h4 class="upper">Your Order</h4>
+                    <h4 class="upper">Sản Phẩm</h4>
                     <div class="table table-condensed table-striped table-responsive table table-bordered table-responsive">
                         <table class="table m-b-0">
                             <thead>
@@ -268,7 +185,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="table-responsive">
-                        <h4>Order Total</h4>
+                        <h4>Hóa Đơn</h4>
 
                         <table class="table">
                             <tbody>
@@ -315,7 +232,7 @@
                     </div>
                 </div>
                 <div class="col-md-6">
-                    <h4 class="upper">Payment Method</h4>
+                    <h4 class="upper">Phương Thức Thanh Toán</h4>
 
                     <table class="payment-method table table-bordered table-condensed table-responsive">
                         <tbody>
@@ -323,7 +240,7 @@
                             <td>
                                 <div class="radio">
                                     <label>
-                                        <input type="radio" name="optionsRadios" value=""><b class="dark">Direct Bank Transfer</b>
+                                        <input type="radio" name="optionsRadios" value=""><b class="dark">Thanh toán khi nhận hàng(COD) <i class="fa fa-money"></i></b>
                                         <br>
                                     </label>
                                 </div>
@@ -333,23 +250,14 @@
                             <td>
                                 <div class="radio">
                                     <label>
-                                        <input type="radio" name="optionsRadios" value=""><b class="dark">Cheque Payment</b>
-                                    </label>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div class="radio">
-                                    <label>
-                                        <input type="radio" name="optionsRadios" value="" checked=""><img width="90" alt="paypal" src="images/shop/paypal-logo.png">
+                                        <input type="radio" name="optionsRadios" value=""><b class="dark">Thanh toán qua MOMO <i class="fa fa-credit-card"></i></b>
                                     </label>
                                 </div>
                             </td>
                         </tr>
                         </tbody>
                     </table>
-                    <a class="button color button-3d rounded icon-left float-right" href="#"><span>Proceed to PayPal</span></a>
+                    <a class="button color button-3d rounded icon-left float-right" href="#"><span>Xác nhận thanh toán</span></a>
                 </div>
 
             </div>
