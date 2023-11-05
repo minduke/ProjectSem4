@@ -3,13 +3,13 @@ package com.tuithemngot.controller;
 import com.tuithemngot.model.*;
 import com.tuithemngot.repository.*;
 import com.tuithemngot.service.CartManager;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -19,6 +19,18 @@ public class HomeController {
 
     @Autowired
     ProductRepository proRepo;
+
+    @Autowired
+    CustomerRepository customerRepository;
+
+    @Autowired
+    CartManager cartManager;
+
+    @Autowired
+    Type_product_Repository typeProductRepository;
+
+    @Autowired
+    JdbcTemplate jdbcTemplate;
 
     @RequestMapping(value = "/home", method = RequestMethod.GET)
     public String home(Model model) {
@@ -39,8 +51,6 @@ public class HomeController {
         return "default/productDetail";
     }
 
-    @Autowired
-    CartManager cartManager;
 
     @RequestMapping("/cart")
     public String showCart(HttpSession session, Model model) {
@@ -55,8 +65,7 @@ public class HomeController {
         return "default/shopCart";
     }
 
-    @Autowired
-    Type_product_Repository typeProductRepository;
+
 
     @RequestMapping("/layout")
     public String layout(Model model){
@@ -86,6 +95,19 @@ public class HomeController {
         return "default/loginForm";
     }
 
+    @RequestMapping(value = "/checkin", method = RequestMethod.POST)
+    public String checkin(@RequestParam("username") String username, @RequestParam("password") String password, HttpServletRequest request){
+        String sql = "select count(*) from customers where cus_username = ? and cus_password = ?";
+        int count = jdbcTemplate.queryForObject(sql, Integer.class, username, password);
+        if (count == 1){
+            Customer customer = customerRepository.findByLogin(username, password);
+            request.getSession().setAttribute("user", customer);
+            return "redirect:/home";
+        } else {
+            return "redirect:/login";
+        }
+    }
+
     @RequestMapping("/menu/{id}")
     public String banhLanh(Model model, @PathVariable("id") Long id){
         List<Product> listP = proRepo.findByFilter(id);
@@ -96,8 +118,21 @@ public class HomeController {
         model.addAttribute("typeName", typeProduct);
         return "default/showProductByType";
     }
-    @RequestMapping("/register")
-    public String regisTer() {
+
+
+
+    @RequestMapping(value = "/register", method = RequestMethod.GET)
+    public String register(Model model) {
+        Customer customer = new Customer();
+        model.addAttribute("customer", customer);
         return "default/register";
+    }
+
+    @RequestMapping(value = "/registered", method = RequestMethod.POST)
+    public String registered(@RequestParam("gender") String gender, Customer customer){
+        String cus_gender = gender;
+        customer.setCus_gender(cus_gender);
+        customerRepository.insertCustomer(customer);
+        return "redirect:/login";
     }
 }

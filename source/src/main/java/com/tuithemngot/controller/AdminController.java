@@ -264,6 +264,8 @@ public class AdminController {
     public String loginAD() {
         return "/admin/LoginAD";
     }
+
+
     @RequestMapping(value = "/chklogin", method = RequestMethod.POST)
     public String chklogin(@RequestParam("usr")String username,@RequestParam("pwd") String password, HttpServletRequest request) {
         Logger log = Logger.getGlobal();

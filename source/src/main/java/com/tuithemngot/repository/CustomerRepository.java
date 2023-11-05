@@ -52,4 +52,23 @@ public class CustomerRepository {
         }
         return null;
     }
+
+    public int insertCustomer(Customer customer){
+        try {
+            return cDB.update("insert into customers (cus_name, cus_address, cus_phone, cus_email, cus_gender, cus_username, cus_password) values (?, ?, ?, ?, ?, ?, ?)",
+                    new Object[]{customer.getCus_name(), customer.getCus_address(), customer.getCus_phone(), customer.getCus_email(), customer.getCus_gender(), customer.getCus_username(), customer.getCus_password()});
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public Customer findByLogin(String username, String password){
+        try {
+            return cDB.queryForObject("select row_number() over (order by cus_id) 'stt', * from customers where cus_username = ? and cus_password = ?", new CustomerRowMapper(), new Object[]{username, password});
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
