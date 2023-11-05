@@ -51,7 +51,34 @@
     <!--VENDOR SCRIPT-->
     <script th:src="@{/default/vendor/jquery/jquery-1.11.2.min.js}"></script>
     <script th:src="@{/default/vendor/plugins-compressed.js}"></script>
+   <style>
+       .user-dropdown {
+           display: flex;
+           align-items: center;
+       }
 
+       .user-icon {
+           margin-right: 5px;
+       }
+
+       .user-icon i.fa-user {
+           font-size: 18px;
+       }
+
+       .user-menu {
+           display: none;
+           position: absolute;
+           top: 100%;
+           right: 0;
+           background-color: #fff;
+           border: 1px solid #ccc;
+           padding: 5px;
+       }
+
+       .user-dropdown:hover .user-menu {
+           display: block;
+       }
+   </style>
 </head>
 
 <body class="wide">
@@ -116,8 +143,16 @@
                                 </li>
                                 <li class=""><a th:href="@{'/tin-tuc'}">Tin Tức</a></li>
                                 <li class="dropdown"><a href="#">Khuyến Mãi  </a></li>
-                                <li class=""><a th:href="@{'/login'}">Đăng Nhập/Đăng Kí</a>
-
+                                <li class="user-dropdown" th:if="${session.user != null}">
+                                    <div class="user-icon">
+                                        <i class="fa fa-user fa-lg"></i>
+                                    </div>
+                                    <div class="user-menu">
+                                        <a href="/logout">Đăng xuất</a>
+                                    </div>
+                                </li>
+                                <li th:if="${session.user == null}">
+                                    <a href="/login"><span class="login-link">Đăng nhập</span></a>
                                 </li>
 
                             </ul>
