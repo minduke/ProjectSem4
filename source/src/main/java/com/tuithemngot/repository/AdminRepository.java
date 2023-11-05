@@ -34,6 +34,15 @@ public class AdminRepository {
 		}
     	return null;
     }
+
+    public Admin findByFilter(String username, String password){
+        try {
+            return aDB.queryForObject("select * from admin where username = ? and password = ?", new AdminRowMapper(), new Object[]{username, password});
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
     
     
 }

@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.Banner;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
@@ -251,21 +254,35 @@ public class AdminController {
         return "/admin/showCartImport";
     }
 
+    @Autowired
+    AdminRepository adminRepository;
+
+    @Autowired
+    JdbcTemplate jdbcTemplate;
+
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String loginAD(){
+    public String loginAD() {
         return "/admin/LoginAD";
     }
     @RequestMapping(value = "/chklogin", method = RequestMethod.POST)
     public String chklogin(@RequestParam("usr")String username,@RequestParam("pwd") String password, HttpServletRequest request) {
         Logger log = Logger.getGlobal();
         log.info("Tài khoản: " +username + " <---> " + "Mật khẩu: " + password);
-        request.getSession().setAttribute("myacc",username);
-        if(username.equals("")) {
-            return "redirect:/admin/login";
-        } else {
+        String query = "select count(*) from admin where username = ? and password = ? ";
+        int count = jdbcTemplate.queryForObject(query, Integer.class, username, password);
+        if (count == 1){
+            request.getSession().setAttribute("myacc", username);
             return "redirect:/admin/";
+        } else {
+            return "redirect:/admin/login";
         }
 
 
+    }
+
+    @RequestMapping("/logout")
+    public String logout(HttpServletRequest request){
+        request.getSession().removeAttribute("myacc");
+        return "redirect:/admin/login";
     }
 }
