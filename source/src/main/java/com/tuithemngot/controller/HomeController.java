@@ -101,28 +101,28 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/checkin", method = RequestMethod.POST)
-    public String checkin(@RequestParam("username") String username, @RequestParam("password") String password, HttpServletRequest request){
+    public String checkin(@RequestParam("username") String username, @RequestParam("password") String password, HttpServletRequest request) {
 
-//        String sql = "select count(*) from customers where cus_username = ? and cus_password = ?";
-//        int count = jdbcTemplate.queryForObject(sql, Integer.class, username, password);
-//        if (count == 1){
-//            Customer customer = customerRepository.findByLogin(username, password);
-//            request.getSession().setAttribute("user", customer);
-//            return "redirect:/home";
-//        } else {
-//            return "redirect:/login";
-//        }
-
-        Customer customer = customerRepository.findByUsername(username);
-        if (customer == null){
-            return "redirect:/login";
+        String sql = "select count(*) from customers where cus_username = ? and cus_password = ?";
+        int count = jdbcTemplate.queryForObject(sql, Integer.class, username, password);
+        if (count == 1) {
+            Customer customer = customerRepository.findByLogin(username, password);
+            request.getSession().setAttribute("user", customer);
+            return "redirect:/home";
         } else {
-            String pass = customer.getCus_password();
-            if (checkPassword(password, pass)){
-                return "redirect:/home";
-            }
+            return "redirect:/login";
         }
-        return "redirect:/login";
+//        Customer customer = customerRepository.findByUsername(username);
+//        if (customer == null){
+//            request.getSession().setAttribute("user", customer);
+//            return "redirect:/login";
+//        } else {
+//            String pass = customer.getCus_password();
+//            if (checkPassword(password, pass)){
+//                return "redirect:/home";
+//            }
+//        }
+//        return "redirect:/login";
     }
 
     @RequestMapping("/logout")
@@ -200,6 +200,11 @@ public class HomeController {
     @RequestMapping("/thong-tin-USER")
     public String thongTin() {
         return "default/thongTinUser";
+    }
+
+    @RequestMapping("/chi-tiet-ne")
+    public String chiTiet() {
+        return "default/chitietDonHangUser";
     }
 
 

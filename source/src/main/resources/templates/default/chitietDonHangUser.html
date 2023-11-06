@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html  lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="www.ultraq.net.nz/thymeleaf/layout" layout:decorate="/default/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Chi Tiết Đơn Hàng</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <h1>Chi tiết theo từng đơn hàng</h1>
+    <div class="table table-condensed table-striped table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th class="cart-product-tenSP">Tên Sản Phẩm</th>
+                <th class="cart-product-quantity">Số Lượng</th>
+                <th class="cart-product-price">Giá</th>
+                <th class="cart-product-subtotal">Tổng Đơn</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Sản phẩm 1 -->
+            <tr>
+                <td class="cart-product-tenSP">
+                    <span>Tên sản phẩm 1</span>
+                </td>
+                <td class="cart-product-quantity">
+                    <div class="quantity">
+                        <input type="text" class="qty" value="1" name="quantity">
+                    </div>
+                </td>
+                <td class="cart-product-price">
+                    <span class="amount">1.000.000đ</span>
+                </td>
+                <td class="cart-product-subtotal">
+                    <span class="amount">1.000.000đ</span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>
+</body>
+</html>
