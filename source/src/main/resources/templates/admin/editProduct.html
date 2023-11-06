@@ -13,28 +13,28 @@
         <input type="hidden" th:field="*{pro_id}">
         <div class="mb-3">
             <label class="form-label">Tên sản phẩm</label>
-            <input type="text" class="form-control" name="pro_name" th:field="*{pro_name}">
+            <input type="text" class="form-control" name="pro_name" th:value="*{pro_name}">
         </div>
-<!--        <div class="mb-3">-->
-<!--            <label class="form-label">Ảnh</label>-->
-<!--            <input type="file" class="" name="pro_image" th:field="*{pro_image}" >-->
+        <div class="mb-3">
+            <label class="form-label">Ảnh</label>
+            <input type="file" class="" name="pro_image" th:value="*{pro_image}" >
 <!--            <img th:src="@{'/images/' + ${product.pro_image}}" style="width: 80px"></img>-->
-<!--        </div>-->
+        </div>
         <div class="mb-3">
             <label class="form-label">Giá nhập</label>
-            <input type="text" class="form-control" name="import_price" th:field="*{import_price}">
+            <input type="text" class="form-control" name="import_price" th:value="*{import_price}">
         </div>
         <div class="mb-3">
             <label class="form-label">Giá bán</label>
-            <input type="text" class="form-control" name="pro_price" th:field="*{pro_price}">
+            <input type="text" class="form-control" name="pro_price" th:value="*{pro_price}">
         </div>
         <div class="mb-3">
             <label class="form-label">Mô tả chi tiết</label>
-            <input type="text" class="form-control" name="pro_spec" th:field="*{pro_spec}">
+            <input type="text" class="form-control" name="pro_spec" th:value="*{pro_spec}">
         </div>
         <div class="mb-3">
             <label class="form-label">Phân loại</label>
-            <input type="text" class="form-control" name="type_id" th:field="*{type_id}">
+            <input type="text" class="form-control" name="type_id" th:value="*{type_id}">
         </div>
         <button type="submit" class="btn btn-primary" style="margin-top: 5px">Lưu</button>
     </form>

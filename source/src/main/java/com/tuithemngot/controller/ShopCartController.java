@@ -7,6 +7,7 @@ import com.tuithemngot.model.CartItem;
 import com.tuithemngot.model.Product;
 import com.tuithemngot.repository.ProductRepository;
 import com.tuithemngot.service.CartManager;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,12 +26,17 @@ public class ShopCartController {
     CartManager cartManager;
 
     @RequestMapping(value = "/add/{id}", method = RequestMethod.POST)
-    public String add(HttpSession session, @PathVariable("id") Long id, @RequestParam(value = "qty", required = false, defaultValue = "1") int qty){
-        Product product = proRepo.findById(id);
-        Cart cart = cartManager.getCart(session);
-        cart.addItem(product, qty);
-        cartManager.setCart(session, cart);
-        return "redirect:/cart";
+    public String add(HttpSession session, @PathVariable("id") Long id, @RequestParam(value = "qty", required = false, defaultValue = "1") int qty, HttpServletRequest request){
+        Object check_cart = request.getSession().getAttribute("user");
+        if (check_cart != null) {
+            Product product = proRepo.findById(id);
+            Cart cart = cartManager.getCart(session);
+            cart.addItem(product, qty);
+            cartManager.setCart(session, cart);
+            return "redirect:/cart";
+        } else {
+            return "redirect:/login";
+        }
     }
 
     @RequestMapping("/remove/{id}")
@@ -54,12 +60,12 @@ public class ShopCartController {
 
     // add to cart của admin
     @RequestMapping(value = "/add-to-cart/{id}", method = RequestMethod.POST)
-    public String addImport(HttpSession session, @PathVariable("id") Long id){
+    public String addImport(HttpSession session, @PathVariable("id") Long id, HttpServletRequest request){
         Product product = proRepo.findById(id);
         CartImport cartImport = cartManager.getImportCart(session);
         cartImport.addItem(product, 1);
         cartManager.setImportCart(session, cartImport);
-        return "redirect:/admin/new-import";
+        return "redirect:/admin/products";
     }
 
     @RequestMapping(value = "/remove-import/{id}", method = RequestMethod.POST)

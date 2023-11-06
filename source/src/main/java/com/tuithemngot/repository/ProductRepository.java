@@ -55,7 +55,7 @@ public class ProductRepository {
 
     public List<Product> findByFilter(Long id){
         try {
-            return pDB.query("select * from products p inner join type_product t on p.type_id = t.type_id where p.type_id = ?", new ProductRowMapper(), new Object[]{id});
+            return pDB.query("exec sp_show_product_by_type ?", new ProductRowMapper(), new Object[]{id});
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -84,7 +84,7 @@ public class ProductRepository {
 
     public Product findById(Long id){
         try {
-            return pDB.queryForObject("select * from products p inner join type_product t on p.type_id = t.type_id where pro_id = ?", new ProductRowMapper(), new Object[]{id});
+            return pDB.queryForObject("exec sp_show_product_by_id ?", new ProductRowMapper(), new Object[]{id});
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -93,8 +93,8 @@ public class ProductRepository {
 
     public int update(Product pro){
         try {
-            return pDB.update("update products set pro_name = ?, import_price = ?, pro_price = ?, pro_spec = ?, type_id = ? where pro_id = ?",
-                    new Object[]{pro.getPro_name(), pro.getImport_price(), pro.getPro_price(), pro.getPro_spec(), pro.getType_id(), pro.getPro_id()});
+            return pDB.update("update products set pro_name = ?, pro_image = ?, import_price = ?, pro_price = ?, pro_spec = ?, type_id = ? where pro_id = ?",
+                    new Object[]{pro.getPro_name(), pro.getPro_image(), pro.getImport_price(), pro.getPro_price(), pro.getPro_spec(), pro.getType_id(), pro.getPro_id()});
         } catch (Exception e){
             e.printStackTrace();
         }
