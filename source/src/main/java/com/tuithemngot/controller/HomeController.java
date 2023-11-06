@@ -1,7 +1,11 @@
 package com.tuithemngot.controller;
 
+import com.tuithemngot.dto.OrderDTO;
+import com.tuithemngot.dto.OrderDetailDTO;
 import com.tuithemngot.model.*;
 import com.tuithemngot.repository.*;
+import com.tuithemngot.repository.repositoryDTO.OrderDetailRepoDTO;
+import com.tuithemngot.repository.repositoryDTO.OrderRepoDTO;
 import com.tuithemngot.service.CartManager;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -36,6 +40,12 @@ public class HomeController {
 
     @Autowired
     DataSource dataSource;
+
+    @Autowired
+    OrderRepoDTO orderRepoDTO;
+
+    @Autowired
+    OrderDetailRepoDTO orderDetailRepoDTO;
 
     @RequestMapping(value = "/home", method = RequestMethod.GET)
     public String home(Model model) {
@@ -102,27 +112,29 @@ public class HomeController {
 
     @RequestMapping(value = "/checkin", method = RequestMethod.POST)
     public String checkin(@RequestParam("username") String username, @RequestParam("password") String password, HttpServletRequest request) {
-
-        String sql = "select count(*) from customers where cus_username = ? and cus_password = ?";
-        int count = jdbcTemplate.queryForObject(sql, Integer.class, username, password);
-        if (count == 1) {
-            Customer customer = customerRepository.findByLogin(username, password);
-            request.getSession().setAttribute("user", customer);
-            return "redirect:/home";
-        } else {
-            return "redirect:/login";
-        }
-//        Customer customer = customerRepository.findByUsername(username);
-//        if (customer == null){
+        // đăng nhập không mã hoá pass
+//        String sql = "select count(*) from customers where cus_username = ? and cus_password = ?";
+//        int count = jdbcTemplate.queryForObject(sql, Integer.class, username, password);
+//        if (count == 1) {
+//            Customer customer = customerRepository.findByLogin(username, password);
 //            request.getSession().setAttribute("user", customer);
-//            return "redirect:/login";
+//            return "redirect:/home";
 //        } else {
-//            String pass = customer.getCus_password();
-//            if (checkPassword(password, pass)){
-//                return "redirect:/home";
-//            }
+//            return "redirect:/login";
 //        }
-//        return "redirect:/login";
+
+        // đăng nhập có mã hoá
+        Customer customer = customerRepository.findByUsername(username);
+        if (customer == null){
+            return "redirect:/login";
+        } else {
+            String pass = customer.getCus_password();
+            if (checkPassword(password, pass)){
+                request.getSession().setAttribute("user", customer);
+                return "redirect:/home";
+            }
+        }
+        return "redirect:/login";
     }
 
     @RequestMapping("/logout")
@@ -191,20 +203,44 @@ public class HomeController {
     }
 
 
-    @RequestMapping("/lich-su-don-hang")
-    public String lichSuDonHang() {
-        return "default/lichSuDonHang";
+    @RequestMapping("/lich-su-dat-hang")
+    public String lichSuDonHang(Model model, HttpServletRequest request) {
+        List<Type_product> showMenu = typeProductRepository.findAll();
+        model.addAttribute("menus", showMenu);
+        Object check_session = request.getSession().getAttribute("user");
+        if (check_session != null){
+            Customer customer = (Customer) request.getSession().getAttribute("user");
+            Long id = customer.getCus_id();
+            List<OrderDTO> orderHistory = orderRepoDTO.showOrderByCusId(id);
+            model.addAttribute("orders", orderHistory);
+            return "/default/orderHistory";
+        }
+        return "redirect:/login";
     }
 
 
-    @RequestMapping("/thong-tin-USER")
-    public String thongTin() {
-        return "default/thongTinUser";
+    @RequestMapping("/thong-tin-user")
+    public String thongTin(Model model, HttpServletRequest request) {
+        List<Type_product> showMenu = typeProductRepository.findAll();
+        model.addAttribute("menus", showMenu);
+        Object check_session = request.getSession().getAttribute("user");
+        if (check_session != null){
+            return "/default/information";
+        }
+        return "redirect:/login";
     }
 
-    @RequestMapping("/chi-tiet-ne")
-    public String chiTiet() {
-        return "default/chitietDonHangUser";
+    @RequestMapping("/chi-tiet-don-hang/{id}")
+    public String chiTiet(Model model, HttpServletRequest request, @PathVariable("id") Long id) {
+        List<Type_product> showMenu = typeProductRepository.findAll();
+        model.addAttribute("menus", showMenu);
+        Object check_session = request.getSession().getAttribute("user");
+        if (check_session != null){
+            List<OrderDetailDTO> list = orderDetailRepoDTO.showOrderDetail(id);
+            model.addAttribute("details", list);
+            return "default/orderDetailUser";
+        }
+        return "redirect:/login";
     }
 
     @RequestMapping("/thay-doi-mat-khau")

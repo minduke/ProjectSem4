@@ -69,4 +69,13 @@ public class OrderRepoDTO {
         return 0;
     }
 
+    public List<OrderDTO> showOrderByCusId(Long id){
+        try {
+            return jdbcTemplate.query("exec sp_show_order_by_cus_id ? ", new OrderDTORowMapper(), new Object[]{id});
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

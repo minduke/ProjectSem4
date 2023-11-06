@@ -17,29 +17,29 @@
                     <form>
                         <div class="col-md-6 form-group">
                             <label for="full-name">Họ và tên:</label>
-                            <strong>Nguyễn Văn A</strong>
+                            <strong th:text="${session.user.cus_name}">Nguyễn Văn A</strong>
                         </div>
                         <div class="col-md-6 form-group">
                             <label for="gender">Giới tính:</label>
-                            <strong>Phi Giới Tính</strong>
+                            <strong th:text="${session.user.cus_gender}">Phi Giới Tính</strong>
                         </div>
                         <div class="col-md-6 form-group">
                             <label for="username">Tên tài khoản:</label>
-                            <strong>test</strong>
+                            <strong th:text="${session.user.cus_username}">test</strong>
                         </div>
                         <div class="col-md-6 form-group">
                             <label for="password">Mật khẩu:</label>
-                            <strong>******</strong>
+                            <input type="password" th:value="${session.user.cus_password}" readonly oncopy="return false;"/>
                             <a href="/quen-mat-khau">Quên mật khẩu?</a>
                         </div>
 
                         <div class="col-md-6 form-group">
                             <label for="email">Email:</label>
-                            <strong>CoGaiBenTreHeHe@gmail.com</strong>
+                            <strong th:text="${session.user.cus_email}">CoGaiBenTreHeHe@gmail.com</strong>
                         </div>
                         <div class="col-md-6 form-group">
                             <label for="phone">Số điện thoại:</label>
-                            <strong>0123456789</strong>
+                            <strong th:text="${session.user.cus_phone}">0123456789</strong>
                         </div>
                     </form>
                 </div>

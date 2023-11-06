@@ -12,58 +12,61 @@
         <div class="container">
             <div class="shop-cart">
                 <div class="table table-condensed table-striped table-responsive">
-                    <form th:action="@{/update}" method="post">
                     <table class="table">
                         <thead>
-                        <tr>
-                            <th class="cart-product-remove"></th>
-                            <th class="cart-product-thumbnail">Sản phẩm</th>
-                            <th class="cart-product-price">Giá</th>
-                            <th class="cart-product-quantity">Số lượng</th>
-                            <th class="cart-product-subtotal">Thành tiền</th>
-                        </tr>
+                            <tr>
+                                <th class="cart-product-remove"></th>
+                                <th class="cart-product-thumbnail">Sản phẩm</th>
+                                <th class="cart-product-price">Giá</th>
+                                <th class="cart-product-quantity">Số lượng</th>
+                                <th class="cart-product-subtotal">Thành tiền</th>
+                            </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td colspan="5" th:if="${msg}">
-                                <h1 th:text="${msg}"></h1>
-                            </td>
-                        </tr>
-                        <tr th:each="item : ${items}">
-                            <td class="cart-product-remove">
-                                <a th:href="@{'/remove/' + ${item.product.pro_id}}"><i class="fa fa-close"></i></a>
-                            </td>
+                            <tr>
+                                <td colspan="5" th:if="${msg}">
+                                        <h1 th:text="${msg}"></h1>
+                                </td>
+                            </tr>
+                            <tr th:each="item : ${items}">
+                                <td class="cart-product-remove">
+                                    <a th:href="@{'/remove/' + ${item.product.pro_id}}"><i class="fa fa-close"></i></a>
+                                </td>
+                                <form th:action="@{'/update/' + ${item.product.pro_id} }" method="post">
 
-                            <td class="cart-product-thumbnail">
-                                <a href="#">
-                                    <img th:src="@{'/images/' + ${item.product.pro_image}}" alt="">
-                                </a>
-                                <input th:value="${item.product.pro_id}" name="id" type="hidden">
-                                <div class="cart-product-thumbnail-name" th:text="${item.product.pro_name}"></div>
-                            </td>
+                                    <td class="cart-product-thumbnail">
+                                        <a href="#">
+                                            <img th:src="@{'/images/' + ${item.product.pro_image}}" alt="">
+                                        </a>
+                                        <input th:value="${item.product.pro_id}" name="id" type="hidden">
+                                        <div class="cart-product-thumbnail-name" th:text="${item.product.pro_name}"></div>
+                                    </td>
 
 
-                            <td class="cart-product-price">
-                                <span class="amount" th:text="${item.product.pro_price}">$20.00</span>
-                            </td>
+                                    <td class="cart-product-price">
+                                        <span class="amount" th:text="${item.product.pro_price}">$20.00</span>
+                                    </td>
 
-                            <td class="product-details-quantity">
+                                    <td class="product-details-quantity">
 
-                                <input type="number" id="cart_qty" name="qty" class="qty" min="1" th:value="${item.quantity}">
+                                        <input type="number" id="cart_qty" name="qty" class="qty" min="1" th:value="${item.quantity}">
 
-                            </td>
+                                    </td>
 
-                            <td class="cart-product-subtotal">
-                                <span class="amount" th:text="${item.subTotal}">$20.00</span>
-                            </td>
-                        </tr>
+                                    <td class="cart-product-subtotal">
+                                        <span class="amount" th:text="${item.subTotal}">$20.00</span>
+                                    </td>
+                                    <td>
+                                        <button type="submit"><i class="fa fa-rotate-right"></i></button>
+                                    </td>
+                                </form>
+
+                            </tr>
 
                         </tbody>
 
                     </table>
-                        <button type="submit" class="button color button-3d rounded icon-left float-left"><span>Cập nhật giỏ hàng</span></button>
 
-                    </form>
                 </div>
                 <div class="row">
 
@@ -135,7 +138,7 @@
 <!--                            <a th:href="@{'/update/' + ${}}"  class="button color button-3d rounded icon-left float-left"><span>Cập nhật giỏ hàng</span></a>-->
 
                         </div>
-<!--                        <a th:href="@{'/update'}"  class="button color button-3d rounded icon-left float-left"><span>Cập nhật giỏ hàng</span></a>-->
+                        <a th:href="@{/home}"  class="button color button-3d rounded icon-left float-left"><span>Tiếp tục mua hàng</span></a>
                         <a th:href="@{/check-out}"  class="button color button-3d rounded icon-left float-right"><span>Thanh Toán</span></a>
                     </div>
                 </div>

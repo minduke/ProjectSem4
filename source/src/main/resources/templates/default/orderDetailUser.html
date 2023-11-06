@@ -6,33 +6,37 @@
 </head>
 <body>
 <section layout:fragment="content" class="parallax fullscreen">
-    <h1>Chi tiết theo từng đơn hàng</h1>
+    <h1 style="text-align: center">Chi tiết theo từng đơn hàng</h1>
     <div class="table table-condensed table-striped table-responsive">
         <table class="table">
             <thead>
             <tr>
+                <th class="cart-product-tenSP">STT</th>
                 <th class="cart-product-tenSP">Tên Sản Phẩm</th>
                 <th class="cart-product-quantity">Số Lượng</th>
                 <th class="cart-product-price">Giá</th>
-                <th class="cart-product-subtotal">Tổng Đơn</th>
+                <th class="cart-product-subtotal">Thành tiền</th>
             </tr>
             </thead>
             <tbody>
             <!-- Sản phẩm 1 -->
-            <tr>
+            <tr th:each="detail : ${details}">
                 <td class="cart-product-tenSP">
-                    <span>Tên sản phẩm 1</span>
+                    <strong th:text="${detail.stt}">Tên sản phẩm 1</strong>
+                </td>
+                <td class="cart-product-tenSP">
+                    <span th:text="${detail.pro_name}">Tên sản phẩm 1</span>
                 </td>
                 <td class="cart-product-quantity">
                     <div class="quantity">
-                        <input type="text" class="qty" value="1" name="quantity">
+                        <span th:text="${detail.quantity}">1</span>
                     </div>
                 </td>
                 <td class="cart-product-price">
-                    <span class="amount">1.000.000đ</span>
+                    <span class="amount" th:text="${detail.pro_price}">1.000.000đ</span>
                 </td>
                 <td class="cart-product-subtotal">
-                    <span class="amount">1.000.000đ</span>
+                    <span class="amount" th:text="${detail.subTotal}">1.000.000đ</span>
                 </td>
             </tr>
             </tbody>

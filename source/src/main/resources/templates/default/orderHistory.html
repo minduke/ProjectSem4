@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html  lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="www.ultraq.net.nz/thymeleaf/layout" layout:decorate="/default/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Lịch Sử Đơn Hàng</title>
+</head>
+<body>
+<section layout:fragment="content" class="parallax fullscreen">
+    <h1 style="text-align: center">Các Đơn Hàng Bạn Đã Mua</h1>
+    <div class="table table-condensed table-striped table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th class="cart-product-STT">STT</th>
+                <th class="cart-product-tenKH">Người nhận</th>
+                <th class="cart-product-ngayDatH">Thời gian đặt hàng</th>
+                <th class="cart-product-ngayGiaoH">Địa chỉ giao hàng</th>
+                <th class="cart-product-ngayGiaoH">Số điện thoại</th>
+                <th class="cart-product-cachThucTT">Hình Thức Thanh Toán</th>
+                <th class="cart-product-subtotal">Tổng Đơn</th>
+                <th class="cart-product-trangThai">Trạng Thái Đơn Hàng</th>
+                <th class="cart-product-icon">Xem Thêm</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!--Don Hang-->
+            <tr th:each="order : ${orders}">
+                <td class=""cart-product-STT"">
+                    <strong th:text="${order.stt}"></strong>
+                </td>
+                <td class="cart-product-tenKH">
+                    <h4 th:text="${order.order_receiver}">Lê Minh Phương</h4>
+                </td>
+                <td class="cart-product-ngayDatH">
+                    <span class="amount" th:text="${order.order_date}">1/11/2023</span>
+                </td>
+                <td class="cart-product-ngayGiaoH">
+                    <span class="amount" th:text="${order.order_delivery_address}">5/11/2023</span>
+                </td>
+                <td class="cart-product-ngayGiaoH">
+                    <span class="amount" th:text="${order.order_phone_receiver}">5/11/2023</span>
+                </td>
+                <td class="cart-product-cachThucTT">
+                    <h4>Tiền mặt</h4>
+                </td>
+                <td class="cart-product-subtotal">
+                    <strong class="amount" th:text="${order.total}">5.000.000đ</strong>
+                </td>
+                <td class="cart-product-trangThai">
+                    <h4 th:text="${order.status}">Hoàn Thành</h4>
+                </td>
+                <td class="cart-product-icon">
+                    <a th:href="@{'/chi-tiet-don-hang/' + ${order.order_id} }">
+                        <i class="fa fa-eye" aria-hidden="true"></i>
+                    </a>
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+</section>
+</body>
+</html>

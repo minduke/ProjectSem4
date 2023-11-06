@@ -47,8 +47,8 @@ public class ShopCartController {
         return "redirect:/cart";
     }
 
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public String update(HttpSession session, @RequestParam(value = "id", required = false) Long id, @RequestParam(value = "qty", required = false) Integer qty){
+    @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
+    public String update(HttpSession session, @PathVariable(value = "id", required = false) Long id, @RequestParam(value = "qty", required = false) Integer qty){
         Product product = proRepo.findById(id);
         Cart cart = cartManager.getCart(session);
         if (qty == null){

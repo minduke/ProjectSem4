@@ -108,18 +108,15 @@
                                         <li class="" th:each="menu : ${menus}">
                                             <a th:text="${menu.type_name}" th:href="@{'/menu/' + ${menu.type_id} }"></a>
                                         </li>
-<!--                                        <li class=""><a href="#">Brownies</a></li>-->
-<!--                                        <li class=""><a href="#">Chè</a></li>-->
-<!--                                        <li class=""><a href="#">Bông lan</a></li>-->
                                     </ul>
                                 </li>
                                 <li class=""><a th:href="@{'/tin-tuc'}">Tin Tức</a></li>
                                 <li class="dropdown"><a href="#">Khuyến Mãi  </a></li>
 
-                                <li th:if="${session.user != null}" class="dropdown"><a href="#">Tài Khoản</a>
+                                <li th:if="${session.user != null}" class="dropdown"><a href="#" th:text="'Hello, ' + ${session.user.cus_name}">Tài Khoản</a>
                                     <ul class="dropdown-menu">
-                                        <li class=""><a th:href="@{/lich-su-don-hang}" class="logout-button">Lịch Sử Đơn Hàng</a></li>
-                                        <li class=""><a th:href="@{/thong-tin-USER}" class="logout-button">Thông Tin Tài Khoản</a></li>
+                                        <li class=""><a th:href="@{/lich-su-dat-hang}" class="logout-button">Lịch Sử Đơn Hàng</a></li>
+                                        <li class=""><a th:href="@{/thong-tin-user}" class="logout-button">Thông Tin Tài Khoản</a></li>
                                         <li class=""><a th:href="@{/thay-doi-mat-khau}" class="logout-button">Đổi Mật Khẩu</a></li>
                                         <li class=""><a th:href="@{/logout}" class="logout-button">Đăng Xuất</a></li>
 
