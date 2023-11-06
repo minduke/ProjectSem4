@@ -20,6 +20,7 @@ public class ImportRepository {
       @Override
       public Import mapRow(ResultSet rs,int rowNum) throws SQLException {
           Import imp = new Import();
+          imp.setStt(rs.getInt("stt"));
           imp.setImport_id(rs.getLong("import_id"));
           imp.setImport_date(rs.getString("import_date"));
           imp.setImport_total(rs.getString("import_total"));
@@ -29,7 +30,7 @@ public class ImportRepository {
 
   public List<Import> findAll() {
       try{
-         return iDB.query("select * from import", new ImportRowMapper());
+         return iDB.query("exec sp_show_import", new ImportRowMapper());
       }catch (Exception e) {
           e.printStackTrace();
       }

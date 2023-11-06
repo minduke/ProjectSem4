@@ -1,6 +1,7 @@
 package com.tuithemngot.repository.repositoryDTO;
 
 import com.tuithemngot.dto.OrderDTO;
+import org.codehaus.groovy.runtime.StringGroovyMethods;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -44,6 +45,15 @@ public class OrderRepoDTO {
     public List<OrderDTO> showOrderByDate(String from, String to){
         try {
             return jdbcTemplate.query("exec sp_show_order_by_date ?, ?", new OrderDTORowMapper(), new Object[]{from, to});
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<OrderDTO> showOrderByMonth(String month){
+        try {
+            return jdbcTemplate.query("exec sp_show_order_by_month ?", new OrderDTORowMapper(), new Object[]{month});
         } catch (Exception e){
             e.printStackTrace();
         }

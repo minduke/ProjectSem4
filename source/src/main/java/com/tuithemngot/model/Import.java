@@ -2,6 +2,8 @@ package com.tuithemngot.model;
 
 public class Import {
 
+    private int stt;
+
     private Long import_id;
 
 
@@ -15,10 +17,19 @@ public class Import {
 
 
 
-    public Import(Long import_id, String import_date, String import_total){
+    public Import(int stt, Long import_id, String import_date, String import_total){
+        this.stt = stt;
         this.import_id = import_id;
         this.import_date = import_date;
         this.Import_total = import_total;
+    }
+
+    public int getStt() {
+        return stt;
+    }
+
+    public void setStt(int stt) {
+        this.stt = stt;
     }
 
     public Long getImport_id() {

@@ -5,6 +5,7 @@ import com.tuithemngot.repository.*;
 import com.tuithemngot.service.CartManager;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
@@ -71,12 +72,12 @@ public class HomeController {
 
 
 
-    @RequestMapping("/layout")
-    public String layout(Model model){
-        List<Type_product> showMenu = typeProductRepository.findAll();
-        model.addAttribute("menus", showMenu);
-        return "default/layout";
-    }
+//    @RequestMapping("/layout")
+//    public String layout(Model model){
+//        List<Type_product> showMenu = typeProductRepository.findAll();
+//        model.addAttribute("menus", showMenu);
+//        return "default/layout";
+//    }
 
     @RequestMapping(value = "/check-out", method = RequestMethod.GET)
     public String checkOut(Model model) {
@@ -101,15 +102,27 @@ public class HomeController {
 
     @RequestMapping(value = "/checkin", method = RequestMethod.POST)
     public String checkin(@RequestParam("username") String username, @RequestParam("password") String password, HttpServletRequest request){
-        String sql = "select count(*) from customers where cus_username = ? and cus_password = ?";
-        int count = jdbcTemplate.queryForObject(sql, Integer.class, username, password);
-        if (count == 1){
-            Customer customer = customerRepository.findByLogin(username, password);
-            request.getSession().setAttribute("user", customer);
-            return "redirect:/home";
-        } else {
+
+//        String sql = "select count(*) from customers where cus_username = ? and cus_password = ?";
+//        int count = jdbcTemplate.queryForObject(sql, Integer.class, username, password);
+//        if (count == 1){
+//            Customer customer = customerRepository.findByLogin(username, password);
+//            request.getSession().setAttribute("user", customer);
+//            return "redirect:/home";
+//        } else {
+//            return "redirect:/login";
+//        }
+
+        Customer customer = customerRepository.findByUsername(username);
+        if (customer == null){
             return "redirect:/login";
+        } else {
+            String pass = customer.getCus_password();
+            if (checkPassword(password, pass)){
+                return "redirect:/home";
+            }
         }
+        return "redirect:/login";
     }
 
     @RequestMapping("/logout")
@@ -139,7 +152,9 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/registered", method = RequestMethod.POST)
-    public String registered(@RequestParam("gender") String gender, Customer customer){
+    public String registered(@RequestParam("gender") String gender, @RequestParam("password") String password, Customer customer){
+        String temp = encryptPassword(password);
+        customer.setCus_password(temp);
         String cus_gender = gender;
         customer.setCus_gender(cus_gender);
         customerRepository.insertCustomer(customer);
@@ -148,6 +163,7 @@ public class HomeController {
 
     @RequestMapping(value = "/save-order", method = RequestMethod.POST)
     public String saveOrder(@RequestParam("order_receiver") String receiver, @RequestParam("order_phone_receiver") String phone_receiver, @RequestParam("order_delivery_address") String address, HttpSession session, HttpServletRequest request){
+
         Customer customer = (Customer) session.getAttribute("user");
         Long cus_id = customer.getCus_id();
         Cart cart = (Cart) session.getAttribute("gioHang");
@@ -173,12 +189,26 @@ public class HomeController {
         session.removeAttribute("gioHang");
         return "redirect:/home";
     }
+
+
     @RequestMapping("/lich-su-don-hang")
     public String lichSuDonHang() {
         return "default/lichSuDonHang";
     }
+
+
     @RequestMapping("/thong-tin-USER")
     public String thongTin() {
         return "default/thongTinUser";
+    }
+
+
+    public static String encryptPassword(String password) {
+        String salt = BCrypt.gensalt(12);
+        return BCrypt.hashpw(password, salt);
+    }
+
+    public boolean checkPassword(String password, String hashedPassword){
+        return BCrypt.checkpw(password, hashedPassword);
     }
 }

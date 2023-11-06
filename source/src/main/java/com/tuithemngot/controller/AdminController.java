@@ -12,7 +12,9 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.Banner;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.TransactionStatus;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,9 +36,38 @@ import java.util.logging.Logger;
 @RequestMapping("/admin")
 public class AdminController {
 
-    // admin home (show order with status = đang giao)
     @Autowired
     OrderRepoDTO orderRepoDTO;
+
+    @Autowired
+    OrderDetailRepoDTO orderDetailRepoDTO;
+
+    @Autowired
+    private CustomerRepository cusRepo;
+
+    @Autowired
+    private ProductRepository proRep;
+
+    @Autowired
+    Type_product_Repository typeRepo;
+
+    @Autowired
+    ImportRepository importRepository;
+
+    @Autowired
+    ImportDetailRepository importDetailRepository;
+
+    @Autowired
+    CartManager cartManager;
+
+    @Autowired
+    JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    DataSource dataSource;
+
+    @Autowired
+    AdminRepository adminRepository;
 
     @RequestMapping("/")
     public String homeAdmin(Model model) {
@@ -59,8 +90,14 @@ public class AdminController {
         return "/admin/showOrderByDate";
     }
 
-    @Autowired
-    OrderDetailRepoDTO orderDetailRepoDTO;
+    @RequestMapping("/month")
+    public String orderByMonth(Model model, @RequestParam(value = "month", required = false) String month){
+        List<OrderDTO> orders = orderRepoDTO.showOrderByMonth(month);
+        model.addAttribute("orders", orders);
+        return "/admin/showOrderByMonth";
+    }
+
+
     @RequestMapping("/order-detail/{id}")
     public String showOrderById(@PathVariable("id") Long id, Model model){
         List<OrderDetailDTO> orderDetailDTO = orderDetailRepoDTO.showOrderDetail(id);
@@ -68,9 +105,7 @@ public class AdminController {
         return "/admin/showDetail";
     }
 
-    // customer
-    @Autowired
-    private CustomerRepository cusRepo;
+
 
     @RequestMapping(value = "/customer", method = RequestMethod.GET)
     public String showCustomer(Model model, @RequestParam(name = "keyword", required = false) String keyword) {
@@ -90,11 +125,6 @@ public class AdminController {
     }
 
 
-
-
-    // product
-    @Autowired
-    private ProductRepository proRep;
 
     @RequestMapping(value = "/insertPro", method = RequestMethod.POST)
     public String insertPro(Product product, @RequestParam("pro_name") String pro_name,
@@ -181,7 +211,7 @@ public class AdminController {
     }
 
     @RequestMapping("/edit")
-    public String saveEdit(Product product, Model model, @RequestParam("pro_name") String pro_name, @RequestParam("pro_price") float pro_price){
+    public String saveEdit(Product product){
         proRep.update(product);
         return "redirect:/admin/products";
     }
@@ -203,10 +233,6 @@ public class AdminController {
     }
 
 
-    // type product
-    @Autowired
-    Type_product_Repository typeRepo;
-
     @RequestMapping(value = "/type", method = RequestMethod.GET)
     public String showType(Model model){
         List<Type_product> listType = typeRepo.findAll();
@@ -227,9 +253,6 @@ public class AdminController {
         return "redirect:/admin/type";
     }
 
-    // import
-    @Autowired
-    ImportRepository importRepository;
 
     @RequestMapping(value = "/import", method = RequestMethod.GET)
     public String showImport(Model model){
@@ -238,8 +261,7 @@ public class AdminController {
         return "admin/showImport";
     }
 
-    @Autowired
-    ImportDetailRepository importDetailRepository;
+
     @RequestMapping("/import-detail/{id}")
     public String showImportById(@PathVariable("id") Long id, Model model){
         List<ImportDetail> importDetailList = importDetailRepository.findById(id);
@@ -247,17 +269,13 @@ public class AdminController {
         return "/admin/ImportDetail";
     }
 
-    @Autowired
-    CartManager cartManager;
+
     @RequestMapping(value = "/new-import", method = RequestMethod.GET)
     public String newImport(HttpSession session, Model model){
         List<CartItemImport> items = cartManager.getImportCart(session).getItems();
         model.addAttribute("items", items);
         return "/admin/showCartImport";
     }
-
-    @Autowired
-    AdminRepository adminRepository;
 
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
@@ -278,8 +296,6 @@ public class AdminController {
         } else {
             return "redirect:/admin/login";
         }
-
-
     }
 
     @RequestMapping("/logout")
@@ -288,151 +304,37 @@ public class AdminController {
         return "redirect:/admin/login";
     }
 
-    @Autowired
-    JdbcTemplate jdbcTemplate;
-    @Autowired
-    DataSource dataSource;
 
     @RequestMapping(value = "/save-import", method = RequestMethod.POST)
     public String saveImport(@RequestParam("import_total") double total, HttpSession session){
+        try {
 
-        String insertImport = String.format("exec sp_insert_import ?", total);
-        jdbcTemplate = new JdbcTemplate(dataSource);
-        Long import_id = jdbcTemplate.queryForObject(insertImport, new Object[]{total}, Long.class);
-        System.out.println(import_id);
-        String sql = "insert into import_detail (import_id, pro_id, import_price, quantity, import_detail_total) values (?, ?, ?, ?, ?)";
-        CartImport importDetailList = cartManager.getImportCart(session);
-        List<CartItemImport> items = importDetailList.getItems();
-        for (CartItemImport item : items) {
-            Product product = item.getProduct();
-            int quantity = item.getQuantity();
-            double importPrice = product.getImport_price();
-            double importDetailTotal = item.getSubTotal();
-            jdbcTemplate.update(sql, import_id, product.getPro_id(), importPrice, quantity, importDetailTotal);
+            String insertImport = String.format("exec sp_insert_import ?", total);
+            jdbcTemplate = new JdbcTemplate(dataSource);
+            Long import_id = jdbcTemplate.queryForObject(insertImport, new Object[]{total}, Long.class);
+            System.out.println(import_id);
+            String sql = "insert into import_detail (import_id, pro_id, import_price, quantity, import_detail_total) values (?, ?, ?, ?, ?)";
+            CartImport importDetailList = cartManager.getImportCart(session);
+            List<CartItemImport> items = importDetailList.getItems();
+            for (CartItemImport item : items) {
+                Product product = item.getProduct();
+                int quantity = item.getQuantity();
+                double importPrice = product.getImport_price();
+                double importDetailTotal = item.getSubTotal();
+                jdbcTemplate.update(sql, import_id, product.getPro_id(), importPrice, quantity, importDetailTotal);
+            }
+            session.removeAttribute("nhapHang");
+
+        } catch (Exception e) {
+            if (dataSource instanceof DataSourceTransactionManager) {
+                DataSourceTransactionManager transactionManager = (DataSourceTransactionManager) dataSource;
+                TransactionStatus status = transactionManager.getTransaction(null);
+                transactionManager.rollback(status);
+            }
+            e.printStackTrace();
         }
-         session.removeAttribute("nhapHang");
-
         return "redirect:/admin/";
+
     }
 
-//    @RequestMapping(value = "/updateUser", method = RequestMethod.GET)
-//    public String updateuser(Model model, @RequestParam("id1") long id) {
-//        User item = usr1.findById(id);
-//
-//        model.addAttribute("usr_id", item.getUsr_id());
-//        model.addAttribute("firstName", item.getUsr_firstName());
-//        model.addAttribute("lastName", item.getUsr_lastName());
-//        model.addAttribute("telephone", item.getUsr_telephone());
-//        model.addAttribute("email", item.getUsr_email());
-//        model.addAttribute("image", item.getUsr_image());
-//        model.addAttribute("password", item.getUsr_password());
-//        model.addAttribute("role", item.getUsr_role());
-//        User template = usr1.findById(id);
-//        String tem = template.getUsr_image();
-//        model.addAttribute("image", tem);
-//        // xóa hình đã khi thay đổi hình khác
-//        File imageFile = new File("src/main/resources/static/image/" + tem);
-//        if (imageFile.exists()) {
-//            imageFile.delete();
-//        }
-//        MyUploadForm myUploadForm2 = new MyUploadForm();
-//        model.addAttribute("myUploadForm", myUploadForm2);
-//        return "admin/user/updateUser";
-//    }
-//
-//    @RequestMapping(value = "/updateUserEdit", method = RequestMethod.POST)
-//    public String update_user_edit(Model model, @RequestParam("firstName") String firstName,
-//                                   @RequestParam("lastName") String lastName, @RequestParam("telephone") String telephone,
-//                                   @RequestParam("email") String email, @RequestParam("image") String image,
-//                                   @RequestParam("password") String password, @RequestParam("role") String role,
-//                                   @RequestParam("fileDatas") MultipartFile file1, MyUploadForm myUploadForm,
-//                                   @ModelAttribute("myUploadForm") MyUploadForm myUploadForm1, HttpServletRequest request, User user) {
-//        try {
-//            String temp = encryptPassword(password);
-//            user.setUsr_firstName(firstName);
-//            user.setUsr_lastName(lastName);
-//            user.setUsr_telephone(telephone);
-//            user.setUsr_email(email);
-//            user.setUsr_image(image);
-//            user.setUsr_password(temp);
-//            user.setUsr_role(role);
-//
-//            usr1.update(user);
-//
-//            Path staticPath = Paths.get("src", "main", "resources", "static", "image");
-//            String usr1 = staticPath.toString();
-//            System.out.println(" staticPath:  " + usr1 + " === ");
-//            File uploadRootDir1 = new File(usr1);
-//            if (!uploadRootDir1.exists()) {
-//                uploadRootDir1.mkdirs();
-//            }
-//            MultipartFile[] fileDatas = myUploadForm.getFileDatas();
-//            List<File> uploadedFiles = new ArrayList<File>();
-//            for (MultipartFile fileData : fileDatas) {
-//                // Lấy tên ảnh
-//                String originalFilename = fileData.getOriginalFilename();
-//                try {
-//                    // Đường dẫn static + tên đường dẫn ảnh
-//                    File serverFile = new File(uploadRootDir1.getAbsolutePath() + File.separator + originalFilename);
-//                    System.out.println("static + image" + serverFile);
-//
-//                    BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
-//
-//                    stream.write(fileData.getBytes());
-//                    stream.close();
-//
-//                    uploadedFiles.add(serverFile);
-//                    System.out.println("Write file: " + serverFile);
-//
-//                } catch (Exception ex) {
-//
-//                }
-//
-//            }
-//
-//        } catch (Exception ec) {
-//            ec.printStackTrace();
-//            throw new RuntimeException("Error value insert!!");
-//        }
-//        MultipartFile[] fileDatas = myUploadForm.getFileDatas();
-//
-//        System.out.println(" ====== file Datas" + fileDatas + "======");
-//        Iterable<User> usr = usr1.findAll();
-//        model.addAttribute("listUser", usr);
-//        return "redirect:/admin/alltable";
-//    }
-
-//    <div class="form-outline mb-4">
-//										<input type="text" name="usr_id" class="form-control" style="display: none;" th:value="${usr_id}"/>
-//										<label class="form-label">User ID</label>
-//									</div>
-//
-//									<div class="form-outline mb-4">
-//										<input type="text" name="firstName" class="form-control" th:value="${firstName}"/>
-//										<label class="form-label">First Name</label>
-//									</div>
-//
-//									<!-- Password input -->
-//									<div class="form-outline mb-4">
-//										<input type="text" name="lastName" class="form-control"  th:value="${lastName}" />
-//										<label class="form-label">Last Name</label>
-//									</div>
-//									<div class="form-outline mb-4">
-//										<input type="text" name="telephone" class="form-control"  th:value="${telephone}"/>
-//										<label class="form-label">Telephone</label>
-//									</div>
-//									<div class="form-outline mb-4">
-//										<input type="email" name="email" class="form-control" th:value="${email}"/>
-//										<label class="form-label" >Email</label>
-//									</div>
-//									<div class="form-outline mb-4">
-//										<input type="password" name="password" class="form-control" th:value="${password}" />
-//										<label class="form-label">Password</label>
-//									</div>
-//										<div class="mb-3">
-//				  					<label for="" class="form-label">User Image</label>
-//								    <input  type="text" class="form-control" id="image" name="image" th:value="${image}" readonly>
-//
-//    File to upload:
-//									 <input accept="image/*" th:field="*{fileDatas}" type="file"  name="imagesrc" onchange="displayFileName()"	/>
 }

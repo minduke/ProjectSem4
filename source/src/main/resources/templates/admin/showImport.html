@@ -20,7 +20,7 @@
       </thead>
       <tbody>
         <tr th:each="import : ${imports}">
-          <th scope="row" th:text="${import.import_id}"></th>
+          <th scope="row" th:text="${import.stt}"></th>
           <td th:text="${import.import_date}"></td>
           <td th:text="${import.import_total}"></td>
           <td><a th:href="@{'/admin/import-detail/' + ${import.import_id}}"><i class="fa-solid fa-pen-to-square"></i></a></td>
