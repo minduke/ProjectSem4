@@ -173,4 +173,12 @@ public class HomeController {
         session.removeAttribute("gioHang");
         return "redirect:/home";
     }
+    @RequestMapping("/lich-su-don-hang")
+    public String lichSuDonHang() {
+        return "default/lichSuDonHang";
+    }
+    @RequestMapping("/thong-tin-USER")
+    public String thongTin() {
+        return "default/thongTinUser";
+    }
 }

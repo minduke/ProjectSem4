@@ -51,34 +51,6 @@
     <!--VENDOR SCRIPT-->
     <script th:src="@{/default/vendor/jquery/jquery-1.11.2.min.js}"></script>
     <script th:src="@{/default/vendor/plugins-compressed.js}"></script>
-   <style>
-       .user-dropdown {
-           display: flex;
-           align-items: center;
-       }
-
-       .user-icon {
-           margin-right: 5px;
-       }
-
-       .user-icon i.fa-user {
-           font-size: 18px;
-       }
-
-       .user-menu {
-           display: none;
-           position: absolute;
-           top: 100%;
-           right: 0;
-           background-color: #fff;
-           border: 1px solid #ccc;
-           padding: 5px;
-       }
-
-       .user-dropdown:hover .user-menu {
-           display: block;
-       }
-   </style>
 </head>
 
 <body class="wide">
@@ -143,18 +115,18 @@
                                 </li>
                                 <li class=""><a th:href="@{'/tin-tuc'}">Tin Tức</a></li>
                                 <li class="dropdown"><a href="#">Khuyến Mãi  </a></li>
-                                <li class="user-dropdown" th:if="${session.user != null}">
-                                    <div class="user-icon">
-                                        <i class="fa fa-user fa-lg"></i>
-                                    </div>
-                                    <div class="user-menu">
-                                        <a href="/logout">Đăng xuất</a>
-                                    </div>
+
+                                <li th:if="${session.user != null}" class="dropdown"><a href="#">Tài Khoản</a>
+                                    <ul class="dropdown-menu">
+                                        <li class=""><a th:href="@{/lich-su-don-hang}" class="logout-button">Lịch Sử Đơn Hàng</a></li>
+                                        <li class=""><a th:href="@{/thong-tin-USER}" class="logout-button">Thông tin tài khoản</a></li>
+                                        <li class=""><a th:href="@{/logout}" class="logout-button">Đăng Xuất</a></li>
+
+                                    </ul>
                                 </li>
                                 <li th:if="${session.user == null}">
-                                    <a href="/login"><span class="login-link">Đăng nhập</span></a>
+                                    <a href="/login" class="user-login-link">Đăng nhập</a>
                                 </li>
-
                             </ul>
                         </nav>
                     </div>
