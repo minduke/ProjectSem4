@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="www.ultraq.net.nz/thymeleaf/layout" layout:decorate="/default/layout">
+<head>
+    <meta charset="UTF-8">
+    <title>Thay đổi mật khẩu</title>
+</head>
+<body>
+<div class="container container-fullscreen" layout:fragment="content">
+    <div class="text-middle">
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3 p-30 background-white">
+                <div class="col-md-12 m-t-20">
+                    <h3>Thay đổi mật khẩu</h3>
+
+                    <form>
+                        <div class="form-group">
+                            <label for="old-password">Mật khẩu cũ:</label>
+                            <input type="password" placeholder="Nhập mật khẩu cũ" class="form-control input-lg" id="old-password" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="new-password">Mật khẩu mới:</label>
+                            <input type="password" placeholder="Nhập mật khẩu mới" class="form-control input-lg" id="new-password" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="confirm-password">Xác nhận mật khẩu mới:</label>
+                            <input type="password" placeholder="Xác nhận mật khẩu mới" class="form-control input-lg" id="confirm-password" required>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Thay đổi mật khẩu</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

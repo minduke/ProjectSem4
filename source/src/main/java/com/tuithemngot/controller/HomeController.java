@@ -207,6 +207,12 @@ public class HomeController {
         return "default/chitietDonHangUser";
     }
 
+    @RequestMapping("/thay-doi-mat-khau")
+    public String thayMatKhau() {return "default/thayMKhau";}
+
+    @RequestMapping("/quen-mat-khau")
+    public String layMatKhau() {return "default/quenMK";}
+
 
     public static String encryptPassword(String password) {
         String salt = BCrypt.gensalt(12);
