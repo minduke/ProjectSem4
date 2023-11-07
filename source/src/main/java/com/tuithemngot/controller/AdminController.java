@@ -300,7 +300,7 @@ public class AdminController {
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String loginAD() {
-        return "loginAD";
+        return "admin/LoginAD";
     }
 
 
