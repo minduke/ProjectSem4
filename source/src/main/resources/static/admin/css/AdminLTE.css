@@ -3402,6 +3402,7 @@ fieldset[disabled] .btn-vk.active {
   color: #587ea3;
   background-color: #ffffff;
 }
+/* Css cho 2 nút ở showProduct và ProductbyType*/
 .icon-button {
   border: none; /* Xóa viền */
   background: none; /* Xóa nền */

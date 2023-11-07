@@ -355,7 +355,7 @@
   width: 100%;
   z-index: -2;
 }
-
+/*Nút thêm vào giỏ hàng ở trang home khi di chuyển chuột vào*/
 .transparent-button {
     border: none;
     background: none;
