@@ -82,12 +82,7 @@ public class HomeController {
 
 
 
-//    @RequestMapping("/layout")
-//    public String layout(Model model){
-//        List<Type_product> showMenu = typeProductRepository.findAll();
-//        model.addAttribute("menus", showMenu);
-//        return "default/layout";
-//    }
+
 
     @RequestMapping(value = "/check-out", method = RequestMethod.GET)
     public String checkOut(Model model) {
@@ -246,8 +241,7 @@ public class HomeController {
     @RequestMapping("/thay-doi-mat-khau")
     public String thayMatKhau() {return "default/thayMKhau";}
 
-    @RequestMapping("/quen-mat-khau")
-    public String layMatKhau() {return "default/quenMK";}
+
 
 
     public static String encryptPassword(String password) {
