@@ -20,6 +20,21 @@ function setTodayDate() {
     dateInput2.value = formattedDate;
 }
 
+function formatNumber(num) {
+    try {
+        if (num == null) return "";
+
+        if (!$.isNumeric(num)) return "0";
+
+        var p = num.toFixed(2).split(".");
+        return p[0].split("").reverse().reduce(function (acc, num, i, orig) {
+            return num + (i && !(i % 3) ? "," : "") + acc;
+        }, "") + (p[1] != null && p[1] != "00" ? "." + p[1] : "");
+    } catch (ex) {
+        return "0";
+    }
+}
+
 // const inputElement = document.getElementById("myNumber");
 // inputElement.addEventListener("input", function (){
 //     console.log("Change value: " + inputElement.value)
