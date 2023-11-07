@@ -1,16 +1,19 @@
 package com.tuithemngot.controller;
 
+import com.tuithemngot.dto.LoyalCustomer;
 import com.tuithemngot.dto.OrderDTO;
 import com.tuithemngot.dto.OrderDetailDTO;
+import com.tuithemngot.dto.TopSellingProduct;
 import com.tuithemngot.model.*;
 import com.tuithemngot.repository.*;
+import com.tuithemngot.repository.repositoryDTO.LoyalCustomerRepo;
 import com.tuithemngot.repository.repositoryDTO.OrderDetailRepoDTO;
 import com.tuithemngot.repository.repositoryDTO.OrderRepoDTO;
+import com.tuithemngot.repository.repositoryDTO.TopSellingRepo;
 import com.tuithemngot.service.CartManager;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.Banner;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Controller;
@@ -25,9 +28,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
@@ -35,6 +35,9 @@ import java.util.logging.Logger;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
+
+    @Autowired
+    LoyalCustomerRepo loyalCustomerRepo;
 
     @Autowired
     OrderRepoDTO orderRepoDTO;
@@ -68,6 +71,11 @@ public class AdminController {
 
     @Autowired
     AdminRepository adminRepository;
+
+    @Autowired
+    TopSellingRepo topSellingRepo;
+
+
 
     @RequestMapping("/")
     public String homeAdmin(Model model) {
@@ -197,11 +205,6 @@ public class AdminController {
         return "admin/showProduct";
     }
 
-    @RequestMapping("/delete/{id}")
-    public String deletePro(@PathVariable("id") Long id){
-        proRep.deleteById(id);
-        return "redirect:/admin/products";
-    }
 
     @RequestMapping("/edit/{id}")
     public String showEdit(@PathVariable("id") Long id, Model model){
@@ -298,6 +301,18 @@ public class AdminController {
         }
     }
 
+    @RequestMapping("/khach-hang-than-thiet")
+    public String loyalCustomer(Model model, @RequestParam(value = "keyword", required = false) String keyword){
+        List<LoyalCustomer> loyalCustomers;
+        if (keyword != null){
+            loyalCustomers = loyalCustomerRepo.showByName(keyword);
+        } else {
+            loyalCustomers = loyalCustomerRepo.showAll();
+        }
+        model.addAttribute("list", loyalCustomers);
+        return "/admin/loyalCustomer";
+    }
+
     @RequestMapping("/logout")
     public String logout(HttpServletRequest request){
         request.getSession().removeAttribute("myacc");
@@ -335,6 +350,13 @@ public class AdminController {
         }
         return "redirect:/admin/";
 
+    }
+
+    @RequestMapping("top-selling")
+    public String topSelling(Model model){
+        List<TopSellingProduct> topSellingProducts = topSellingRepo.topSellingProducts();
+        model.addAttribute("list", topSellingProducts);
+        return "/admin/topSellingPro";
     }
 
 }
