@@ -30,9 +30,7 @@
                         <div class="col-md-6 form-group">
                             <label for="password">Mật khẩu:</label>
                             <input type="password" th:value="${session.user.cus_password}" readonly oncopy="return false;"/>
-                            <a href="/quen-mat-khau">Quên mật khẩu?</a>
                         </div>
-
                         <div class="col-md-6 form-group">
                             <label for="email">Email:</label>
                             <strong th:text="${session.user.cus_email}">CoGaiBenTreHeHe@gmail.com</strong>
