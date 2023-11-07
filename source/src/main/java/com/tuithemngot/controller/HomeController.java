@@ -83,8 +83,6 @@ public class HomeController {
 
 
 
-
-
     @RequestMapping(value = "/check-out", method = RequestMethod.GET)
     public String checkOut(Model model) {
         List<Type_product> showMenu = typeProductRepository.findAll();
@@ -136,6 +134,7 @@ public class HomeController {
     @RequestMapping("/logout")
     public String logout(HttpServletRequest request){
         request.getSession().removeAttribute("user");
+        request.getSession().removeAttribute("gioHang");
         return "redirect:/home";
     }
 
@@ -243,16 +242,16 @@ public class HomeController {
         Long id = customer.getCus_id();
         if (checkPassword(old, oldPass)){
             if (!neww.equals(confirm)){
-                redirectAttributes.addFlashAttribute("msg", "2 mật khẩu không giống nhau");
+                redirectAttributes.addFlashAttribute("msg", "Mật khẩu không trùng khớp!");
                 return "redirect:/thay-doi-mat-khau";
             } else {
                 String newPass = encryptPassword(confirm);
                 customerRepository.updatePassword(newPass, id);
-                redirectAttributes.addFlashAttribute("msg", "Thay đổi mật khẩu thành công");
-                return "redirect:/thay-doi-mat-khau";
+                session.removeAttribute("user");
+                return "redirect:/login";
             }
         } else {
-            redirectAttributes.addFlashAttribute("msg", "Sai mật khẩu cũ!");
+            redirectAttributes.addFlashAttribute("msg", "Sai mật khẩu hiện tại!");
             return "redirect:/thay-doi-mat-khau";
         }
 //        return "/default/changePass";
