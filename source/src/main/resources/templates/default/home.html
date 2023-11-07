@@ -2,8 +2,11 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="/default/layout">
 <head>
+
     <meta charset="UTF-8">
     <title>Trang chủ</title>
+
+
 </head>
 <body>
 
@@ -39,7 +42,7 @@
                                 <div class="product-overlay">
                                     <form th:action="@{'/add/' + ${product.pro_id} }" method="post">
                                         <a>
-                                            <button type="submit" style="background-color: #FFFFFF">Bỏ vào giỏ</button>
+                                            <button type="submit" class="transparent-button">Thêm Vào Giỏ Hàng</button>
                                         </a>
                                     </form>
                                 </div>

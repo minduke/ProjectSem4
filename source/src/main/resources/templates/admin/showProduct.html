@@ -42,7 +42,7 @@
             </td>
             <td><a th:href="@{'/admin/edit/' + ${product.pro_id} }" ><i class="fa-solid fa-pen-to-square"></i></a></td>
             <form th:action="@{'/add-to-cart/' + ${product.pro_id} }" method="post">
-                <td><button type="submit"><i class="fa-solid fa-plus-square"></i></button></td>
+                <td><button type="submit" class="icon-button"><i class="fas fa-plus-circle"></i></button></td>
             </form>
         </tr>
         </tbody>
