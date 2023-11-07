@@ -213,10 +213,23 @@ public class AdminController {
         return "admin/editProduct";
     }
 
-    @RequestMapping("/edit")
+    @RequestMapping(value = "/edit", method = RequestMethod.POST)
     public String saveEdit(Product product){
         proRep.update(product);
         return "redirect:/admin/products";
+    }
+
+    @RequestMapping(value = "/edit-type/{id}", method = RequestMethod.GET)
+    public String editType(@PathVariable("id") Long id, Model model){
+        Type_product typeProduct = typeRepo.findById(id);
+        model.addAttribute("type", typeProduct);
+        return "/admin/editType";
+    }
+
+    @RequestMapping(value = "/editType", method = RequestMethod.POST)
+    public String saveType(Type_product typeProduct){
+        typeRepo.updateType(typeProduct);
+        return "redirect:/admin/type";
     }
 
     @RequestMapping("/list-product/{id}")
@@ -276,14 +289,18 @@ public class AdminController {
     @RequestMapping(value = "/new-import", method = RequestMethod.GET)
     public String newImport(HttpSession session, Model model){
         List<CartItemImport> items = cartManager.getImportCart(session).getItems();
-        model.addAttribute("items", items);
+        if (items == null || items.isEmpty()){
+            model.addAttribute("msg", "Chưa có sản phẩm trong giỏ");
+        } else {
+            model.addAttribute("items", items);
+        }
         return "/admin/showCartImport";
     }
 
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String loginAD() {
-        return "/admin/LoginAD";
+        return "loginAD";
     }
 
 

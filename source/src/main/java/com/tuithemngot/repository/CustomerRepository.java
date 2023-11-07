@@ -80,4 +80,13 @@ public class CustomerRepository {
         }
         return null;
     }
+
+    public int updatePassword(String newPass, Long id){
+        try {
+            cDB.update("update customers set cus_password = ? where cus_id = ?", new Object[]{newPass, id});
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return 0;
+    }
 }

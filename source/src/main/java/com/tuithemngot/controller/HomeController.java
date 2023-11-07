@@ -203,15 +203,12 @@ public class HomeController {
     public String lichSuDonHang(Model model, HttpServletRequest request) {
         List<Type_product> showMenu = typeProductRepository.findAll();
         model.addAttribute("menus", showMenu);
-        Object check_session = request.getSession().getAttribute("user");
-        if (check_session != null){
-            Customer customer = (Customer) request.getSession().getAttribute("user");
-            Long id = customer.getCus_id();
-            List<OrderDTO> orderHistory = orderRepoDTO.showOrderByCusId(id);
-            model.addAttribute("orders", orderHistory);
-            return "/default/orderHistory";
-        }
-        return "redirect:/login";
+        Customer customer = (Customer) request.getSession().getAttribute("user");
+        Long id = customer.getCus_id();
+        List<OrderDTO> orderHistory = orderRepoDTO.showOrderByCusId(id);
+        model.addAttribute("orders", orderHistory);
+
+        return "/default/orderHistory";
     }
 
 
@@ -219,28 +216,47 @@ public class HomeController {
     public String thongTin(Model model, HttpServletRequest request) {
         List<Type_product> showMenu = typeProductRepository.findAll();
         model.addAttribute("menus", showMenu);
-        Object check_session = request.getSession().getAttribute("user");
-        if (check_session != null){
-            return "/default/information";
-        }
-        return "redirect:/login";
+        return "/default/information";
     }
 
     @RequestMapping("/chi-tiet-don-hang/{id}")
     public String chiTiet(Model model, HttpServletRequest request, @PathVariable("id") Long id) {
         List<Type_product> showMenu = typeProductRepository.findAll();
         model.addAttribute("menus", showMenu);
-        Object check_session = request.getSession().getAttribute("user");
-        if (check_session != null){
-            List<OrderDetailDTO> list = orderDetailRepoDTO.showOrderDetail(id);
-            model.addAttribute("details", list);
-            return "default/orderDetailUser";
-        }
-        return "redirect:/login";
+        return "default/orderDetailUser";
     }
 
     @RequestMapping("/thay-doi-mat-khau")
-    public String thayMatKhau() {return "default/thayMKhau";}
+    public String pass(HttpSession session, Model model){
+        List<Type_product> showMenu = typeProductRepository.findAll();
+        model.addAttribute("menus", showMenu);
+        return "default/changePass";
+    }
+
+    @RequestMapping(value = "/change-pass", method = RequestMethod.POST)
+    public String changePassword(@RequestParam(value = "old-password", required = false) String old, @RequestParam(value = "new-password", required = false) String neww, @RequestParam(value = "confirm-password", required = false) String confirm,
+                                 HttpSession session, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+
+        Object object = session.getAttribute("user");
+        Customer customer = (Customer) object;
+        String oldPass = customer.getCus_password();
+        Long id = customer.getCus_id();
+        if (checkPassword(old, oldPass)){
+            if (!neww.equals(confirm)){
+                redirectAttributes.addFlashAttribute("msg", "2 mật khẩu không giống nhau");
+                return "redirect:/thay-doi-mat-khau";
+            } else {
+                String newPass = encryptPassword(confirm);
+                customerRepository.updatePassword(newPass, id);
+                redirectAttributes.addFlashAttribute("msg", "Thay đổi mật khẩu thành công");
+                return "redirect:/thay-doi-mat-khau";
+            }
+        } else {
+            redirectAttributes.addFlashAttribute("msg", "Sai mật khẩu cũ!");
+            return "redirect:/thay-doi-mat-khau";
+        }
+//        return "/default/changePass";
+    }
 
 
 

@@ -22,8 +22,8 @@
         </tr>
         </thead>
         <tbody>
-        <div th:if="${items == null}">
-            <h1>Chưa có sản phẩm</h1>
+        <div th:if="${msg}">
+            <h1 th:text="${msg}">Chưa có sản phẩm</h1>
         </div>
         <tr th:each="item : ${items}">
             <form th:action="@{'/remove-import/' + ${item.product.pro_id} }" method="post">
@@ -44,7 +44,7 @@
     </table>
     <div class="col col-lg-4"></div>
     <div class="col col-lg-4"></div>
-    <div class="col col-lg-4" th:text=" 'Tổng tiền: ' + ${session.nhapHang.total} " style="font-size: 30px" ></div>
+    <div class="col col-lg-4" th:text=" 'Tổng tiền: ' + ${session.nhapHang != null  ? session.nhapHang.total : 0} " style="font-size: 30px" ></div>
     <form th:action="@{/admin/save-import}" method="post">
         <table hidden>
             <tbody>
@@ -53,7 +53,7 @@
                 <td><input type="text" name="import_price" th:value="${item.product.import_price}"></td>
                 <td><input type="text" name="quantity" th:value="${item.quantity}"></td>
                 <td><input type="text" name="sub_total" th:value="${item.subTotal}"></td>
-                <td><input type="text" name="import_total" th:value="${session.nhapHang.total}"></td>
+                <td><input type="text" name="import_total" th:value="${session.nhapHang != null  ? session.nhapHang.total : 0}"></td>
             </tr>
             </tbody>
         </table>

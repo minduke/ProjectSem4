@@ -82,7 +82,7 @@
 
                 <!--SHOPPING CART -->
                 <div id="shopping-cart">
-<!--                    <span class="shopping-cart-items">8</span>-->
+                    <span class="shopping-cart-items" th:text="${session.gioHang != null ? session.gioHang.getItemCount : 0}">8</span>
                     <a th:href="@{'/cart'}"><i class="fa fa-shopping-cart"></i></a>
                 </div>
                 <!--END: SHOPPING CART -->

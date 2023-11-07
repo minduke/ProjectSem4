@@ -7,6 +7,7 @@
 </head>
 <body>
 <div layout:fragment="content">
+    <h1 style="text-align: center">Thông tin khách hàng</h1>
     <div>
         <form>
             <input type="text" name="keyword"/>
@@ -18,7 +19,7 @@
         <tr>
             <th scope="col">#</th>
             <th scope="col">Tên khách hàng</th>
-            <th scope="col">Ngày sinh</th>
+<!--            <th scope="col">Ngày sinh</th>-->
             <th scope="col">Địa chỉ</th>
             <th scope="col">Số điện thoại</th>
             <th scope="col">Email</th>
@@ -33,7 +34,7 @@
         <tr th:each="customer: ${customers}">
             <td th:text="${customer.stt}"></td>
             <td th:text="${customer.cus_name}"></td>
-            <td th:text="${customer.cus_birthday}"></td>
+<!--            <td th:text="${customer.cus_birthday}"></td>-->
             <td th:text="${customer.cus_address}"></td>
             <td th:text="${customer.cus_phone}"></td>
             <td th:text="${customer.cus_email}"></td>

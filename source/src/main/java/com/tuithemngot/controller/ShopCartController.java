@@ -33,7 +33,7 @@ public class ShopCartController {
             Cart cart = cartManager.getCart(session);
             cart.addItem(product, qty);
             cartManager.setCart(session, cart);
-            return "redirect:/cart";
+            return "redirect:/home";
         } else {
             return "redirect:/login";
         }

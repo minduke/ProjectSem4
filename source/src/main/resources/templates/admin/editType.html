@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultra.net.nz/thymeleaf/layout" layout:decorate="/admin/layout">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div class="container" layout:fragment="content">
+  <h1 style="text-align: center">
+    Sửa tên danh mục nhóm sản phẩm
+  </h1>
+  <form th:object="${type}" th:action="@{/admin/editType}" method="post">
+    <div class="mb-3">
+      <input type="hidden" class="form-control" th:field="*{type_id}">
+      <label class="form-label">Nhóm sản phẩm</label>
+      <input type="text" class="form-control" style="width: 30vw" th:field="*{type_name}">
+    </div>
+    <button type="submit" class="btn btn-primary" style="margin-top: 5px">Lưu</button>
+  </form>
+</div>
+</body>
+</html>

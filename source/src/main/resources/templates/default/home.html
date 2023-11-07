@@ -37,7 +37,11 @@
 <!--										<a href="#"><i class="fa fa-heart"></i></a>-->
 									</span>
                                 <div class="product-overlay">
-                                    <a th:href="@{'/shop-cart/' + ${product.pro_id} }" >Chi tiết</a>
+                                    <form th:action="@{'/add/' + ${product.pro_id} }" method="post">
+                                        <a>
+                                            <button type="submit" style="background-color: #FFFFFF">Bỏ vào giỏ</button>
+                                        </a>
+                                    </form>
                                 </div>
                             </div>
 

@@ -93,8 +93,8 @@ public class ProductRepository {
 
     public int update(Product pro){
         try {
-            return pDB.update("update products set pro_name = ?, pro_image = ?, import_price = ?, pro_price = ?, pro_spec = ?, type_id = ? where pro_id = ?",
-                    new Object[]{pro.getPro_name(), pro.getPro_image(), pro.getImport_price(), pro.getPro_price(), pro.getPro_spec(), pro.getType_id(), pro.getPro_id()});
+            return pDB.update("update products set pro_name = ?, import_price = ?, pro_price = ?, pro_spec = ?, type_id = ? where pro_id = ?",
+                    new Object[]{pro.getPro_name(), pro.getImport_price(), pro.getPro_price(), pro.getPro_spec(), pro.getType_id(), pro.getPro_id()});
         } catch (Exception e){
             e.printStackTrace();
         }

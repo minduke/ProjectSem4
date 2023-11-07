@@ -23,11 +23,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td colspan="5" th:if="${msg}">
+                            <tr th:if="${msg}">
+                                <td colspan="5">
                                         <h1 th:text="${msg}"></h1>
                                 </td>
                             </tr>
+<!--                            <div id="emptyCartMsg" style="display: none">-->
+<!--                                <span>Chưa có sản phẩm trong giỏ</span>-->
+<!--                            </div>-->
                             <tr th:each="item : ${items}">
                                 <td class="cart-product-remove">
                                     <a th:href="@{'/remove/' + ${item.product.pro_id}}"><i class="fa fa-close"></i></a>
@@ -63,6 +66,7 @@
 
                             </tr>
 
+
                         </tbody>
 
                     </table>
@@ -96,40 +100,14 @@
 
                             <table class="table" >
                                 <tbody>
-<!--                                <tr th:each="item : ${items}">-->
-<!--                                    <td class="cart-product-name" >-->
-<!--                                        <strong>Giá tiền sản phẩm</strong>-->
-<!--                                    </td>-->
 
-<!--                                    <td class="cart-product-name text-right">-->
-<!--                                        <span class="amount" th:text="${item.product.pro_price}">$125.96</span>-->
-<!--                                    </td>-->
-<!--                                </tr>-->
-<!--                                <tr>-->
-<!--                                    <td class="cart-product-name">-->
-<!--                                        <strong>Tiền vận chuyển</strong>-->
-<!--                                    </td>-->
-
-<!--                                    <td class="cart-product-name  text-right">-->
-<!--&lt;!&ndash;                                        <span class="amount">Miễn phí</span>&ndash;&gt;-->
-<!--                                    </td>-->
-<!--                                </tr>-->
-<!--                                <tr>-->
-<!--                                    <td class="cart-product-name">-->
-<!--                                        <strong>Ưu đãi</strong>-->
-<!--                                    </td>-->
-
-<!--                                    <td class="cart-product-name  text-right">-->
-<!--&lt;!&ndash;                                        <span class="amount">-20%</span>&ndash;&gt;-->
-<!--                                    </td>-->
-<!--                                </tr>-->
                                 <tr>
                                     <td class="cart-product-name">
                                         <strong>Tổng tiền</strong>
                                     </td>
 
                                     <td class="cart-product-name text-right">
-                                        <span class="amount color lead" th:text="${session.gioHang.total}"><strong>$100.76</strong></span>
+                                        <span class="amount color lead" th:text="${session.gioHang != null ? session.gioHang.total : 0}"><strong>$100.76</strong></span>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -147,6 +125,12 @@
     </section>
     <!-- END: SHOP CART -->
 </div>
+<!--<script>-->
+<!--    var items = /*[[${items}]]*/ null;-->
 
+<!--    if (!items || items.length === 0) {-->
+<!--        document.getElementById("emptyCartMsg").style.display = "block";-->
+<!--    }-->
+<!--</script>-->
 </body>
 </html>

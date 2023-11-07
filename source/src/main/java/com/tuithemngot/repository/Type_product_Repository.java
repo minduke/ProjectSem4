@@ -57,4 +57,13 @@ public class Type_product_Repository {
         }
         return null;
     }
+
+    public int updateType(Type_product typeProduct){
+        try {
+            typeDB.update("update type_product set type_name = ? where type_id = ?", new Object[]{typeProduct.getType_name(), typeProduct.getType_id()});
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return 0;
+    }
 }
