@@ -3408,12 +3408,13 @@ fieldset[disabled] .btn-vk.active {
   background: none; /* Xóa nền */
   padding: 0; /* Xóa padding */
   font-size: 18px; /* Điều chỉnh kích thước biểu tượng */
-  color: rgba(23, 61, 18, 0.74); /* Màu sắc của biểu tượng */
+  color: rgba(82, 192, 64, 0.74); /* Màu sắc của biểu tượng */
 }
 .icon-button-hai {
   border: none; /* Xóa viền */
   background: none; /* Xóa nền */
   padding: 0; /* Xóa padding */
   font-size: 18px; /* Điều chỉnh kích thước biểu tượng */
-  color: rgba(23, 61, 18, 0.74); /* Màu sắc của biểu tượng */
+  color: rgba(74, 166, 62, 0.76); /* Màu sắc của biểu tượng */
 }
+
