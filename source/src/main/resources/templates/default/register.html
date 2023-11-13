@@ -26,20 +26,23 @@
                 </select>
               </div>
               <div class="col-md-6 form-group">
-                <input type="text" required placeholder="Username" class="form-control input-lg" th:field="*{cus_username}">
+                <input type="text" required placeholder="Username" class="form-control input-lg" name="username">
               </div>
               <div class="col-md-6 form-group">
-                <input type="password" placeholder="Password" class="form-control input-lg" name="password">
+                <input type="password" placeholder="Password" class="form-control input-lg" name="password" required>
               </div>
 
               <div class="col-md-12 form-group">
                 <input type="text" placeholder="Địa chỉ" class="form-control input-lg" th:field="*{cus_address}" required>
               </div>
               <div class="col-md-6 form-group">
-                <input type="email" placeholder="Email" class="form-control input-lg" th:field="*{cus_email}" required>
+                <input type="email" placeholder="Email" class="form-control input-lg" name="email" required>
               </div>
               <div class="col-md-6 form-group">
-                <input type="tel" placeholder="Số điện thoại" class="form-control input-lg" th:field="*{cus_phone}" required>
+                <input type="tel" placeholder="Số điện thoại" class="form-control input-lg" name="phone" required>
+              </div>
+              <div class="col-md-12 form-group" th:if="${error}">
+                <h3 style="color: hotpink; background-color: black;text-align: center" th:text="${error}"></h3>
               </div>
               <div class="col-md-12 form-group">
                 <button class="btn btn-primary" type="submit">Tạo tài khoản</button>

@@ -159,11 +159,37 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/registered", method = RequestMethod.POST)
-    public String registered(@RequestParam("gender") String gender, @RequestParam("password") String password, Customer customer){
+    public String registered(@RequestParam("gender") String gender, @RequestParam("password") String password, Customer customer,
+                             @RequestParam("username") String username, @RequestParam("email") String email, @RequestParam("phone") String phone,
+                             RedirectAttributes redirectAttributes){
         String temp = encryptPassword(password);
         customer.setCus_password(temp);
         String cus_gender = gender;
         customer.setCus_gender(cus_gender);
+        String findByUsername = "select count(*) from customers where cus_username = ?";
+        int countUsername = jdbcTemplate.queryForObject(findByUsername, Integer.class, username);
+        if (countUsername == 1){
+            redirectAttributes.addFlashAttribute("error", "Tên tài khoản đã tồn tại");
+            return "redirect:/register";
+        } else {
+            customer.setCus_username(username);
+            String findByEmail = "select count(*) from customers where cus_email = ?";
+            int countEmail = jdbcTemplate.queryForObject(findByEmail, Integer.class, email);
+            if (countEmail == 1){
+                redirectAttributes.addFlashAttribute("error", "Email đã tồn tại");
+                return "redirect:/register";
+            } else {
+                customer.setCus_email(email);
+                String findByPhone = "select count(*) from customers where cus_phone = ?";
+                int countPhone = jdbcTemplate.queryForObject(findByPhone, Integer.class, phone);
+                if (countPhone >= 1){
+                    redirectAttributes.addFlashAttribute("error", "Số điện thoại đã tồn tại");
+                    return "redirect:/register";
+                } else {
+                    customer.setCus_phone(phone);
+                }
+            }
+        }
         customerRepository.insertCustomer(customer);
         return "redirect:/login";
     }
