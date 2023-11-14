@@ -248,6 +248,8 @@ public class HomeController {
     public String chiTiet(Model model, HttpServletRequest request, @PathVariable("id") Long id) {
         List<Type_product> showMenu = typeProductRepository.findAll();
         model.addAttribute("menus", showMenu);
+        List<OrderDetailDTO> list = orderDetailRepoDTO.showOrderDetail(id);
+        model.addAttribute("details", list);
         return "default/orderDetailUser";
     }
 
