@@ -25,7 +25,7 @@
                                 <input type="text" class="form-control input-lg" placeholder="Số điện thoại" required name="order_phone_receiver" th:value="${session.user.cus_phone}">
                             </div>
                             <div class="col-md-12 form-group">
-                                <input type="text" class="form-control input-lg" placeholder="Địa chỉ nhận hàng: số nhà / tên đường" id="address" th:value="${session.user.cus_address}">
+                                <input type="text" class="form-control input-lg" placeholder="Địa chỉ nhận hàng: số nhà / tên đường" id="address" th:value="${session.user.cus_address}" name="temp">
                             </div>
                             <div class="col-md-12 form-group">
                                 <select class="form-select form-select-sm mb-3" id="city" aria-label=".form-select-sm">
@@ -42,7 +42,7 @@
                                     <option value="" selected>Chọn phường xã</option>
                                 </select>
                             </div>
-                            <div class="col-md-12 form-group" hidden>
+                            <div class="col-md-12 form-group">
                                 <label class="sr-only">Đây là địa chỉ của bạn nè</label>
                                 <input type="text" class="form-control input-lg" placeholder="Email" id="current_address" name="order_delivery_address">
                             </div>
