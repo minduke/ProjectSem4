@@ -19,13 +19,13 @@
                                 <h4 class="upper">Thông Tin Vận Chuyển</h4>
                             </div>
                             <div class="col-md-6 form-group">
-                                <input type="text" class="form-control input-lg" placeholder="Họ và tên" required name="order_receiver">
+                                <input type="text" class="form-control input-lg" placeholder="Họ và tên" required name="order_receiver" th:value="${session.user.cus_name}">
                             </div>
                             <div class="col-md-6 form-group">
-                                <input type="text" class="form-control input-lg" placeholder="Số điện thoại" required name="order_phone_receiver">
+                                <input type="text" class="form-control input-lg" placeholder="Số điện thoại" required name="order_phone_receiver" th:value="${session.user.cus_phone}">
                             </div>
                             <div class="col-md-12 form-group">
-                                <input type="text" class="form-control input-lg" placeholder="Địa chỉ nhận hàng: số nhà / tên đường" id="address">
+                                <input type="text" class="form-control input-lg" placeholder="Địa chỉ nhận hàng: số nhà / tên đường" id="address" th:value="${session.user.cus_address}">
                             </div>
                             <div class="col-md-12 form-group">
                                 <select class="form-select form-select-sm mb-3" id="city" aria-label=".form-select-sm">
