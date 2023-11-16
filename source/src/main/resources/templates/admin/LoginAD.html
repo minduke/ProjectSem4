@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>LOGIN ADMIN</title>
+    <title>Đăng Nhập ADMIN</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
     <style>
@@ -31,11 +31,12 @@
             border-radius: 5px;
             box-shadow: inset 0 0 1px #272727;
         }
-        .text{
-            font-size: 30px;
-            color: #c7c7c7;
+        .text {
+            font-size: 35px;
+            color: rgba(27, 143, 11, 0.76);
             font-weight: 600;
             letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(148, 95, 95, 0.5);
         }
         form{
             margin-top: 40px;
@@ -117,7 +118,7 @@
 <body>
 <div class="login-form">
     <div class="text">
-        LOGIN
+        TUI THÈM NGỌT
     </div>
     <form th:action="@{/admin/chklogin}" method="post">
         <div class="field">
@@ -128,7 +129,7 @@
             <div class="fas fa-lock"></div>
             <input type="password" placeholder="Password" name="pwd" id="pwd">
         </div>
-        <button type="submit" value="login">Login</button>
+        <button type="submit" value="login">Đăng Nhập</button>
 
     </form>
 </div>

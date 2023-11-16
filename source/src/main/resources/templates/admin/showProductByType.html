@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultra.net.nz/thymeleaf/layout" layout:decorate="/admin/layout">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Sản Phẩm Theo Nhóm</title>
 </head>
 <body>
 <div class="" layout:fragment="content">
@@ -10,13 +10,13 @@
         <h1 th:text="'Sản phẩm thuộc nhóm ' + ${session.type_name}" style="text-align: center"></h1>
         <thead>
         <tr>
-            <th scope="col"></th>
+            <th scope="col">Ảnh</th>
             <th scope="col">Tên sản phẩm</th>
-
             <th scope="col">Giá nhập</th>
             <th scope="col">Giá bán</th>
             <th scope="col">Trạng thái</th>
-            <th scope="col"></th>
+            <th scope="col">Sửa</th>
+            <th scope="col">Nhập Hàng</th>
         </tr>
         </thead>
         <tbody>

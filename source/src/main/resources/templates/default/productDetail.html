@@ -2,10 +2,20 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="/default/layout">
 <head>
     <meta charset="UTF-8">
-    <title>Chi tiết sản phẩm</title>
+    <title>Chi Tiết Sản Phẩm</title>
 </head>
 <body>
 <div layout:fragment="content">
+    <!-- PAGE TITLE -->
+    <section id="page-title" class="page-title-parallax page-title-center text-dark"
+             style="background-image:url(/images/Title.jpg);">
+        <div class="container">
+            <div class="page-title col-md-8">
+                <h2>Chi Tiết Sản Phẩm</h2>
+            </div>
+        </div>
+    </section>
+    <!-- END: PAGE TITLE -->
     <!-- SHOP PRODUCT PAGE -->
     <form th:action="@{'/add/' + ${product.pro_id}}" method="post">
 
@@ -15,8 +25,8 @@
                 <div class="row">
                     <div class="col-md-5">
                         <div class="product-image">
-                            <div class="carousel" data-carousel-col="1" data-lightbox-type="gallery">
-                                <a href="images/shop/products/product-large.jpg" title="Shop product image!"><img alt="Shop product image!" th:src="@{'/images/' + ${product.pro_image}}" style="width: 380px; height: 507px">
+                            <div  >
+                                <a href="#" title="Shop product image!"><img alt="Shop product image!" th:src="@{'/images/' + ${product.pro_image}}" style="width: 380px; height: 507px">
                                 </a>
 
                             </div>
@@ -75,97 +85,97 @@
 
 
                 </div>
-                <div class="row m-t-40">
+<!--                <div class="row m-t-40">-->
 
-                    <div class="col-md-6">
-                        <h4>Reviews (3)</h4>
-                        <div id="comments" class="comments">
-
-
-
-                            <div class="comment">
-                                <a href="#" class="pull-left">
-                                    <img alt="" src="images/team/1.jpg" class="avatar">
-                                </a>
-                                <div class="media-body">
-                                    <div class="product-rate">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star-half-o"></i>
-                                    </div>
-                                    <h4 class="media-heading">Alea Grande</h4>
-
-                                    <p>Maecenas nec iaculis turpis, egeiquam eget malesuada enim, eu interdum elit. Sed sagittis ornare velit a congue.</p>
-
-                                </div>
-                            </div>
-
-                            <div class="comment">
-                                <a class="pull-left" href="#">
-                                    <img class="avatar" src="images/team/3.jpg" alt="">
-                                </a>
-                                <div class="media-body">
-                                    <div class="product-rate">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star-half-o"></i>
-                                    </div>
-                                    <h4 class="media-heading">Ariol Smith</h4>
-
-                                    <p>Ut ulneque. Aliquam eget malesuada enim, eu interdum elit. Sed sagittis ornare velit a congue.</p>
-
-                                </div>
-                            </div>
-                            <div class="comment">
-                                <a href="#" class="pull-left">
-                                    <img alt="" src="images/team/2.jpg" class="avatar">
-                                </a>
-                                <div class="media-body">
-                                    <div class="product-rate">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star-half-o"></i>
-                                    </div>
-                                    <h4 class="media-heading">Juna Smith</h4>
-
-                                    <p>Nullam nisl dui, congue in mi non,a enim, eu interdum elit. Sed sagittis ornare velit a congue.</p>
-
-                                </div>
+<!--                    <div class="col-md-6">-->
+<!--                        <h4>Reviews (3)</h4>-->
+<!--                        <div id="comments" class="comments">-->
 
 
 
+<!--                            <div class="comment">-->
+<!--                                <a href="#" class="pull-left">-->
+<!--                                    <img alt="" src="images/team/1.jpg" class="avatar">-->
+<!--                                </a>-->
+<!--                                <div class="media-body">-->
+<!--                                    <div class="product-rate">-->
+<!--                                        <i class="fa fa-star"></i>-->
+<!--                                        <i class="fa fa-star"></i>-->
+<!--                                        <i class="fa fa-star"></i>-->
+<!--                                        <i class="fa fa-star"></i>-->
+<!--                                        <i class="fa fa-star-half-o"></i>-->
+<!--                                    </div>-->
+<!--                                    <h4 class="media-heading">Alea Grande</h4>-->
 
-                            </div>
+<!--                                    <p>Maecenas nec iaculis turpis, egeiquam eget malesuada enim, eu interdum elit. Sed sagittis ornare velit a congue.</p>-->
+
+<!--                                </div>-->
+<!--                            </div>-->
+
+<!--                            <div class="comment">-->
+<!--                                <a class="pull-left" href="#">-->
+<!--                                    <img class="avatar" src="images/team/3.jpg" alt="">-->
+<!--                                </a>-->
+<!--                                <div class="media-body">-->
+<!--                                    <div class="product-rate">-->
+<!--                                        <i class="fa fa-star"></i>-->
+<!--                                        <i class="fa fa-star"></i>-->
+<!--                                        <i class="fa fa-star"></i>-->
+<!--                                        <i class="fa fa-star"></i>-->
+<!--                                        <i class="fa fa-star-half-o"></i>-->
+<!--                                    </div>-->
+<!--                                    <h4 class="media-heading">Ariol Smith</h4>-->
+
+<!--                                    <p>Ut ulneque. Aliquam eget malesuada enim, eu interdum elit. Sed sagittis ornare velit a congue.</p>-->
+
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <div class="comment">-->
+<!--                                <a href="#" class="pull-left">-->
+<!--                                    <img alt="" src="images/team/2.jpg" class="avatar">-->
+<!--                                </a>-->
+<!--                                <div class="media-body">-->
+<!--                                    <div class="product-rate">-->
+<!--                                        <i class="fa fa-star"></i>-->
+<!--                                        <i class="fa fa-star"></i>-->
+<!--                                        <i class="fa fa-star"></i>-->
+<!--                                        <i class="fa fa-star"></i>-->
+<!--                                        <i class="fa fa-star-half-o"></i>-->
+<!--                                    </div>-->
+<!--                                    <h4 class="media-heading">Juna Smith</h4>-->
+
+<!--                                    <p>Nullam nisl dui, congue in mi non,a enim, eu interdum elit. Sed sagittis ornare velit a congue.</p>-->
+
+<!--                                </div>-->
 
 
 
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <h4> Additional Information</h4>
-                        <div class="accordion toggle fancy radius clean">
-                            <div class="ac-item ac-active">
-                                <h5 class="ac-title"><i class="fa fa-rocket"></i>Suscipit laboriosam</h5>
-                                <div class="ac-content">Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.</div>
-                            </div>
-                            <div class="ac-item">
-                                <h5 class="ac-title"><i class="fa fa-heart"></i>Aliquam voluptatem</h5>
-                                <div style="display: none;" class="ac-content">Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.</div>
-                            </div>
-                            <div class="ac-item">
-                                <h5 class="ac-title"><i class="fa fa-shopping-cart"></i>Labore et dolore</h5>
-                                <div style="display: none;" class="ac-content">Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.</div>
-                            </div>
-                        </div>
-                    </div>
 
-                </div>
+<!--                            </div>-->
+
+
+
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="col-md-6">-->
+<!--                        <h4> Additional Information</h4>-->
+<!--                        <div class="accordion toggle fancy radius clean">-->
+<!--                            <div class="ac-item ac-active">-->
+<!--                                <h5 class="ac-title"><i class="fa fa-rocket"></i>Suscipit laboriosam</h5>-->
+<!--                                <div class="ac-content">Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.</div>-->
+<!--                            </div>-->
+<!--                            <div class="ac-item">-->
+<!--                                <h5 class="ac-title"><i class="fa fa-heart"></i>Aliquam voluptatem</h5>-->
+<!--                                <div style="display: none;" class="ac-content">Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.</div>-->
+<!--                            </div>-->
+<!--                            <div class="ac-item">-->
+<!--                                <h5 class="ac-title"><i class="fa fa-shopping-cart"></i>Labore et dolore</h5>-->
+<!--                                <div style="display: none;" class="ac-content">Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.</div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+<!--                </div>-->
             </div>
         </div>
     </section>

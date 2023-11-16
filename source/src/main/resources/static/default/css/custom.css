@@ -405,18 +405,90 @@
 }
 
 .custom-form-group img {
-    width: 200px; /* Đặt kích thước rõ ràng cho chiều rộng */
-    height: auto; /* Tự động tính toán chiều cao dựa trên tỷ lệ */
-    border: 10px solid #FF69B4; /* Màu hồng */
-    box-shadow: 0 0 10px rgba(255, 105, 180, 0.7); /* Hiệu ứng bóng đen xung quanh hình ảnh */
+    width: 200px;
+    height: auto;
+    border: 10px solid #FF69B4;
+    box-shadow: 0 0 10px rgba(255, 105, 180, 0.7);
+    opacity: 0;
+    animation: rotate-in 0.5s ease-in-out forwards;
+}
+
+@keyframes rotate-in {
+    0% {
+        opacity: 0;
+        transform: rotate(-180deg);
+    }
+    100% {
+        opacity: 1;
+        transform: rotate(0);
+    }
+}
+
+
+/*Chỗ này là trong lịch sử đơn hàng nè bay*/
+/* CSS cho tiêu đề cột */
+.table_cus thead th {
+    background-color: #f2f2f2;
+    color: #333;
+    font-weight: bold;
+    padding: 10px;
+    text-align: left;
+}
+
+/* CSS cho dòng chẵn của dữ liệu */
+.table_cus tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* CSS cho dòng lẻ của dữ liệu */
+.table tbody tr:nth-child(odd) {
+    background-color: #fff;
+}
+
+/* CSS cho ô dữ liệu */
+.table tbody td {
+    padding: 10px;
+}
+
+/* CSS cho nút xem thêm */
+.table .cart-product-icon a {
+    color: #333;
+    text-decoration: none;
+}
+
+/* CSS cho màu sắc sặc sỡ */
+.table .cart-product-tenKH h4 {
+    color: #090306; /* Màu hồng */
 }
 
 
 
+.table .cart-product-ngayDatH .amount {
+    color: #3065f8; /* Màu xanh dương */
+}
+
+.table .cart-product-trangThai h4 {
+    color: #ff8c00; /* Màu cam */
+}
+
+/* Thêm các tùy chỉnh màu sắc khác tùy ý */
 
 
+/*Tạm Tính checkout*/
+/*.table_tam {*/
+/*    border-collapse: separate;*/
+/*    border-spacing: 0;*/
+/*    width: 100%;*/
+/*    border: 1px solid #ddd;*/
+/*}*/
 
+/*.table_tam td, .table_tam th {*/
+/*    padding: 8px;*/
+/*}*/
 
+/*.table_tam th {*/
+/*    border-bottom: 1px solid #ddd;*/
+/*}*/
 
 
 

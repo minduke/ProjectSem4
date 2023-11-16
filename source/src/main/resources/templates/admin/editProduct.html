@@ -2,12 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="/admin/layout">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Sửa Thông Tin Sản Phẩm</title>
 </head>
 <body>
 <div class="container" layout:fragment="content">
     <div style="text-align: center">
-        <h1>Sửa thông tin sản phẩm</h1>
+        <h1>Sửa Thông Tin Sản Phẩm</h1>
     </div>
     <form th:action="@{/admin/edit}" method="post" th:object="${product}" enctype="multipart/form-data">
         <input type="hidden" th:field="*{pro_id}">
@@ -36,7 +36,7 @@
             <label class="form-label">Phân loại</label>
             <input type="text" class="form-control" name="type_id" th:field="*{type_id}">
         </div>
-        <button type="submit" class="btn btn-primary" style="margin-top: 5px">Lưu</button>
+        <button type="submit" class="btn btn-primary">Lưu</button>
     </form>
 </div>
 </body>
