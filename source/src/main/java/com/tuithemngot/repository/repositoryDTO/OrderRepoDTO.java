@@ -29,6 +29,10 @@ public class OrderRepoDTO {
             orderDTO.setOrder_date(rs.getString("order_date"));
             orderDTO.setTotal(rs.getFloat("order_total"));
             orderDTO.setStatus(rs.getString("status"));
+            orderDTO.setOrder_note(rs.getString("order_note"));
+            orderDTO.setTransaction_no(rs.getLong("transaction_no"));
+            orderDTO.setTransaction_date(rs.getString("transaction_date"));
+            orderDTO.setPayment_methods(rs.getString("payment_methods"));
             return orderDTO;
         }
     }

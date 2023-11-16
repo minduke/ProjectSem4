@@ -18,24 +18,30 @@
         <thead>
         <tr>
             <th scope="col">#</th>
-            <th scope="col">Người nhận</th>
-            <th scope="col">Địa chỉ giao hàng</th>
-            <th scope="col">Số điện thoại</th>
-            <th scope="col">Thời gian đặt hàng</th>
-            <th scope="col">Tổng tiền</th>
-            <th scope="col">Trạng thái</th>
-            <th scope="col">Chi tiết</th>
-            <th scope="col"></th>
+            <th scope="col" style="width: 170px">Mã thanh toán</th>
+            <th scope="col" style="width: 170px">Người nhận</th>
+            <th scope="col" style="width: 170px">Địa chỉ giao hàng</th>
+            <th scope="col" style="width: 170px">Phương thức thanh toán</th>
+            <th scope="col" style="width: 170px">Số điện thoại</th>
+            <th scope="col" style="width: 170px">Thời gian đặt hàng</th>
+            <th scope="col" style="width: 170px">Tổng tiền</th>
+            <th scope="col" style="width: 170px">Ghi chú</th>
+            <th scope="col" style="width: 170px">Trạng thái</th>
+            <th scope="col" >Chi tiết</th>
+<!--            <th scope="col" style="width: 210px"></th>-->
         </tr>
         </thead>
         <tbody>
         <tr th:each="order: ${orders}">
             <td th:text="${order.stt}"></td>
+            <td th:text="${order.transaction_no}"></td>
             <td th:text="${order.order_receiver}"></td>
             <td th:text="${order.order_delivery_address}"></td>
+            <td th:text="${order.payment_methods}"></td>
             <td th:text="${order.order_phone_receiver}"></td>
             <td th:text="${order.order_date}"></td>
             <td th:text="${order.total}"></td>
+            <td th:text="${order.order_note}"></td>
             <td>
                 <form th:action="@{'/admin/updateStatus/' + ${order.order_id}}" method="post">
                     <select name="update">

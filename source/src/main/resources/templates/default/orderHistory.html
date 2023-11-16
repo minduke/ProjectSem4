@@ -5,20 +5,22 @@
     <title>Lịch Sử Đơn Hàng</title>
 </head>
 <body>
-<section layout:fragment="content" class="parallax fullscreen">
+<section layout:fragment="content" >
     <h1 style="text-align: center">Các Đơn Hàng Bạn Đã Mua</h1>
     <div class="table table-condensed table-striped table-responsive">
         <table class="table">
             <thead>
             <tr>
                 <th class="cart-product-STT">STT</th>
-                <th class="cart-product-tenKH">Người nhận</th>
-                <th class="cart-product-ngayDatH">Thời gian đặt hàng</th>
-                <th class="cart-product-ngayGiaoH">Địa chỉ giao hàng</th>
-                <th class="cart-product-ngayGiaoH">Số điện thoại</th>
-                <th class="cart-product-cachThucTT">Hình Thức Thanh Toán</th>
-                <th class="cart-product-subtotal">Tổng Đơn</th>
-                <th class="cart-product-trangThai">Trạng Thái Đơn Hàng</th>
+                <th class="cart-product-tenKH" style="width: 190px">Mã thanh toán</th>
+                <th class="cart-product-tenKH" style="width: 190px">Người nhận</th>
+                <th class="cart-product-ngayDatH" style="width: 190px">Thời gian đặt hàng</th>
+                <th class="cart-product-ngayGiaoH" style="width: 190px">Địa chỉ giao hàng</th>
+                <th class="cart-product-ngayGiaoH" style="width: 190px">Số điện thoại</th>
+                <th class="cart-product-cachThucTT" style="width: 190px">Hình Thức Thanh Toán</th>
+                <th class="cart-product-subtotal" style="width: 190px">Tổng Đơn</th>
+                <th class="cart-product-subtotal" style="width: 190px">Ghi chú</th>
+                <th class="cart-product-trangThai" style="width: 190px">Trạng Thái Đơn Hàng</th>
                 <th class="cart-product-icon">Xem Thêm</th>
             </tr>
             </thead>
@@ -27,6 +29,9 @@
             <tr th:each="order : ${orders}">
                 <td class=""cart-product-STT"">
                     <strong th:text="${order.stt}"></strong>
+                </td>
+                <td class="cart-product-tenKH">
+                    <h4 th:text="${order.transaction_no}">Lê Minh Phương</h4>
                 </td>
                 <td class="cart-product-tenKH">
                     <h4 th:text="${order.order_receiver}">Lê Minh Phương</h4>
@@ -41,10 +46,13 @@
                     <span class="amount" th:text="${order.order_phone_receiver}">5/11/2023</span>
                 </td>
                 <td class="cart-product-cachThucTT">
-                    <h4>Tiền mặt</h4>
+                    <h4 th:text="${order.payment_methods}">Tiền mặt</h4>
                 </td>
                 <td class="cart-product-subtotal">
                     <strong class="amount" th:text="${order.total}">5.000.000đ</strong>
+                </td>
+                <td class="cart-product-subtotal">
+                    <strong class="amount" th:text="${order.order_note}">5.000.000đ</strong>
                 </td>
                 <td class="cart-product-trangThai">
                     <h4 th:text="${order.status}">Hoàn Thành</h4>

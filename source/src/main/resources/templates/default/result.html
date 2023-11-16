@@ -2,23 +2,23 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="/default/layout">
 <head>
     <meta charset="UTF-8">
-    <title>Thanh Toán Ok</title>
+    <title>Kết quả giao dịch</title>
 </head>
 <body>
     <div class="container container-fullscreen" layout:fragment="content">
         <h1 class="LOA" th:text="${msg}">Đây là nội dung thông báo kết quả thanh toán</h1>
         <form class="custom-form">
             <div class="custom-col-md-6 custom-form-group">
-                <label for="full-name">Số Hóa Đơn:</label>
-                <strong>HĐ-001</strong>
+                <label>Số Hóa Đơn:</label>
+                <strong th:text="${no}">HĐ-001</strong>
             </div>
             <div class="custom-col-md-6 custom-form-group">
-                <label for="username">Ngày Thanh Toán:</label>
-                <strong>16-11-2023</strong>
+                <label>Ngày Thanh Toán:</label>
+                <strong th:text="${date}">16-11-2023</strong>
             </div>
             <div class="custom-col-md-6 custom-form-group">
-                <label for="password">Ngân hàng:</label>
-                <strong>NCB</strong>
+                <label>Ngân hàng:</label>
+                <strong th:text="${bank_name}">NCB</strong>
             </div>
             <div class="custom-col-md-6 custom-form-group">
                 <h2>Cảm ơn bạn đã mua hàng của chúng tôi</h2>

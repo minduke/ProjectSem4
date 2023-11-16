@@ -23,6 +23,7 @@ import javax.sql.DataSource;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -67,7 +68,8 @@ public class HomeController {
 
 
     @RequestMapping("/shop-cart/{id}")
-    public String productDetail(@PathVariable("id") Long id, Model model) {
+    public String productDetail(@PathVariable("id") Long id,
+                                Model model) {
         Product product = proRepo.findById(id);
         model.addAttribute("product", product);
         List<Type_product> showMenu = typeProductRepository.findAll();
@@ -77,7 +79,8 @@ public class HomeController {
 
 
     @RequestMapping("/cart")
-    public String showCart(HttpSession session, Model model) {
+    public String showCart(HttpSession session,
+                           Model model) {
         List<Type_product> showMenu = typeProductRepository.findAll();
         model.addAttribute("menus", showMenu);
         List<CartItem> items = cartManager.getCart(session).getItems();
@@ -113,7 +116,9 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/checkin", method = RequestMethod.POST)
-    public String checkin(@RequestParam("username") String username, @RequestParam("password") String password, HttpServletRequest request) {
+    public String checkin(@RequestParam("username") String username,
+                          @RequestParam("password") String password,
+                          HttpServletRequest request) {
         // đăng nhập không mã hoá pass
 //        String sql = "select count(*) from customers where cus_username = ? and cus_password = ?";
 //        int count = jdbcTemplate.queryForObject(sql, Integer.class, username, password);
@@ -147,7 +152,8 @@ public class HomeController {
     }
 
     @RequestMapping("/menu/{id}")
-    public String banhLanh(Model model, @PathVariable("id") Long id){
+    public String banhLanh(Model model,
+                           @PathVariable("id") Long id){
         List<Product> listP = proRepo.findByFilter(id);
         model.addAttribute("products", listP);
         List<Type_product> showMenu = typeProductRepository.findAll();
@@ -167,8 +173,12 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/registered", method = RequestMethod.POST)
-    public String registered(@RequestParam("gender") String gender, @RequestParam("password") String password, Customer customer,
-                             @RequestParam("username") String username, @RequestParam("email") String email, @RequestParam("phone") String phone,
+    public String registered(@RequestParam("gender") String gender,
+                             @RequestParam("password") String password,
+                             Customer customer,
+                             @RequestParam("username") String username,
+                             @RequestParam("email") String email,
+                             @RequestParam("phone") String phone,
                              RedirectAttributes redirectAttributes){
         String temp = encryptPassword(password);
         customer.setCus_password(temp);
@@ -205,8 +215,11 @@ public class HomeController {
     @RequestMapping(value = "/save-order", method = RequestMethod.POST)
     public String saveOrder(@RequestParam("order_receiver") String receiver,
                             @RequestParam("order_phone_receiver") String phone_receiver,
-                            @RequestParam("order_delivery_address") String address, HttpSession session,
-                            @RequestParam("temp") String temp,
+                            @RequestParam("order_delivery_address") String address,
+                            @RequestParam("note") String order_note,
+                            @RequestParam("temp") String temp,// cái này để lấy địa chỉ gán sẵn của user
+                            @RequestParam("optionsRadios") String options,
+                            HttpSession session,
                             HttpServletRequest request) throws UnsupportedEncodingException {
 
         Customer customer = (Customer) session.getAttribute("user");
@@ -219,9 +232,10 @@ public class HomeController {
         } else {
             adr = address;
         }
-        String insertOrder = String.format("exec sp_insert_order ?, ?, ?, ?, ?", cus_id, order_total, receiver, adr, phone_receiver);
+
+        String insertOrder = String.format("exec sp_insert_order ?, ?, ?, ?, ?, ?", cus_id, order_total, receiver, adr, phone_receiver, order_note);
         jdbcTemplate = new JdbcTemplate(dataSource);
-        Long order_id = jdbcTemplate.queryForObject(insertOrder, new Object[]{cus_id, order_total, receiver, adr, phone_receiver}, Long.class);
+        Long order_id = jdbcTemplate.queryForObject(insertOrder, new Object[]{cus_id, order_total, receiver, adr, phone_receiver, order_note}, Long.class);
         System.out.println(order_id);
         String sql = "insert into order_detail (order_id, pro_id, import_price, pro_price, quantity, detail_total) values (?, ?, ?, ?, ?, ?)";
         cart = cartManager.getCart(session);
@@ -238,102 +252,140 @@ public class HomeController {
         }
 
         session.removeAttribute("gioHang");
+        if (options.equals("COD")){
+            String updatePayment = "update orders set payment_methods = ? where order_id = ?";
+            jdbcTemplate.update(updatePayment, options, order_id);
+            return "redirect:/resultCOD";
+        } else {
+            String vnp_Version = "2.1.0";
+            String vnp_Command = "pay";
+            String orderType = "other";
 
-        String vnp_Version = "2.1.0";
-        String vnp_Command = "pay";
-        String orderType = "other";
+            Long amount = (long) (order_total * 100);
+            String bankCode = "NCB";
 
-        Long amount = (long) (order_total * 100);
-        String bankCode = "NCB";
+            String vnp_TxnRef = Config.getRandomNumber(8);
+            String vnp_IpAddr = Config.getIpAddress(request);
 
-        String vnp_TxnRef = Config.getRandomNumber(8);
-        String vnp_IpAddr = Config.getIpAddress(request);
+            String vnp_TmnCode = Config.vnp_TmnCode;
 
-        String vnp_TmnCode = Config.vnp_TmnCode;
+            Map<String, String> vnp_Params = new HashMap<>();
+            vnp_Params.put("vnp_Version", vnp_Version);
+            vnp_Params.put("vnp_Command", vnp_Command);
+            vnp_Params.put("vnp_TmnCode", vnp_TmnCode);
+            vnp_Params.put("vnp_Amount", String.valueOf(amount));
+            vnp_Params.put("vnp_CurrCode", "VND");
 
-        Map<String, String> vnp_Params = new HashMap<>();
-        vnp_Params.put("vnp_Version", vnp_Version);
-        vnp_Params.put("vnp_Command", vnp_Command);
-        vnp_Params.put("vnp_TmnCode", vnp_TmnCode);
-        vnp_Params.put("vnp_Amount", String.valueOf(amount));
-        vnp_Params.put("vnp_CurrCode", "VND");
-
-        //cho nay co 3 cach thanh toan VNBANK,VNPAYQR,INTCARD nay h thieu cai nay
-        vnp_Params.put("vnp_BankCode", "VNBANK");
-
-
-        vnp_Params.put("vnp_Locale", "vn");
-        vnp_Params.put("vnp_TxnRef", String.valueOf(order_id));
-        vnp_Params.put("vnp_OrderInfo", "Thanh toan don hang:" + order_id);
-
-        //cai nay optional
-        vnp_Params.put("vnp_OrderType", orderType);
+            //cho nay co 3 cach thanh toan VNBANK,VNPAYQR,INTCARD nay h thieu cai nay
+            vnp_Params.put("vnp_BankCode", "VNBANK");
 
 
-        vnp_Params.put("vnp_ReturnUrl", "http://localhost:8080/result");
-        vnp_Params.put("vnp_IpAddr", vnp_IpAddr);
+            vnp_Params.put("vnp_Locale", "vn");
+            vnp_Params.put("vnp_TxnRef", String.valueOf(order_id));
+            vnp_Params.put("vnp_OrderInfo", "Thanh toan don hang:" + order_id);
 
-        Calendar cld = Calendar.getInstance(TimeZone.getTimeZone("Etc/GMT+7"));
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
-        String vnp_CreateDate = formatter.format(cld.getTime());
-        vnp_Params.put("vnp_CreateDate", vnp_CreateDate);
+            //cai nay optional
+            vnp_Params.put("vnp_OrderType", orderType);
 
-        cld.add(Calendar.MINUTE, 15);
-        String vnp_ExpireDate = formatter.format(cld.getTime());
-        vnp_Params.put("vnp_ExpireDate", vnp_ExpireDate);
 
-        List fieldNames = new ArrayList(vnp_Params.keySet());
-        Collections.sort(fieldNames);
-        StringBuilder hashData = new StringBuilder();
-        StringBuilder query = new StringBuilder();
-        Iterator itr = fieldNames.iterator();
-        while (itr.hasNext()) {
-            String fieldName = (String) itr.next();
-            String fieldValue = (String) vnp_Params.get(fieldName);
-            if ((fieldValue != null) && (fieldValue.length() > 0)) {
-                //Build hash data
-                hashData.append(fieldName);
-                hashData.append('=');
-                hashData.append(URLEncoder.encode(fieldValue, StandardCharsets.US_ASCII.toString()));
-                //Build query
-                query.append(URLEncoder.encode(fieldName, StandardCharsets.US_ASCII.toString()));
-                query.append('=');
-                query.append(URLEncoder.encode(fieldValue, StandardCharsets.US_ASCII.toString()));
-                if (itr.hasNext()) {
-                    query.append('&');
-                    hashData.append('&');
+            vnp_Params.put("vnp_ReturnUrl", "http://localhost:8080/result");
+            vnp_Params.put("vnp_IpAddr", vnp_IpAddr);
+
+            Calendar cld = Calendar.getInstance(TimeZone.getTimeZone("Etc/GMT+7"));
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+            String vnp_CreateDate = formatter.format(cld.getTime());
+            vnp_Params.put("vnp_CreateDate", vnp_CreateDate);
+
+            cld.add(Calendar.MINUTE, 15);
+            String vnp_ExpireDate = formatter.format(cld.getTime());
+            vnp_Params.put("vnp_ExpireDate", vnp_ExpireDate);
+
+            List fieldNames = new ArrayList(vnp_Params.keySet());
+            Collections.sort(fieldNames);
+            StringBuilder hashData = new StringBuilder();
+            StringBuilder query = new StringBuilder();
+            Iterator itr = fieldNames.iterator();
+            while (itr.hasNext()) {
+                String fieldName = (String) itr.next();
+                String fieldValue = (String) vnp_Params.get(fieldName);
+                if ((fieldValue != null) && (fieldValue.length() > 0)) {
+                    //Build hash data
+                    hashData.append(fieldName);
+                    hashData.append('=');
+                    hashData.append(URLEncoder.encode(fieldValue, StandardCharsets.US_ASCII.toString()));
+                    //Build query
+                    query.append(URLEncoder.encode(fieldName, StandardCharsets.US_ASCII.toString()));
+                    query.append('=');
+                    query.append(URLEncoder.encode(fieldValue, StandardCharsets.US_ASCII.toString()));
+                    if (itr.hasNext()) {
+                        query.append('&');
+                        hashData.append('&');
+                    }
                 }
             }
-        }
-        String queryUrl = query.toString();
-        String vnp_SecureHash = Config.hmacSHA512(Config.secretKey, hashData.toString());
-        queryUrl += "&vnp_SecureHash=" + vnp_SecureHash;
-        String paymentUrl = Config.vnp_PayUrl + "?" + queryUrl;
+            String updatePayment = "update orders set payment_methods = ? where order_id = ?";
+            jdbcTemplate.update(updatePayment, options, order_id);
+            String queryUrl = query.toString();
+            String vnp_SecureHash = Config.hmacSHA512(Config.secretKey, hashData.toString());
+            queryUrl += "&vnp_SecureHash=" + vnp_SecureHash;
+            String paymentUrl = Config.vnp_PayUrl + "?" + queryUrl;
 
-        PaymentResDTO paymentResDTO = new PaymentResDTO();
-        paymentResDTO.setStatus("Ok");
-        paymentResDTO.setMessage("Successfully");
-        paymentResDTO.setURL(paymentUrl);
-        System.out.println(paymentUrl);
-        return "redirect:" + paymentUrl;
+            PaymentResDTO paymentResDTO = new PaymentResDTO();
+            paymentResDTO.setStatus("Ok");
+            paymentResDTO.setMessage("Successfully");
+            paymentResDTO.setURL(paymentUrl);
+            System.out.println(paymentUrl);
+            return "redirect:" + paymentUrl;
+        }
     }
 
 
     @RequestMapping("/result")
     public String result(@RequestParam("vnp_ResponseCode") int resultCode,
-                         Model model){
+                         @RequestParam("vnp_TxnRef") Long id,
+                         @RequestParam("vnp_BankCode") String name,
+                         @RequestParam("vnp_PayDate") String date,
+                         @RequestParam("vnp_TransactionNo") String no,
+                         Model model) throws ParseException {
         List<Type_product> showMenu = typeProductRepository.findAll();
         model.addAttribute("menus", showMenu);
         if (resultCode == 00){
+
+            Long order_id = id;
+            String dateTimeString = date;
+            String pattern = "yyyyMMddHHmmss";
+            SimpleDateFormat inputDateFormat = new SimpleDateFormat(pattern);
+            java.util.Date date2 = inputDateFormat.parse(dateTimeString);
+
+            // Chuyển đổi sang định dạng ngày giờ của SQL Server
+            String sqlServerDateTimeFormat = "yyyy-MM-dd HH:mm:ss";
+            SimpleDateFormat outputDateFormat = new SimpleDateFormat(sqlServerDateTimeFormat);
+            String sqlServerDateTimeString = outputDateFormat.format(date2);
+            String transaction_no = no;
+            String sql = "update orders set transaction_no = ?, transaction_date = ? where order_id = ?";
+            jdbcTemplate.update(sql, transaction_no, sqlServerDateTimeString, order_id);
+
             model.addAttribute("msg", "Thanh toán thành công");
+            model.addAttribute("date", sqlServerDateTimeString);
+            model.addAttribute("no", transaction_no);
+            model.addAttribute("bank_name", name);
         } else {
             model.addAttribute("msg", "Thanh toán thất bại");
         }
         return "/default/result";
     }
 
+    @RequestMapping("/resultCOD")
+    public String COD(Model model){
+        List<Type_product> showMenu = typeProductRepository.findAll();
+        model.addAttribute("menus", showMenu);
+        model.addAttribute("msg", "Đặt hàng thành công. Chúng tôi sẽ liên lạc với bạn trong thời gian nhanh nhất");
+        return "default/resultCOD";
+    }
+
     @RequestMapping("/lich-su-dat-hang")
-    public String lichSuDonHang(Model model, HttpServletRequest request) {
+    public String lichSuDonHang(Model model,
+                                HttpServletRequest request) {
         List<Type_product> showMenu = typeProductRepository.findAll();
         model.addAttribute("menus", showMenu);
         Customer customer = (Customer) request.getSession().getAttribute("user");
@@ -346,14 +398,17 @@ public class HomeController {
 
 
     @RequestMapping("/thong-tin-user")
-    public String thongTin(Model model, HttpServletRequest request) {
+    public String thongTin(Model model,
+                           HttpServletRequest request) {
         List<Type_product> showMenu = typeProductRepository.findAll();
         model.addAttribute("menus", showMenu);
         return "/default/information";
     }
 
     @RequestMapping("/chi-tiet-don-hang/{id}")
-    public String chiTiet(Model model, HttpServletRequest request, @PathVariable("id") Long id) {
+    public String chiTiet(Model model,
+                          HttpServletRequest request,
+                          @PathVariable("id") Long id) {
         List<Type_product> showMenu = typeProductRepository.findAll();
         model.addAttribute("menus", showMenu);
         List<OrderDetailDTO> list = orderDetailRepoDTO.showOrderDetail(id);
@@ -362,15 +417,20 @@ public class HomeController {
     }
 
     @RequestMapping("/thay-doi-mat-khau")
-    public String pass(HttpSession session, Model model){
+    public String pass(HttpSession session,
+                       Model model){
         List<Type_product> showMenu = typeProductRepository.findAll();
         model.addAttribute("menus", showMenu);
         return "default/changePass";
     }
 
     @RequestMapping(value = "/change-pass", method = RequestMethod.POST)
-    public String changePassword(@RequestParam(value = "old-password", required = false) String old, @RequestParam(value = "new-password", required = false) String neww, @RequestParam(value = "confirm-password", required = false) String confirm,
-                                 HttpSession session, HttpServletRequest request, RedirectAttributes redirectAttributes) {
+    public String changePassword(@RequestParam(value = "old-password", required = false) String old,
+                                 @RequestParam(value = "new-password", required = false) String neww,
+                                 @RequestParam(value = "confirm-password", required = false) String confirm,
+                                 HttpSession session,
+                                 HttpServletRequest request,
+                                 RedirectAttributes redirectAttributes) {
 
         Object object = session.getAttribute("user");
         Customer customer = (Customer) object;
