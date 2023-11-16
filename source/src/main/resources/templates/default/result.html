@@ -2,13 +2,31 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="/default/layout">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Thanh Toán Ok</title>
 </head>
 <body>
-    <section layout:fragment="content" class="container">
+    <div class="container container-fullscreen" layout:fragment="content">
+        <h1 class="LOA" th:text="${msg}">Đây là nội dung thông báo kết quả thanh toán</h1>
+        <form class="custom-form">
+            <div class="custom-col-md-6 custom-form-group">
+                <label for="full-name">Số Hóa Đơn:</label>
+                <strong>HĐ-001</strong>
+            </div>
+            <div class="custom-col-md-6 custom-form-group">
+                <label for="username">Ngày Thanh Toán:</label>
+                <strong>16-11-2023</strong>
+            </div>
+            <div class="custom-col-md-6 custom-form-group">
+                <label for="password">Ngân hàng:</label>
+                <strong>NCB</strong>
+            </div>
+            <div class="custom-col-md-6 custom-form-group">
+                <h2>Cảm ơn bạn đã mua hàng của chúng tôi</h2>
+                <img th:src="@{/images/Avatar.jpg}">
+            </div>
+        </form>
 
 
-        <h1 th:text="${msg}">Đây là nội dung thông báo kết quả thanh toán</h1>
-    </section>
+    </div>
 </body>
 </html>

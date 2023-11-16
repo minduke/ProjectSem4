@@ -367,7 +367,49 @@
     color: rgba(252, 216, 174, 0.78); /* Màu chữ  */
     font-size: 16px; /* Kích thước chữ px */
 }
+/*result*/
+.LOA {
+        text-align: center;
+        font-size: 32px; /* Điều chỉnh kích thước chữ theo ý muốn */
+    background: linear-gradient(45deg, #ff00ff, #00ffff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.custom-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
 
+.custom-form-group label {
+    font-size: 16px; /* Kích thước chữ cho label */
+    background: linear-gradient(45deg, #ff00ff, #00ffff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.custom-form-group strong {
+    font-size: 24px; /* Kích thước chữ cho strong */
+    background: linear-gradient(45deg, #ff00ff, #00ffff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.custom-form-group h2 {
+    font-size: 24px;
+    background: linear-gradient(45deg, #ff00ff, #00ffff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.custom-form-group img {
+    width: 200px; /* Đặt kích thước rõ ràng cho chiều rộng */
+    height: auto; /* Tự động tính toán chiều cao dựa trên tỷ lệ */
+    border: 10px solid #FF69B4; /* Màu hồng */
+    box-shadow: 0 0 10px rgba(255, 105, 180, 0.7); /* Hiệu ứng bóng đen xung quanh hình ảnh */
+}
 
 
 
