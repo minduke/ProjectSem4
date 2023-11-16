@@ -3475,4 +3475,27 @@ fieldset[disabled] .btn-vk.active {
 
 .form-group select,
 .form-group button {
-  height: 30px
+  height: 30px;
+}
+
+.table td.receiver {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.table td.note {
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100px; /* Chiều rộng cột ghi chú */
+}
+
+.table td.other-columns {
+  /* Thiết lập chiều rộng cho các cột khác */
+  width: 150px;
+}
