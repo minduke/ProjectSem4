@@ -229,12 +229,12 @@ var INSPIRO = {};
             });
 
             //Skip loader if page has an js error or not loading for more than 5 seconds!
-            setTimeout(function () {
-                if ($(".animsition-loading").length) {
-                    $body.addClass("no-page-loader");
-                    $(".animsition-loading").hide();
-                }
-            }, 5000);
+            // setTimeout(function () {
+            //     if ($(".animsition-loading").length) {
+            //         $body.addClass("no-page-loader");
+            //         $(".animsition-loading").hide();
+            //     }
+            // }, 1000);
         }
     };
 

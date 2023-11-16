@@ -1,7 +1,9 @@
 package com.tuithemngot.controller;
 
+import com.tuithemngot.config.Config;
 import com.tuithemngot.dto.OrderDTO;
 import com.tuithemngot.dto.OrderDetailDTO;
+import com.tuithemngot.dto.PaymentResDTO;
 import com.tuithemngot.model.*;
 import com.tuithemngot.repository.*;
 import com.tuithemngot.repository.repositoryDTO.OrderDetailRepoDTO;
@@ -18,7 +20,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.sql.DataSource;
-import java.util.List;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Controller
 @RequestMapping("/")
@@ -47,6 +53,8 @@ public class HomeController {
 
     @Autowired
     OrderDetailRepoDTO orderDetailRepoDTO;
+
+
 
     @RequestMapping(value = "/home", method = RequestMethod.GET)
     public String home(Model model) {
@@ -195,7 +203,11 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/save-order", method = RequestMethod.POST)
-    public String saveOrder(@RequestParam("order_receiver") String receiver, @RequestParam("order_phone_receiver") String phone_receiver, @RequestParam("order_delivery_address") String address, HttpSession session, @RequestParam("temp") String temp){
+    public String saveOrder(@RequestParam("order_receiver") String receiver,
+                            @RequestParam("order_phone_receiver") String phone_receiver,
+                            @RequestParam("order_delivery_address") String address, HttpSession session,
+                            @RequestParam("temp") String temp,
+                            HttpServletRequest request) throws UnsupportedEncodingException {
 
         Customer customer = (Customer) session.getAttribute("user");
         Long cus_id = customer.getCus_id();
@@ -226,9 +238,99 @@ public class HomeController {
         }
 
         session.removeAttribute("gioHang");
-        return "redirect:/home";
+
+        String vnp_Version = "2.1.0";
+        String vnp_Command = "pay";
+        String orderType = "other";
+
+        Long amount = (long) (order_total * 100);
+        String bankCode = "NCB";
+
+        String vnp_TxnRef = Config.getRandomNumber(8);
+        String vnp_IpAddr = Config.getIpAddress(request);
+
+        String vnp_TmnCode = Config.vnp_TmnCode;
+
+        Map<String, String> vnp_Params = new HashMap<>();
+        vnp_Params.put("vnp_Version", vnp_Version);
+        vnp_Params.put("vnp_Command", vnp_Command);
+        vnp_Params.put("vnp_TmnCode", vnp_TmnCode);
+        vnp_Params.put("vnp_Amount", String.valueOf(amount));
+        vnp_Params.put("vnp_CurrCode", "VND");
+
+        //cho nay co 3 cach thanh toan VNBANK,VNPAYQR,INTCARD nay h thieu cai nay
+        vnp_Params.put("vnp_BankCode", "VNBANK");
+
+
+        vnp_Params.put("vnp_Locale", "vn");
+        vnp_Params.put("vnp_TxnRef", String.valueOf(order_id));
+        vnp_Params.put("vnp_OrderInfo", "Thanh toan don hang:" + order_id);
+
+        //cai nay optional
+        vnp_Params.put("vnp_OrderType", orderType);
+
+
+        vnp_Params.put("vnp_ReturnUrl", "http://localhost:8080/result");
+        vnp_Params.put("vnp_IpAddr", vnp_IpAddr);
+
+        Calendar cld = Calendar.getInstance(TimeZone.getTimeZone("Etc/GMT+7"));
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+        String vnp_CreateDate = formatter.format(cld.getTime());
+        vnp_Params.put("vnp_CreateDate", vnp_CreateDate);
+
+        cld.add(Calendar.MINUTE, 15);
+        String vnp_ExpireDate = formatter.format(cld.getTime());
+        vnp_Params.put("vnp_ExpireDate", vnp_ExpireDate);
+
+        List fieldNames = new ArrayList(vnp_Params.keySet());
+        Collections.sort(fieldNames);
+        StringBuilder hashData = new StringBuilder();
+        StringBuilder query = new StringBuilder();
+        Iterator itr = fieldNames.iterator();
+        while (itr.hasNext()) {
+            String fieldName = (String) itr.next();
+            String fieldValue = (String) vnp_Params.get(fieldName);
+            if ((fieldValue != null) && (fieldValue.length() > 0)) {
+                //Build hash data
+                hashData.append(fieldName);
+                hashData.append('=');
+                hashData.append(URLEncoder.encode(fieldValue, StandardCharsets.US_ASCII.toString()));
+                //Build query
+                query.append(URLEncoder.encode(fieldName, StandardCharsets.US_ASCII.toString()));
+                query.append('=');
+                query.append(URLEncoder.encode(fieldValue, StandardCharsets.US_ASCII.toString()));
+                if (itr.hasNext()) {
+                    query.append('&');
+                    hashData.append('&');
+                }
+            }
+        }
+        String queryUrl = query.toString();
+        String vnp_SecureHash = Config.hmacSHA512(Config.secretKey, hashData.toString());
+        queryUrl += "&vnp_SecureHash=" + vnp_SecureHash;
+        String paymentUrl = Config.vnp_PayUrl + "?" + queryUrl;
+
+        PaymentResDTO paymentResDTO = new PaymentResDTO();
+        paymentResDTO.setStatus("Ok");
+        paymentResDTO.setMessage("Successfully");
+        paymentResDTO.setURL(paymentUrl);
+        System.out.println(paymentUrl);
+        return "redirect:" + paymentUrl;
     }
 
+
+    @RequestMapping("/result")
+    public String result(@RequestParam("vnp_ResponseCode") int resultCode,
+                         Model model){
+        List<Type_product> showMenu = typeProductRepository.findAll();
+        model.addAttribute("menus", showMenu);
+        if (resultCode == 00){
+            model.addAttribute("msg", "Thanh toán thành công");
+        } else {
+            model.addAttribute("msg", "Thanh toán thất bại");
+        }
+        return "/default/result";
+    }
 
     @RequestMapping("/lich-su-dat-hang")
     public String lichSuDonHang(Model model, HttpServletRequest request) {
