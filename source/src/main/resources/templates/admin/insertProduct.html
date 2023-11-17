@@ -30,10 +30,10 @@
             <label for="" class="form-label">Mô tả chi tiết</label>
             <input type="text" class="form-control" name="pro_spec">
         </div>
-<!--        <div class="mb-3">-->
+        <div class="mb-3" th:if="${msg}">
 <!--            <label for="" class="form-label">Phân loại</label>-->
-<!--            <input type="text" class="form-control" name="type_id" >-->
-<!--        </div>-->
+            <h3 th:text="${msg}"></h3>
+        </div>
         <button type="submit" class="btn btn-primary" >Lưu</button>
     </form>
 </div>

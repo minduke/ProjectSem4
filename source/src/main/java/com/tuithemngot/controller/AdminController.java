@@ -14,6 +14,7 @@ import com.tuithemngot.service.CartManager;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.Banner;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,7 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.sql.DataSource;
 import java.io.BufferedOutputStream;
@@ -136,58 +138,70 @@ public class AdminController {
 
     @RequestMapping(value = "/insertPro", method = RequestMethod.POST)
     public String insertPro(Product product, @RequestParam("pro_name") String pro_name,
-                            @RequestParam("import_price") float import_price, @RequestParam("pro_price") float pro_price,
-                            @RequestParam("pro_spec") String pro_spec, MyUploadForm myUploadForm,
-                            @ModelAttribute("myUploadForm") MyUploadForm myUploadForm1, @RequestParam("fileDatas") MultipartFile file, HttpServletRequest request) {
+                            @RequestParam("import_price") float import_price,
+                            @RequestParam("pro_price") float pro_price,
+                            @RequestParam("pro_spec") String pro_spec,
+                            MyUploadForm myUploadForm,
+                            @ModelAttribute("myUploadForm") MyUploadForm myUploadForm1,
+                            @RequestParam("fileDatas") MultipartFile file,
+                            HttpServletRequest request,
+                            RedirectAttributes redirectAttributes) {
 
-        product.setPro_name(pro_name);
-        product.setPro_image(file.getOriginalFilename());
-        product.setImport_price(import_price);
-        product.setPro_price(pro_price);
-        product.setPro_spec(pro_spec);
-        product.setType_id((Long) request.getSession().getAttribute("type_id"));
-        proRep.insertProduct(product);
+
+        String fileExtension = file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")).toLowerCase();
+        if (fileExtension.equals(".jpg") || fileExtension.equals(".png")) {
+
+            product.setPro_name(pro_name);
+            product.setPro_image(file.getOriginalFilename());
+            product.setImport_price(import_price);
+            product.setPro_price(pro_price);
+            product.setPro_spec(pro_spec);
+            product.setType_id((Long) request.getSession().getAttribute("type_id"));
+            proRep.insertProduct(product);
 
 
 //         cấu hình đường dẫn gốc để lưu ảnh khi upload
-        Path staticPath = Paths.get("src", "main", "resources", "static", "images");
-        String temp = staticPath.toString();
+            Path staticPath = Paths.get("src", "main", "resources", "static", "images");
+            String temp = staticPath.toString();
 
 
 //         gán đường dẫn để java hiểu
-        File uploadRootDir = new File(temp);
+            File uploadRootDir = new File(temp);
 
-        if (!uploadRootDir.exists()) {
-            uploadRootDir.mkdirs();
-        }
+            if (!uploadRootDir.exists()) {
+                uploadRootDir.mkdirs();
+            }
 
-        MultipartFile[] fileDatas = myUploadForm.getFileDatas();
+            MultipartFile[] fileDatas = myUploadForm.getFileDatas();
 
 //        List<File> uploadedFiles = new ArrayList<File>();
 
-        for (MultipartFile fileData : fileDatas) {
+            for (MultipartFile fileData : fileDatas) {
 
-            String originalFileName = fileData.getOriginalFilename();
-            File imageSrc = new File(uploadRootDir.getAbsolutePath() + originalFileName);
+                String originalFileName = fileData.getOriginalFilename();
+                File imageSrc = new File(uploadRootDir.getAbsolutePath() + originalFileName);
 
-            try {
+                try {
 
-                File serverFile = new File(uploadRootDir.getAbsolutePath() + File.separator + originalFileName);
-                BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
-                stream.write(fileData.getBytes());
+                    File serverFile = new File(uploadRootDir.getAbsolutePath() + File.separator + originalFileName);
+                    BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+                    stream.write(fileData.getBytes());
 
-                stream.close();
+                    stream.close();
 
 //                    uploadedFiles.add(serverFile);
 
-            } catch (Exception e) {
-                e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
             }
 
+            return "redirect:/admin/products";
+        } else {
+            redirectAttributes.addFlashAttribute("msg", "Không phải hình ảnh");
+            return "redirect:/admin/insert";
         }
-
-        return "redirect:/admin/products";
-
     }
 
     @RequestMapping(value = "/insert", method = RequestMethod.GET)
