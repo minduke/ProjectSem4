@@ -117,7 +117,9 @@
 
                         </div>
                         <a th:href="@{/home}"  class="button color button-3d rounded icon-left float-left"><span>Tiếp tục mua hàng</span></a>
-                        <a th:href="@{/check-out}"  class="button color button-3d rounded icon-left float-right"><span>Thanh Toán</span></a>
+                        <div th:if="${session.gioHang != null && session.gioHang.getItemCount() > 0}">
+                            <a th:href="@{/check-out}" class="button color button-3d rounded icon-left float-right" ><span>Thanh Toán</span></a>
+                        </div>
                     </div>
                 </div>
             </div>
