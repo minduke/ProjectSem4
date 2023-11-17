@@ -3,7 +3,6 @@ package com.tuithemngot.controller;
 import com.tuithemngot.config.Config;
 import com.tuithemngot.dto.OrderDTO;
 import com.tuithemngot.dto.OrderDetailDTO;
-import com.tuithemngot.dto.PaymentResDTO;
 import com.tuithemngot.model.*;
 import com.tuithemngot.repository.*;
 import com.tuithemngot.repository.repositoryDTO.OrderDetailRepoDTO;
@@ -330,11 +329,6 @@ public class HomeController {
             queryUrl += "&vnp_SecureHash=" + vnp_SecureHash;
             String paymentUrl = Config.vnp_PayUrl + "?" + queryUrl;
 
-            PaymentResDTO paymentResDTO = new PaymentResDTO();
-            paymentResDTO.setStatus("Ok");
-            paymentResDTO.setMessage("Successfully");
-            paymentResDTO.setURL(paymentUrl);
-            System.out.println(paymentUrl);
             return "redirect:" + paymentUrl;
         }
     }
