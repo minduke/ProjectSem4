@@ -72,7 +72,7 @@ public class CustomerRepository {
         return null;
     }
 
-    public Customer findByUsername(String username){
+    public Customer  findByUsername(String username){
         try {
             return cDB.queryForObject("exec sp_find_cus_username ?", new CustomerRowMapper(), new Object[]{username});
         } catch (Exception e){

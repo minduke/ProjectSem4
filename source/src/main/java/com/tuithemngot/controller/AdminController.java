@@ -321,7 +321,7 @@ public class AdminController {
     @RequestMapping(value = "/chklogin", method = RequestMethod.POST)
     public String chklogin(@RequestParam("usr")String username,@RequestParam("pwd") String password, HttpServletRequest request) {
         Logger log = Logger.getGlobal();
-        log.info("Tài khoản: " +username + " <---> " + "Mật khẩu: " + password);
+        log.info("Tài khoản: " + username + " <---> " + "Mật khẩu: " + password);
         String query = "select count(*) from admin where username = ? and password = ? ";
         int count = jdbcTemplate.queryForObject(query, Integer.class, username, password);
         if (count == 1){

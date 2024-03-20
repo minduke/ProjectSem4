@@ -60,8 +60,8 @@ public class HomeController {
     public String home(Model model) {
         List<Product> listP = proRepo.findAllForUser();
         model.addAttribute("products", listP);
-        List<Type_product> showMenu = typeProductRepository.findAll();
-        model.addAttribute("menus", showMenu);
+        showMenu(model);
+
         return "default/home";
     }
 
@@ -71,8 +71,8 @@ public class HomeController {
                                 Model model) {
         Product product = proRepo.findById(id);
         model.addAttribute("product", product);
-        List<Type_product> showMenu = typeProductRepository.findAll();
-        model.addAttribute("menus", showMenu);
+        showMenu(model);
+
         return "default/productDetail";
     }
 
@@ -80,8 +80,8 @@ public class HomeController {
     @RequestMapping("/cart")
     public String showCart(HttpSession session,
                            Model model) {
-        List<Type_product> showMenu = typeProductRepository.findAll();
-        model.addAttribute("menus", showMenu);
+        showMenu(model);
+
         List<CartItem> items = cartManager.getCart(session).getItems();
         if (items == null || items.isEmpty()){
             model.addAttribute("msg", "Chưa có sản phẩm trong giỏ");
@@ -95,22 +95,20 @@ public class HomeController {
 
     @RequestMapping(value = "/check-out", method = RequestMethod.GET)
     public String checkOut(Model model) {
-        List<Type_product> showMenu = typeProductRepository.findAll();
-        model.addAttribute("menus", showMenu);
+        showMenu(model);
         return "default/shopcartCheckout";
     }
 
     @RequestMapping("/tin-tuc")
     public String newsBOARD(Model model) {
-        List<Type_product> showMenu = typeProductRepository.findAll();
-        model.addAttribute("menus", showMenu);
+        showMenu(model);
+
         return "default/newsBoard";
     }
 
     @RequestMapping("/login")
     public String loginForm(Model model) {
-        List<Type_product> showMenu = typeProductRepository.findAll();
-        model.addAttribute("menus", showMenu);
+        showMenu(model);
         return "default/loginForm";
     }
 
@@ -155,8 +153,7 @@ public class HomeController {
                            @PathVariable("id") Long id){
         List<Product> listP = proRepo.findByFilter(id);
         model.addAttribute("products", listP);
-        List<Type_product> showMenu = typeProductRepository.findAll();
-        model.addAttribute("menus", showMenu);
+        showMenu(model);
         Type_product typeProduct = typeProductRepository.findById(id);
         model.addAttribute("typeName", typeProduct);
         return "default/showProductByType";
@@ -166,6 +163,7 @@ public class HomeController {
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public String register(Model model) {
+        showMenu(model);
         Customer customer = new Customer();
         model.addAttribute("customer", customer);
         return "default/register";
@@ -341,8 +339,8 @@ public class HomeController {
                          @RequestParam("vnp_PayDate") String date,
                          @RequestParam("vnp_TransactionNo") String no,
                          Model model) throws ParseException {
-        List<Type_product> showMenu = typeProductRepository.findAll();
-        model.addAttribute("menus", showMenu);
+        showMenu(model);
+
         if (resultCode == 00){
 
             Long order_id = id;
@@ -371,8 +369,7 @@ public class HomeController {
 
     @RequestMapping("/resultCOD")
     public String COD(Model model){
-        List<Type_product> showMenu = typeProductRepository.findAll();
-        model.addAttribute("menus", showMenu);
+        showMenu(model);
         model.addAttribute("msg", "Đặt hàng thành công. Chúng tôi sẽ liên lạc với bạn trong thời gian nhanh nhất");
         return "default/resultCOD";
     }
@@ -394,8 +391,7 @@ public class HomeController {
     @RequestMapping("/thong-tin-user")
     public String thongTin(Model model,
                            HttpServletRequest request) {
-        List<Type_product> showMenu = typeProductRepository.findAll();
-        model.addAttribute("menus", showMenu);
+        showMenu(model);
         return "/default/information";
     }
 
@@ -403,8 +399,7 @@ public class HomeController {
     public String chiTiet(Model model,
                           HttpServletRequest request,
                           @PathVariable("id") Long id) {
-        List<Type_product> showMenu = typeProductRepository.findAll();
-        model.addAttribute("menus", showMenu);
+        showMenu(model);
         List<OrderDetailDTO> list = orderDetailRepoDTO.showOrderDetail(id);
         model.addAttribute("details", list);
         return "default/orderDetailUser";
@@ -413,8 +408,7 @@ public class HomeController {
     @RequestMapping("/thay-doi-mat-khau")
     public String pass(HttpSession session,
                        Model model){
-        List<Type_product> showMenu = typeProductRepository.findAll();
-        model.addAttribute("menus", showMenu);
+        showMenu(model);
         return "default/changePass";
     }
 
@@ -457,5 +451,11 @@ public class HomeController {
 
     public boolean checkPassword(String password, String hashedPassword){
         return BCrypt.checkpw(password, hashedPassword);
+    }
+
+    public Model showMenu(Model model){
+        List<Type_product> showMenu = typeProductRepository.findAll();
+        model.addAttribute("menus", showMenu);
+        return model;
     }
 }
